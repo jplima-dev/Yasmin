@@ -1,0 +1,15 @@
+{
+  "name": "workspace-os-module-sdk",
+  "version": "0.3.0",
+  "private": true,
+  "type": "module",
+  "description": "Comandos locais de desenvolvimento e validação de módulos do Workspace OS",
+  "scripts": {
+    "create-module": "node tools/create-module.js",
+    "validate-modules": "node tools/validate-modules.js",
+    "doctor": "node tools/run-doctor.js",
+    "test": "node tools/test-all.js",
+    "test:python": "node tools/python-runner.js -m unittest discover -s tests -v",
+    "test:js": "node --test tests/*.js"
+  }
+}

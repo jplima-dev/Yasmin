@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 2, "id": "notes", "name": "Notas Flutuantes", "category": "work",
+  "vendor": "Ink-guginha",
+  "author": "Ink-guginha",
+  "description": "Quadros visuais e notas conectadas em seu projeto independente.", "kind": "static-web",
+  "entryFile": "index.html", "icon": "note", "version": "1.0.0", "minCoreVersion": "0.3.0", "dataSchemaVersion": 1,
+  "capabilities": {"export": true, "import": true, "print": true, "offline": true, "shortcuts": ["new-note"], "permissions": ["storage:local"]},
+  "instructions": ["Abra pela Home; os dados continuam no armazenamento próprio do módulo."]
+}

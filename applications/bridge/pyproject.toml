@@ -1,0 +1,19 @@
+[project]
+name = "bridge-devices"
+version = "1.1.2"
+description = "Ecossistema pessoal para integrar dispositivos"
+requires-python = ">=3.11"
+dependencies = [
+  "fastapi==0.116.1",
+  "uvicorn[standard]==0.35.0",
+  "cryptography==45.0.7",
+  "httpx==0.28.1",
+  "winotify==1.1.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest==8.4.2", "pyinstaller==6.22.3"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

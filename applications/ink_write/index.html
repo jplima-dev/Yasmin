@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>InkWrite</title>
+  <script>
+    (() => {
+      const inWorkspace = location.port === '8790' && location.pathname.includes('/module/');
+      document.documentElement.dataset.workspace = inWorkspace ? 'true' : 'false';
+      if (!inWorkspace) {
+        const saved = localStorage.getItem('inkwrite-ui-theme');
+        const theme = saved === 'dark' || saved === 'light'
+          ? saved
+          : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.classList.toggle('dark', theme === 'dark');
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="css/home.css">
+  <script type="module" src="http://127.0.0.1:8790/core/module-bootstrap.js"></script>
+</head>
+<body class="inkwrite-home-body">
+  <main id="inkwriteHome" class="home-shell">
+    <header class="home-topbar">
+      <a class="brand" href="index.html" aria-label="InkWrite">
+        <span class="brand-mark">IW</span>
+        <span class="brand-copy"><strong>InkWrite</strong><small>documentos locais, simples e completos</small></span>
+      </a>
+      <div class="home-actions">
+        <button id="importButton" class="ghost-button" type="button">Importar</button>
+        <span id="workspaceThemeNote" class="workspace-theme-note" hidden>Tema: Configurações / Terminal</span>
+        <button id="homeThemeButton" class="theme-button" type="button" title="Alternar tema" aria-label="Alternar tema">◐</button>
+        <input id="importInput" type="file" accept=".html,.htm,.txt,.md,.markdown,text/html,text/plain,text/markdown" hidden>
+        <a id="openLastDocument" class="text-link" href="editor.html">Abrir último documento</a>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-copy-wrap">
+        <p class="eyebrow">DOCUMENTOS</p>
+        <h1>Escrever sem carregar um escritório inteiro.</h1>
+        <p class="hero-copy">Crie trabalhos, cartas, relatórios e anotações em um editor local. Seus documentos ficam salvos neste navegador e continuam disponíveis offline.</p>
+        <div class="hero-actions">
+          <button id="heroNew" class="primary-button" type="button">＋ Documento em branco</button>
+          <button id="heroImport" class="secondary-button" type="button">Abrir arquivo</button>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <span class="paper paper-back"><em>NOTAS</em><i></i><i></i><i></i></span><span class="paper paper-mid"><em>CARTA</em><b>Olá,</b><i></i><i></i></span><span class="paper paper-front"><em>RELATÓRIO</em><i></i><i></i><i></i><i></i><b></b></span>
+      </div>
+    </section>
+
+    <section class="section-head">
+      <div><p class="eyebrow">CRIAR</p><h2>Comece de um modelo</h2><p>Cada modelo já vem com uma estrutura de exemplo editável e libera ferramentas próprias no editor.</p></div>
+    </section>
+
+    <section class="template-grid" aria-label="Modelos">
+      <button class="template-card featured" data-template="blank" type="button">
+        <span class="template-icon">＋</span><span><strong>Em branco</strong><small>Uma página limpa para começar do zero.</small></span><b>Criar →</b>
+      </button>
+      <button class="template-card" data-template="school" type="button">
+        <span class="template-icon">A</span><span><strong>Trabalho escolar</strong><small>Estrutura acadêmica de exemplo, capa, seções e referências para substituir pelo seu conteúdo.</small></span><b>Usar →</b>
+      </button>
+      <button class="template-card" data-template="letter" type="button">
+        <span class="template-icon">✉</span><span><strong>Carta</strong><small>Carta de exemplo editável, com remetente, destinatário, corpo e assinatura.</small></span><b>Usar →</b>
+      </button>
+      <button class="template-card" data-template="notes" type="button">
+        <span class="template-icon">✓</span><span><strong>Anotações</strong><small>Exemplo de notas com checklist, destaque e divisor de data.</small></span><b>Usar →</b>
+      </button>
+      <button class="template-card wide" data-template="report" type="button">
+        <span class="template-icon">▤</span><span><strong>Relatório simples</strong><small>Relatório de exemplo com resumo, seções, dados e status editáveis.</small></span><b>Usar →</b>
+      </button>
+    </section>
+
+    <section class="recent-head">
+      <div><p class="eyebrow">DOCUMENTOS</p><h2>Recentes</h2><p>Continue exatamente de onde parou.</p></div>
+      <button id="newDocumentButton" class="primary-button" type="button">＋ Novo documento</button>
+    </section>
+
+    <section id="documentGrid" class="document-grid" aria-live="polite"></section>
+    <section id="emptyDocuments" class="empty-state" hidden>
+      <div class="empty-icon">＋</div><h2>Nenhum documento salvo ainda</h2><p>Crie um documento ou importe um arquivo para ele aparecer aqui.</p>
+    </section>
+  </main>
+
+  <dialog id="newDocumentDialog" class="dialog">
+    <form method="dialog" id="newDocumentForm">
+      <button class="dialog-close" type="button" data-dialog-close aria-label="Fechar">×</button>
+      <p class="eyebrow">NOVO DOCUMENTO</p>
+      <h2>Como ele vai se chamar?</h2>
+      <input id="newDocumentName" type="text" value="Documento sem título" autocomplete="off" autofocus>
+      <input id="newDocumentTemplate" type="hidden" value="blank">
+      <div class="dialog-actions"><button class="secondary-button" type="button" data-dialog-close>Cancelar</button><button class="primary-button" type="submit" value="default">Criar documento</button></div>
+    </form>
+  </dialog>
+
+  <script src="js/storage.js"></script>
+  <script src="js/home.js"></script>
+</body>
+</html>

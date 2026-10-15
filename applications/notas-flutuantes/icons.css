@@ -1,0 +1,155 @@
+/* Ícones vetoriais locais: a máscara herda a cor de cada tema. */
+:root {
+  --icon-plus: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.7%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M12%205v14M5%2012h14%22%2F%3E%3C%2Fsvg%3E");
+  --icon-minus: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.7%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M5%2012h14%22%2F%3E%3C%2Fsvg%3E");
+  --icon-undo: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.7%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M9%205%204%2010l5%205M4%2010h9a6%206%200%200%201%206%206v3%22%2F%3E%3C%2Fsvg%3E");
+  --icon-redo: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.7%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%205%205%205-5%205m5-5h-9a6%206%200%200%200-6%206v3%22%2F%3E%3C%2Fsvg%3E");
+  --icon-link: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.7%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m10%2013%204-4m-5%206-2%202a4%204%200%200%201-6-6l4-4a4%204%200%200%201%206%200m2%202%202-2a4%204%200%200%201%206%206l-4%204a4%204%200%200%201-6%200%22%20transform%3D%22translate(1%200)%22%2F%3E%3C%2Fsvg%3E");
+  --icon-calendar: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.7%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%223%22%20y%3D%225%22%20width%3D%2218%22%20height%3D%2216%22%20rx%3D%223%22%2F%3E%3Cpath%20d%3D%22M7%203v4m10-4v4M3%2011h18m-13%204h2m4%200h2m-8%203h2%22%2F%3E%3C%2Fsvg%3E");
+  --icon-edit: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.7%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m14%205%205%205M4%2020l5-1L21%207a2%202%200%200%200-5-5L4%2014Z%22%2F%3E%3C%2Fsvg%3E");
+  --icon-reset: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.7%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M4%209a8%208%200%201%201%200%207M4%204v5h5%22%2F%3E%3C%2Fsvg%3E");
+  --icon-check: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.7%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m5%2012%204%204L19%206%22%2F%3E%3C%2Fsvg%3E");
+  --icon-warning: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.7%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m10.3%204-8%2014a2%202%200%200%200%201.7%203h16a2%202%200%200%200%201.7-3l-8-14a2%202%200%200%200-3.4%200ZM12%209v4m0%204h.01%22%2F%3E%3C%2Fsvg%3E");
+  --icon-settings: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.7%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M4%207h5m4%200h7M4%2017h9m4%200h3%22%2F%3E%3Ccircle%20cx%3D%2211%22%20cy%3D%227%22%20r%3D%222%22%2F%3E%3Ccircle%20cx%3D%2215%22%20cy%3D%2217%22%20r%3D%222%22%2F%3E%3C%2Fsvg%3E");
+  --icon-close: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.7%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m6%206%2012%2012M6%2018%2018%206%22%2F%3E%3C%2Fsvg%3E");
+  --icon-save: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.7%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M4%203h13l4%204v13a1%201%200%200%201-1%201H4a1%201%200%200%201-1-1V4a1%201%200%200%201%201-1Z%22%2F%3E%3Cpath%20d%3D%22M7%203v6h9V3M7%2021v-8h10v8%22%2F%3E%3C%2Fsvg%3E");
+  --icon-download: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.7%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M12%203v12m-5-5%205%205%205-5M4%2016v4a1%201%200%200%200%201%201h14a1%201%200%200%200%201-1v-4%22%2F%3E%3C%2Fsvg%3E");
+  --icon-upload: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.7%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M12%2015V3m-5%205%205-5%205%205M4%2016v4a1%201%200%200%200%201%201h14a1%201%200%200%200%201-1v-4%22%2F%3E%3C%2Fsvg%3E");
+  --icon-palette: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.7%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M12%203a9%209%200%201%200%200%2018h1a2%202%200%200%200%201-3.7%201.5%201.5%200%200%201%201-2.8h2a4%204%200%200%200%204-4A9%209%200%200%200%2012%203Z%22%2F%3E%3Cpath%20d%3D%22M7.5%209h.01M11%206.5h.01M16%208h.01M6.5%2013h.01%22%20stroke-width%3D%223%22%2F%3E%3C%2Fsvg%3E");
+  --icon-moon: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.7%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M20.5%2013A8.5%208.5%200%200%201%2011%203.5%208.5%208.5%200%201%200%2020.5%2013Z%22%2F%3E%3C%2Fsvg%3E");
+  --icon-globe: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.7%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%229%22%2F%3E%3Cellipse%20cx%3D%2212%22%20cy%3D%2212%22%20rx%3D%224%22%20ry%3D%229%22%2F%3E%3Cpath%20d%3D%22M3%2012h18%22%2F%3E%3C%2Fsvg%3E");
+  --icon-trash: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.7%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M3%206h18M9%206V3h6v3M5%206l1%2015h12l1-15M10%2010v7m4-7v7%22%2F%3E%3C%2Fsvg%3E");
+  --icon-left: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.7%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%205-7%207%207%207%22%2F%3E%3C%2Fsvg%3E");
+  --icon-right: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.7%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m9%205%207%207-7%207%22%2F%3E%3C%2Fsvg%3E");
+  --icon-pin: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.7%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m8%203%208%200-1%206%204%204v2H5v-2l4-4ZM12%2015v6%22%2F%3E%3C%2Fsvg%3E");
+  --icon-pinned: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.7%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m8%203%208%200-1%206%204%204v2H5v-2l4-4Z%22%20fill%3D%22black%22%2F%3E%3Cpath%20d%3D%22M12%2015v6%22%2F%3E%3C%2Fsvg%3E");
+  --icon-external: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.7%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M14%203h7v7m0-7L11%2013m-1-8H5a2%202%200%200%200-2%202v12a2%202%200%200%200%202%202h12a2%202%200%200%200%202-2v-5%22%2F%3E%3C%2Fsvg%3E");
+  --icon-eye: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.7%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M2%2012s3-7%2010-7%2010%207%2010%207-3%207-10%207S2%2012%202%2012Z%22%2F%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%223%22%2F%3E%3C%2Fsvg%3E");
+  --icon-folder: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.7%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M3%207V5a2%202%200%200%201%202-2h5l3%204h6a2%202%200%200%201%202%202v10a2%202%200%200%201-2%202H5a2%202%200%200%201-2-2ZM3%207h10%22%2F%3E%3C%2Fsvg%3E");
+  --icon-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.7%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%223%22%20y%3D%223%22%20width%3D%2218%22%20height%3D%2218%22%20rx%3D%223%22%2F%3E%3Ccircle%20cx%3D%228%22%20cy%3D%228%22%20r%3D%221.5%22%2F%3E%3Cpath%20d%3D%22m3%2017%205-5%204%204%204-6%205%207%22%2F%3E%3C%2Fsvg%3E");
+  --icon-file: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.7%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M14%202H5v20h14V7ZM14%202v5h5M8%2012h8m-8%204h6%22%2F%3E%3C%2Fsvg%3E");
+  --icon-archive: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.7%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%223%22%20y%3D%223%22%20width%3D%2218%22%20height%3D%225%22%20rx%3D%221%22%2F%3E%3Cpath%20d%3D%22M5%208v13h14V8M10%2012h4%22%2F%3E%3C%2Fsvg%3E");
+  --icon-attachment: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.7%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m8%2012%207-7a4%204%200%200%201%206%206l-9%209a6%206%200%200%201-8-8l9-9m-5%209%207-7a1.5%201.5%200%200%201%202%202l-9%209a3%203%200%200%201-4-4%22%2F%3E%3C%2Fsvg%3E");
+}
+
+#addNote, #addBoard, #zoomIn { --icon: var(--icon-plus); }
+#zoomOut { --icon: var(--icon-minus); }
+#undoBtn { --icon: var(--icon-undo); }
+#redoBtn { --icon: var(--icon-redo); }
+#linkMode, #llp-label, .make-link-btn, .link-badge-label { --icon: var(--icon-link); }
+#toggleCal, .cal-btn { --icon: var(--icon-calendar); }
+#renameBoard { --icon: var(--icon-edit); }
+#zoomReset { --icon: var(--icon-reset); }
+#saveIndicator { --icon: var(--icon-check); }
+#saveIndicator[data-status="error"] { --icon: var(--icon-warning); }
+#settingsToggle, #settingsHeaderText { --icon: var(--icon-settings); }
+#settingsClose, #file-viewer-close, #deleteSnapshot, .note .del, .link-badge-remove { --icon: var(--icon-close); }
+#backupHeading, .viewer-save-btn, #saveSnapshotNow { --icon: var(--icon-save); }
+#historyHeading { --icon: var(--icon-archive); }
+#restoreSnapshot { --icon: var(--icon-reset); }
+#exportNotes, #exportBoardNotes, #exportSnapshot { --icon: var(--icon-download); }
+#importNotes { --icon: var(--icon-upload); }
+#appearanceHeading, .color-btn { --icon: var(--icon-palette); }
+#darkMode { --icon: var(--icon-moon); }
+#languageHeading { --icon: var(--icon-globe); }
+#deleteHeading { --icon: var(--icon-trash); }
+#calPrev { --icon: var(--icon-left); }
+#calNext { --icon: var(--icon-right); }
+.pin-btn { --icon: var(--icon-pin); }
+.note.pinned .pin-btn { --icon: var(--icon-pinned); }
+.link-open-btn { --icon: var(--icon-external); }
+.file-open-btn { --icon: var(--icon-eye); }
+.local-link .link-badge-label { --icon: var(--icon-folder); }
+.icon-plus { --icon: var(--icon-plus); }
+.icon-minus { --icon: var(--icon-minus); }
+.icon-undo { --icon: var(--icon-undo); }
+.icon-redo { --icon: var(--icon-redo); }
+.icon-link { --icon: var(--icon-link); }
+.icon-calendar { --icon: var(--icon-calendar); }
+.icon-edit { --icon: var(--icon-edit); }
+.icon-reset { --icon: var(--icon-reset); }
+.icon-check { --icon: var(--icon-check); }
+.icon-warning { --icon: var(--icon-warning); }
+.icon-settings { --icon: var(--icon-settings); }
+.icon-close { --icon: var(--icon-close); }
+.icon-save { --icon: var(--icon-save); }
+.icon-download { --icon: var(--icon-download); }
+.icon-upload { --icon: var(--icon-upload); }
+.icon-palette { --icon: var(--icon-palette); }
+.icon-moon { --icon: var(--icon-moon); }
+.icon-globe { --icon: var(--icon-globe); }
+.icon-trash { --icon: var(--icon-trash); }
+.icon-left { --icon: var(--icon-left); }
+.icon-right { --icon: var(--icon-right); }
+.icon-pin { --icon: var(--icon-pin); }
+.icon-pinned { --icon: var(--icon-pinned); }
+.icon-external { --icon: var(--icon-external); }
+.icon-eye { --icon: var(--icon-eye); }
+.icon-folder { --icon: var(--icon-folder); }
+.icon-image { --icon: var(--icon-image); }
+.icon-file { --icon: var(--icon-file); }
+.icon-archive { --icon: var(--icon-archive); }
+.icon-attachment { --icon: var(--icon-attachment); }
+
+:where(#addNote, #addBoard, #zoomIn,
+#zoomOut,
+#undoBtn,
+#redoBtn,
+#linkMode, #llp-label, .make-link-btn, .link-badge-label,
+#toggleCal, .cal-btn,
+#renameBoard,
+#zoomReset,
+#saveIndicator,
+#saveIndicator[data-status="error"],
+#settingsToggle, #settingsHeaderText,
+#settingsClose, #file-viewer-close, #deleteSnapshot, .note .del, .link-badge-remove,
+#backupHeading, #historyHeading, #saveSnapshotNow, #restoreSnapshot, .viewer-save-btn,
+#exportNotes, #exportBoardNotes, #exportSnapshot,
+#importNotes,
+#appearanceHeading, .color-btn,
+#darkMode,
+#languageHeading,
+#deleteHeading,
+#calPrev,
+#calNext,
+.pin-btn,
+.note.pinned .pin-btn,
+.link-open-btn,
+.file-open-btn,
+.local-link .link-badge-label)::before,
+.ui-icon {
+  content: "";
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  vertical-align: -3px;
+  background-color: currentColor;
+  -webkit-mask: var(--icon) center / contain no-repeat;
+  mask: var(--icon) center / contain no-repeat;
+  pointer-events: none;
+}
+
+:where(#addNote, #addBoard, #undoBtn, #redoBtn, #linkMode, #saveIndicator,
+    #settingsToggle, #settingsHeaderText, .settings-section h4,
+    #saveSnapshotNow, #restoreSnapshot, #exportNotes, #exportBoardNotes, #exportSnapshot, #importNotes, #darkMode,
+    #llp-label, #file-viewer-close, .viewer-save-btn, .make-link-btn,
+    .file-open-btn, .link-badge-label)::before {
+  margin-right: 6px;
+}
+
+.note .handle button::before,
+.file-open-btn::before,
+.link-badge-label::before,
+.link-badge-remove::before {
+  width: 13px;
+  height: 13px;
+  vertical-align: -2px;
+}
+
+.note .handle button:empty { width: 19px; height: 19px; }
+.note .handle .make-link-btn::before { margin-right: 4px; }
+.note .handle .link-open-btn { align-items: center; justify-content: center; }
+.note .handle button:hover { background-color: rgba(127, 127, 127, 0.14); border-radius: 3px; }
+.note.pinned .pin-btn::before { transform: rotate(-25deg); }
+.ph-icon .ui-icon { width: 48px; height: 48px; }

@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Analisador de Projetos</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script type="module" src="http://127.0.0.1:8790/core/module-bootstrap.js"></script>
+</head>
+
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark">◇</span>
+        <div>
+          <strong data-i18n="appName">Project Analyzer</strong>
+          <span data-i18n="brandSubtitle">Local code insights</span>
+        </div>
+      </div>
+
+      <div class="topbar-actions">
+        <button id="settings-button" class="secondary-button settings-button" type="button" aria-label="Settings"
+          data-i18n-aria="settings">
+          <span aria-hidden="true">⚙</span>
+          <span data-i18n="settings">Settings</span>
+        </button>
+        <button id="open-project" class="primary-button" type="button" data-i18n="openProject">Abrir projeto</button>
+      </div>
+    </header>
+
+    <aside class="sidebar">
+      <nav>
+        <button class="nav-item active" type="button" data-view="overview" data-i18n="overview">Visão geral</button>
+        <button class="nav-item" type="button" data-view="files" data-i18n="files">Arquivos</button>
+        <button class="nav-item" type="button" data-view="languages" data-i18n="languages">Linguagens</button>
+        <button class="nav-item" type="button" data-view="structure" data-i18n="structure">Estrutura</button>
+        <button class="nav-item" type="button" data-view="insights" data-i18n="insights">Insights</button>
+      </nav>
+      <div class="sidebar-note" data-i18n="readOnlyNote">Read-only analysis. No project files are modified.</div>
+    </aside>
+
+    <main class="content">
+      <section id="empty-state" class="empty-state">
+        <div class="empty-icon">◇</div>
+        <h1 data-i18n="inspectProject">Inspect a project</h1>
+        <p data-i18n="inspectDescription">Select a local folder to generate a structural and language overview.</p>
+        <button id="empty-open-project" class="primary-button" type="button" data-i18n="chooseFolder">Escolher
+          pasta</button>
+      </section>
+
+      <section id="loading-state" class="empty-state hidden">
+        <div class="spinner"></div>
+        <h2 data-i18n="analyzingProject">Analyzing project…</h2>
+        <p data-i18n="scanningDescription">Scanning files, code markers and project statistics.</p>
+      </section>
+
+      <section id="error-state" class="empty-state hidden">
+        <div class="error-icon">!</div>
+        <h2 data-i18n="analysisFailed">Analysis failed</h2>
+        <p id="error-message"></p>
+      </section>
+
+      <div id="dashboard" class="hidden">
+        <section class="view" data-view-panel="overview">
+          <div class="project-heading">
+            <div>
+              <p class="eyebrow" data-i18n="currentProject">Current project</p>
+              <h1 id="project-name">—</h1>
+              <p id="project-path" class="path-text">—</p>
+            </div>
+          </div>
+
+          <div class="stat-grid">
+            <article class="stat-card"><span data-i18n="files">Files</span><strong id="stat-files">0</strong></article>
+            <article class="stat-card"><span data-i18n="folders">Folders</span><strong id="stat-folders">0</strong>
+            </article>
+            <article class="stat-card"><span data-i18n="lines">Lines</span><strong id="stat-lines">0</strong></article>
+            <article class="stat-card"><span data-i18n="size">Size</span><strong id="stat-size">0 B</strong></article>
+          </div>
+
+          <div class="grid-two">
+            <article class="panel">
+              <div class="panel-title">
+                <h2 data-i18n="languages">Languages</h2><span data-i18n="byLines">By lines</span>
+              </div>
+              <div id="overview-languages" class="bars"></div>
+            </article>
+            <article class="panel">
+              <div class="panel-title">
+                <h2 data-i18n="highlights">Highlights</h2>
+              </div>
+              <dl class="detail-list">
+                <div>
+                  <dt data-i18n="largestFile">Largest file</dt>
+                  <dd id="largest-file">—</dd>
+                </div>
+                <div>
+                  <dt data-i18n="mostCommonExtension">Most common extension</dt>
+                  <dd id="common-extension">—</dd>
+                </div>
+                <div>
+                  <dt data-i18n="maximumDepth">Maximum depth</dt>
+                  <dd id="max-depth">—</dd>
+                </div>
+                <div>
+                  <dt data-i18n="averageFileSize">Average file size</dt>
+                  <dd id="average-file-size">—</dd>
+                </div>
+                <div>
+                  <dt data-i18n="codeMarkers">Code markers</dt>
+                  <dd id="overview-markers">—</dd>
+                </div>
+              </dl>
+            </article>
+          </div>
+        </section>
+
+        <section class="view hidden" data-view-panel="files">
+          <div class="section-heading file-heading">
+            <div>
+              <p class="eyebrow" data-i18n="projectContents">Project contents</p>
+              <h1 data-i18n="files">Files</h1>
+            </div>
+            <label class="search-box" for="file-search">
+              <span>⌕</span>
+              <input id="file-search" type="search" autocomplete="off" spellcheck="false"
+                placeholder="Search files or folders…" data-i18n-placeholder="searchPlaceholder">
+            </label>
+          </div>
+          <div class="search-meta" id="file-search-meta" data-i18n="browseTree">Browse the project tree or search by
+            name/path.</div>
+          <div class="grid-files">
+            <article class="panel tree-panel">
+              <div id="file-tree" class="tree"></div>
+            </article>
+            <article class="panel file-inspector">
+              <p class="eyebrow" data-i18n="selectedFile">Selected file</p>
+              <h2 id="file-name" data-i18n="selectFile">Select a file</h2>
+              <dl class="detail-list">
+                <div>
+                  <dt data-i18n="language">Language</dt>
+                  <dd id="file-language">—</dd>
+                </div>
+                <div>
+                  <dt data-i18n="size">Size</dt>
+                  <dd id="file-size">—</dd>
+                </div>
+                <div>
+                  <dt data-i18n="lines">Lines</dt>
+                  <dd id="file-lines">—</dd>
+                </div>
+                <div>
+                  <dt data-i18n="path">Path</dt>
+                  <dd id="file-path">—</dd>
+                </div>
+              </dl>
+            </article>
+          </div>
+        </section>
+
+        <section class="view hidden" data-view-panel="languages">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow" data-i18n="sourceComposition">Source composition</p>
+              <h1 data-i18n="languages">Languages</h1>
+            </div>
+          </div>
+          <div class="grid-two">
+            <article class="panel">
+              <div class="panel-title">
+                <h2 data-i18n="byLines">By lines</h2>
+              </div>
+              <div id="languages-by-lines" class="bars large-bars"></div>
+            </article>
+            <article class="panel">
+              <div class="panel-title">
+                <h2 data-i18n="byFiles">By files</h2>
+              </div>
+              <div id="languages-by-files" class="bars large-bars"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="view hidden" data-view-panel="structure">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow" data-i18n="organization">Organization</p>
+              <h1 data-i18n="structure">Structure</h1>
+            </div>
+          </div>
+          <div class="stat-grid">
+            <article class="stat-card"><span data-i18n="directories">Directories</span><strong
+                id="structure-directories">0</strong></article>
+            <article class="stat-card"><span data-i18n="maximumDepth">Maximum depth</span><strong
+                id="structure-depth">0</strong></article>
+            <article class="stat-card"><span data-i18n="emptyDirectories">Empty directories</span><strong
+                id="structure-empty">0</strong></article>
+            <article class="stat-card"><span data-i18n="averageFile">Average file</span><strong id="structure-average">0
+                B</strong></article>
+          </div>
+          <div class="grid-two">
+            <article class="panel">
+              <div class="panel-title">
+                <h2 data-i18n="filesByExtension">Files by extension</h2>
+              </div>
+              <div id="extensions-list" class="rank-list"></div>
+            </article>
+            <article class="panel">
+              <div class="panel-title">
+                <h2 data-i18n="largestDirectories">Largest directories</h2>
+              </div>
+              <div id="directories-list" class="rank-list"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="view hidden" data-view-panel="insights">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow" data-i18n="projectSignals">Project signals</p>
+              <h1 data-i18n="insights">Insights</h1>
+            </div>
+          </div>
+
+          <div class="stat-grid">
+            <article class="stat-card insight-stat"><span>TODO</span><strong id="marker-todo">0</strong></article>
+            <article class="stat-card insight-stat"><span>FIXME</span><strong id="marker-fixme">0</strong></article>
+            <article class="stat-card insight-stat"><span>HACK</span><strong id="marker-hack">0</strong></article>
+            <article class="stat-card insight-stat"><span data-i18n="emptyFiles">Empty files</span><strong
+                id="insight-empty-files">0</strong></article>
+          </div>
+
+          <div class="grid-two insights-grid">
+            <article class="panel">
+              <div class="panel-title">
+                <h2 data-i18n="codeMarkers">Code markers</h2>
+                <span id="marker-summary">0 occurrences</span>
+              </div>
+              <div id="markers-list" class="marker-list"></div>
+            </article>
+
+            <div class="insight-column">
+              <article class="panel">
+                <div class="panel-title">
+                  <h2 data-i18n="projectSignals">Project signals</h2>
+                </div>
+                <dl class="detail-list">
+                  <div>
+                    <dt data-i18n="largeFiles">Large files</dt>
+                    <dd id="insight-large-files">0</dd>
+                  </div>
+                  <div>
+                    <dt data-i18n="largeFileThreshold">Large-file threshold</dt>
+                    <dd id="insight-large-threshold">—</dd>
+                  </div>
+                  <div>
+                    <dt data-i18n="withoutClassification">Without language classification</dt>
+                    <dd id="insight-unclassified">0</dd>
+                  </div>
+                  <div>
+                    <dt data-i18n="extensionVariety">Extension variety</dt>
+                    <dd id="insight-extension-variety">0</dd>
+                  </div>
+                  <div>
+                    <dt data-i18n="scannerWarnings">Scanner warnings</dt>
+                    <dd id="insight-warnings">0</dd>
+                  </div>
+                </dl>
+              </article>
+
+              <article class="panel">
+                <div class="panel-title">
+                  <h2 data-i18n="largeFiles">Large files</h2>
+                </div>
+                <div id="large-files-list" class="rank-list"></div>
+              </article>
+
+              <article class="panel">
+                <div class="panel-title">
+                  <h2 data-i18n="emptyFiles">Empty files</h2>
+                </div>
+                <div id="empty-files-list" class="rank-list compact-rank-list"></div>
+              </article>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <div id="settings-overlay" class="settings-overlay hidden" role="dialog" aria-modal="true"
+    aria-labelledby="settings-title">
+    <section class="settings-modal">
+      <div class="settings-header">
+        <div>
+          <p class="eyebrow" data-i18n="preferences">Preferences</p>
+          <h2 id="settings-title" data-i18n="settings">Settings</h2>
+        </div>
+        <button id="settings-close" class="icon-only-button" type="button" aria-label="Close"
+          data-i18n-aria="close">×</button>
+      </div>
+
+      <div class="settings-section">
+        <div class="settings-copy">
+          <strong data-i18n="language">Language</strong>
+          <span data-i18n="languageDescription">Choose the language used by the application.</span>
+        </div>
+
+        <div class="language-options" role="radiogroup" aria-label="Language" data-i18n-aria="language">
+          <button class="language-option" type="button" data-language="pt">
+            <span>Português</span>
+            <small>Brasil</small>
+          </button>
+          <button class="language-option" type="button" data-language="en">
+            <span>English</span>
+            <small>English</small>
+          </button>
+        </div>
+      </div>
+
+      <p class="settings-note" data-i18n="languageSavedNote">Your language preference is saved automatically for the
+        next time you open the app.</p>
+    </section>
+  </div>
+
+  <script src="js/i18n.js"></script>
+  <script src="js/charts.js"></script>
+  <script type="module" src="js/browser-api.js"></script>
+  <script type="module" src="js/app.js"></script>
+</body>
+
+</html>

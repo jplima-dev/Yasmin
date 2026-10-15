@@ -1,0 +1,5 @@
+#!/data/data/com.termux/files/usr/bin/sh
+termux-wake-lock
+cd "$HOME/drive2" || exit 1
+mkdir -p logs
+nohup "$HOME/drive2/.venv/bin/python" "$HOME/drive2/run.py" >> "$HOME/drive2/logs/boot.log" 2>&1 &

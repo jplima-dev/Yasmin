@@ -1,0 +1,5 @@
+# Python 3.13/Windows x64. Instale apenas o backend que pretende usar.
+webrtcvad-wheels>=2.0.14,<3
+groq>=1.6,<2
+faster-whisper>=1.2,<2
+pvporcupine>=4,<5

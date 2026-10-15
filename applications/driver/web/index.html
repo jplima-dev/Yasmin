@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="pt-BR" data-module-id="drive2">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>InkDriver</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="stylesheet" href="/static/css/guide.css">
+  <link rel="stylesheet" href="/static/css/workspace.css">
+  <script type="module" src="http://127.0.0.1:8790/core/module-bootstrap.js"></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-mark">ID</span><div><strong>InkDriver</strong><small>Servidor pessoal</small></div></div>
+    <nav id="nav">
+      <button class="nav active" data-view="home">Início</button>
+      <button class="nav" data-view="inbox">Inbox</button>
+      <button class="nav" data-view="files">Arquivos</button>
+      <button class="nav" data-view="emails">Emails</button>
+      <button class="nav" data-view="backups">Backups</button>
+      <button class="nav" data-view="recent">Recentes</button>
+      <button class="nav" data-view="favorites">Favoritos</button>
+      <button class="nav" data-view="trash">Lixeira</button>
+      <button class="nav" data-view="settings">Configurações</button>
+      <button class="nav" data-view="guide">Guia completo</button>
+    </nav>
+    <div class="storage-card">
+      <small>Armazenamento do tablet</small>
+      <div id="storageText">Carregando…</div>
+      <div class="progress"><i id="storageBar"></i></div>
+    </div>
+  </aside>
+
+  <main>
+    <header>
+      <div><p class="eyebrow">INKDRIVER</p><h1 id="viewTitle">Início</h1></div>
+      <div class="server-status"><i></i><span id="serverStatus">Servidor online</span></div>
+    </header>
+
+    <section id="homeView" class="view active-view">
+      <div class="cards">
+        <article class="metric"><span>TABLET</span><strong id="metricStorage">—</strong><small id="metricFiles">— arquivos</small></article>
+        <article class="metric"><span>BACKUP</span><strong id="metricProtected">—</strong><small>arquivos protegidos</small></article>
+        <article class="metric"><span>FILA</span><strong id="metricWaiting">—</strong><small>aguardando backup</small></article>
+        <article class="metric"><span>ERROS</span><strong id="metricErrors">—</strong><small>itens com erro</small></article>
+      </div>
+      <article class="panel summary-panel"><h2>Última sincronização</h2><p id="lastSync">Nenhum backup concluído ainda.</p><div class="status-line"><span id="r2State">R2: verificando…</span><span id="gmailState">Gmail: verificando…</span></div></article>
+    </section>
+
+    <section id="filesView" class="view">
+      <section class="toolbar">
+        <label class="search"><span>⌕</span><input id="searchInput" placeholder="Pesquisar no InkDriver"></label>
+        <button id="newFolderBtn" class="secondary">Nova pasta</button>
+        <label class="primary upload-label">Enviar arquivo<input id="uploadInput" type="file" hidden></label>
+      </section>
+      <section class="crumbs" id="breadcrumbs"></section>
+      <section class="panel">
+        <div class="table-head"><span>Nome</span><span>Tamanho</span><span>Disponibilidade</span><span></span></div>
+        <div id="fileList" class="file-list"></div>
+        <div id="emptyState" class="empty" hidden>Essa pasta está vazia.</div>
+      </section>
+    </section>
+
+    <section id="backupsView" class="view">
+      <div class="split-grid">
+        <article class="panel pad"><h2>Pastas protegidas</h2><p class="muted">Somente caminhos ativados aqui entram na fila do R2.</p><div class="inline"><input id="policyPath" placeholder="Ex.: Documentos"><button id="addPolicyBtn" class="primary">Ativar backup</button></div><div id="policyList" class="stack"></div></article>
+        <article class="panel pad"><h2>Cloudflare R2</h2><p id="r2Detail" class="muted">—</p><div class="inline"><button id="testR2Btn" class="secondary">Testar conexão</button><button id="runSyncBtn" class="secondary">Processar 1 item</button></div></article>
+      </div>
+      <article class="panel pad spaced"><h2>Arquivos protegidos no R2</h2><p class="muted">Itens com cópia remota validada. Arquivos sem cópia local podem ser restaurados.</p><div id="cloudList" class="stack"></div></article>
+      <article class="panel pad spaced"><h2>Fila</h2><div id="queueList" class="stack"></div></article>
+      <article class="panel pad spaced"><h2>Histórico</h2><div id="historyList" class="stack"></div></article>
+    </section>
+
+    <section id="emailsView" class="view">
+      <article class="panel pad"><div class="section-head"><div><h2>Arquivo de e-mails</h2><p id="gmailDetail" class="muted">—</p></div><button id="runGmailBtn" class="primary">Arquivar elegíveis</button></div><div id="emailList" class="stack"></div></article>
+    </section>
+
+    <section id="trashView" class="view">
+      <article class="panel pad"><h2>Lixeira</h2><p class="muted">Excluir pela interface move primeiro para esta área local.</p><div id="trashList" class="stack"></div></article>
+    </section>
+
+    <section id="settingsView" class="view">
+      <div class="split-grid"><article class="panel pad"><h2>Servidor</h2><dl id="settingsList" class="settings-list"></dl></article><article class="panel pad"><h2>Manutenção</h2><div class="stack"><button id="reindexBtn" class="secondary">Reindexar arquivos</button><button id="logoutBtn" class="secondary">Sair</button></div></article></div>
+      <article class="panel pad spaced"><h2>Logs recentes</h2><div id="logList" class="stack log-list"></div></article>
+    </section>
+
+    <section id="guideView" class="view">
+      <div class="guide-intro"><p class="eyebrow">MANUAL COMPLETO</p><h2>Livro do InkDriver</h2><p class="muted">Prepare o tablet, conecte o Workspace e entenda os fluxos de arquivos e backup.</p></div>
+      <div class="guide-book">
+        <details open><summary><span>1</span><div><strong>Preparar o tablet</strong><small>Aplicativos e permissões necessárias</small></div></summary><ol><li>Instale <strong>Termux</strong> e <strong>Termux:Boot</strong> pelo F-Droid ou GitHub oficial.</li><li>Instale o <strong>Tailscale</strong>, entre na sua conta e deixe o tablet conectado.</li><li>Abra o Termux:Boot pelo ícone uma vez. Isso autoriza o início automático.</li><li>Nas configurações do Android, retire a restrição de bateria do Termux, Termux:Boot e Tailscale.</li></ol></details>
+        <details><summary><span>2</span><div><strong>Instalar o InkDriver</strong><small>Projeto e dependências</small></div></summary><ol><li>Abra o Termux e atualize os pacotes com <code>pkg update &amp;&amp; pkg upgrade -y</code>.</li><li>Instale Python e Git com <code>pkg install python git -y</code>.</li><li>Clone o repositório do InkDriver para <code>$HOME/drive2</code> ou copie a pasta do projeto para esse local.</li><li>Entre na pasta, crie o ambiente e instale as dependências: <code>python -m venv .venv</code>, <code>. .venv/bin/activate</code> e <code>pip install -r requirements.txt</code>.</li></ol></details>
+        <details><summary><span>3</span><div><strong>Gerar a configuração no Workspace</strong><small>Sem editar o arquivo manualmente</small></div></summary><ol><li>No computador, abra <strong>Workspace → Configurações → Integrações → InkDriver</strong>.</li><li>Preencha pasta de dados, host, porta, usuário e as opções de segurança.</li><li>Se ativar login, use uma senha com pelo menos oito caracteres e clique em <strong>Gerar segredo</strong>.</li><li>Preencha R2 e Gmail somente se quiser esses recursos opcionais.</li><li>Clique em <strong>Baixar .env do InkDriver</strong> e mova o arquivo baixado para a raiz de <code>$HOME/drive2</code> no tablet.</li></ol></details>
+        <details><summary><span>4</span><div><strong>Testar e conectar ao Workspace</strong><small>Primeiro acesso pela rede privada</small></div></summary><ol><li>No Termux, execute <code>cd $HOME/drive2 &amp;&amp; . .venv/bin/activate &amp;&amp; python run.py</code>.</li><li>No próprio tablet, abra <code>http://127.0.0.1:8000</code> e confirme que a página carrega.</li><li>No Tailscale, copie o IP do tablet no formato <code>100.x.y.z</code>.</li><li>No computador, volte a <strong>Workspace → Configurações → InkDriver</strong> e informe <code>http://100.x.y.z:8000</code>.</li><li>Salve e use <strong>Abrir InkDriver</strong>. O painel deve abrir na mesma guia.</li></ol></details>
+        <details><summary><span>5</span><div><strong>Iniciar automaticamente</strong><small>InkDriver disponível após reiniciar o tablet</small></div></summary><ol><li>No Termux, crie a pasta de boot: <code>mkdir -p ~/.termux/boot</code>.</li><li>Copie o script do projeto: <code>cp scripts/termux-boot-drive2 ~/.termux/boot/20-drive2</code>.</li><li>Dê permissão: <code>chmod +x ~/.termux/boot/20-drive2</code>.</li><li>Reinicie o tablet, aguarde o Tailscale conectar e teste o endereço salvo no Workspace.</li></ol></details>
+        <details><summary><span>6</span><div><strong>Usar arquivos, favoritos e lixeira</strong><small>Rotina diária</small></div></summary><ol><li>Use <strong>Arquivos</strong> para navegar, criar pastas e enviar conteúdo.</li><li>Clique na estrela de um item para vê-lo em <strong>Favoritos</strong>.</li><li>Use <strong>Recentes</strong> para voltar rapidamente aos últimos itens.</li><li>Quando excluir, o arquivo vai primeiro para <strong>Lixeira</strong>; revise antes da remoção definitiva.</li><li>Confira <strong>Configurações → Logs recentes</strong> quando uma ação não concluir.</li></ol></details>
+        <details><summary><span>7</span><div><strong>Ativar backup R2 e arquivo de e-mail</strong><small>Recursos opcionais</small></div></summary><ol><li>Preencha as credenciais R2 no gerador de configuração do Workspace e gere um novo <code>.env</code>.</li><li>No InkDriver, abra <strong>Backups</strong>, adicione somente as pastas que devem ser protegidas e clique em <strong>Testar conexão</strong>.</li><li>Para Gmail, configure o OAuth no Workspace, copie os arquivos de credencial para o tablet e abra <strong>Emails</strong>.</li><li>Teste primeiro sem enviar mensagens à lixeira. Ative a limpeza somente depois de confirmar que as cópias foram validadas.</li></ol></details>
+        <details><summary><span>8</span><div><strong>Resolver problemas comuns</strong><small>Checklist de diagnóstico</small></div></summary><ul><li><strong>Página não abre:</strong> confirme se o processo está rodando e se o Tailscale do tablet está conectado.</li><li><strong>Endereço mudou:</strong> copie novamente o IP Tailscale e atualize o campo do InkDriver no Workspace.</li><li><strong>Login falha:</strong> gere novamente o <code>.env</code>, confira usuário e senha e reinicie o serviço.</li><li><strong>Não inicia após reiniciar:</strong> abra Termux:Boot pelo ícone, confira a permissão do script e as restrições de bateria.</li><li><strong>Backup falha:</strong> teste R2 em Backups e revise os logs em Configurações.</li></ul></details>
+      </div>
+    </section>
+  </main>
+
+  <div id="loginModal" class="modal" hidden>
+    <form id="loginForm" class="modal-card">
+      <div class="brand login-brand"><span class="brand-mark">ID</span><strong>InkDriver</strong></div>
+      <h2>Entrar</h2><p class="muted">Autenticação local do servidor.</p>
+      <label>Usuário<input id="loginUser" autocomplete="username" value="admin"></label>
+      <label>Senha<input id="loginPassword" type="password" autocomplete="current-password"></label>
+      <button class="primary" type="submit">Entrar</button>
+      <p id="loginError" class="error"></p>
+    </form>
+  </div>
+  <div id="toast" class="toast" hidden></div>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

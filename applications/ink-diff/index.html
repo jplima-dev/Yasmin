@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark light"><title>Ink Diff</title>
+  <link rel="stylesheet" href="http://127.0.0.1:8790/core/tool-shell.css">
+</head>
+<body class="ink-tool">
+  <main class="tool-shell">
+    <header class="tool-header">
+      <div class="tool-title"><span class="tool-mark">±</span><div><h1>Ink Diff</h1><p>Compare texto ou código linha por linha.</p></div></div>
+      <div class="tool-actions"><label><input id="ignore-space" type="checkbox"> Ignorar espaços</label><label><input id="ignore-case" type="checkbox"> Ignorar maiúsculas</label><button class="tool-button primary" id="compare" type="button">Comparar</button></div>
+    </header>
+    <section class="tool-grid">
+      <article class="tool-card"><div class="tool-card-header"><h2>Versão anterior</h2><div class="button-row"><label class="tool-button">Adicionar arquivo<input class="sr-only" id="before-file" type="file" accept="text/*,.txt,.md,.markdown,.html,.css,.js,.ts,.json,.csv,.xml,.yaml,.yml,.py,.java,.c,.cpp,.cs,.go,.rs,.sql"></label><button class="tool-button" data-clear="before" type="button">Limpar</button></div></div><div class="tool-card-body"><textarea class="tool-textarea" id="before" spellcheck="false" aria-label="Versão anterior"></textarea></div></article>
+      <article class="tool-card"><div class="tool-card-header"><h2>Nova versão</h2><button class="tool-button" data-clear="after" type="button">Limpar</button></div><div class="tool-card-body"><textarea class="tool-textarea" id="after" spellcheck="false" aria-label="Nova versão"></textarea></div></article>
+    </section>
+    <article class="tool-card" id="result-card">
+      <div class="tool-card-header"><h2>Diferenças</h2><div class="button-row"><button class="tool-button" id="copy" type="button">Copiar diff</button><button class="tool-button" id="download" type="button">Baixar .diff</button></div></div>
+      <div class="tool-card-body"><div class="metric-row"><div class="metric"><strong id="added">0</strong><small>linhas adicionadas</small></div><div class="metric"><strong id="removed">0</strong><small>linhas removidas</small></div><div class="metric"><strong id="unchanged">0</strong><small>linhas iguais</small></div></div><div class="tool-status" id="status">Preencha os dois campos e clique em Comparar.</div></div>
+      <div class="diff-output" id="diff"></div>
+    </article>
+  </main>
+  <script type="module" src="http://127.0.0.1:8790/core/module-bootstrap.js"></script><script type="module" src="./app.js"></script>
+</body>
+</html>

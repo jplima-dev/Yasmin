@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 2,
+  "origin": {"scheme": "http", "host": "127.0.0.1", "port": 8790},
+  "trustedCommandModules": ["organizer", "bridge", "drive2", "notebook"],
+  "moduleOrder": ["organizer", "notes", "writer", "sheets", "notebook", "photos", "converter", "bridge", "drive2", "project-analyzer", "project-reader", "qrcode", "json", "palette", "diff", "base64", "terminal"],
+  "modules": []
+}

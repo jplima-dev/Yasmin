@@ -1,0 +1,735 @@
+:root {
+    --background: #fbfdfc;
+    --surface: #fff;
+    --toolbar: #f4f9f7;
+    --line: #dce8e4;
+    --grid: #e5ece9;
+    --text: #18302b;
+    --muted: #6a7d77;
+    --primary: #0f766e;
+    --primary-dark: #095c56;
+    --accent: #ed7b5d;
+    --mint: #eaf4f0;
+    --selected: #dff3ee;
+    --selected-border: #0f766e;
+    --header: #f5f8f7;
+    --zoom: 1
+}
+
+* {
+    box-sizing: border-box
+}
+
+html,
+body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    min-height: 0
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--background);
+    color: var(--text);
+    font-family: Arial, Helvetica, sans-serif
+}
+
+body.dark {
+    --background: #101714;
+    --surface: #17211d;
+    --toolbar: #1b2723;
+    --line: #30413b;
+    --grid: #2a3934;
+    --text: #e8f1ee;
+    --muted: #9bb0a9;
+    --primary: #4fb7aa;
+    --primary-dark: #38988d;
+    --accent: #ef9a83;
+    --mint: #1f3832;
+    --selected: #21463d;
+    --selected-border: #63c7b9;
+    --header: #1b2723
+}
+
+button,
+input,
+select {
+    font: inherit;
+    color: inherit
+}
+
+button {
+    transition: .15s ease
+}
+
+.topbar {
+    flex: 0 0 auto;
+    min-height: 72px;
+    margin: 0 18px;
+    padding: 7px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--line)
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0
+}
+
+.logo {
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    flex: 0 0 38px;
+    border-radius: 11px;
+    background: var(--primary);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 13px
+}
+
+.document-info {
+    position: relative;
+    padding-bottom: 17px;
+    min-width: 280px
+}
+
+.project-title {
+    width: min(360px, 36vw);
+    padding: 3px 6px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--text);
+    font: 400 18px Georgia, serif;
+    outline: none
+}
+
+.project-title:focus {
+    border-color: var(--line);
+    background: var(--surface)
+}
+
+.brand-tagline {
+    position: absolute;
+    left: 6px;
+    bottom: 0;
+    color: var(--muted);
+    font-size: 10px;
+    letter-spacing: .08em;
+    text-transform: uppercase
+}
+
+.menu {
+    position: absolute;
+    left: 0;
+    top: 43px;
+    display: flex;
+    gap: 2px;
+    z-index: 60
+}
+
+.menu-item {
+    position: relative
+}
+
+.menu-item>button {
+    padding: 5px 7px;
+    border: 0;
+    background: transparent;
+    color: var(--muted);
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 11px
+}
+
+.menu-item>button:hover {
+    background: var(--mint);
+    color: var(--text)
+}
+
+.top-menu {
+    position: absolute;
+    top: 30px;
+    left: 0;
+    min-width: 210px;
+    padding: 6px;
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    background: var(--surface);
+    box-shadow: 0 16px 42px rgba(20, 40, 34, .16);
+    z-index: 100
+}
+
+.top-menu button {
+    width: 100%;
+    padding: 8px 10px;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    text-align: left;
+    cursor: pointer;
+    font-size: 12px
+}
+
+.top-menu button:hover {
+    background: var(--mint)
+}
+
+.top-menu hr {
+    height: 1px;
+    margin: 5px;
+    border: 0;
+    background: var(--line)
+}
+
+.topbar-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    min-width: 0
+}
+
+.save-state {
+    color: var(--muted);
+    font-size: 11px;
+    white-space: nowrap
+}
+
+.icon-button,
+.secondary-button,
+.primary-button,
+.toolbar-button,
+.format-button,
+.align-button {
+    border-radius: 7px;
+    cursor: pointer
+}
+
+.icon-button {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    font-size: 20px
+}
+
+.secondary-button {
+    min-height: 34px;
+    padding: 0 11px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    font-size: 12px
+}
+
+.primary-button {
+    min-height: 34px;
+    padding: 0 12px;
+    border: 1px solid var(--primary);
+    background: var(--primary);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700
+}
+
+.primary-button:hover {
+    background: var(--primary-dark)
+}
+
+.toolbar {
+    flex: 0 0 auto;
+    min-height: 52px;
+    padding: 7px 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--toolbar);
+    border-bottom: 1px solid var(--line);
+    overflow-x: auto
+}
+
+.toolbar-group {
+    display: flex;
+    gap: 4px
+}
+
+.toolbar-group.compact {
+    gap: 2px
+}
+
+.divider {
+    width: 1px;
+    height: 30px;
+    flex: 0 0 1px;
+    background: var(--line);
+    margin: 0 2px
+}
+
+.format-button,
+.align-button {
+    width: 31px;
+    height: 31px;
+    border: 1px solid var(--line);
+    background: var(--surface)
+}
+
+.format-button.active,
+.align-button.active {
+    border-color: var(--primary);
+    background: var(--mint);
+    color: var(--primary)
+}
+
+.toolbar-button {
+    min-height: 32px;
+    padding: 0 10px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    white-space: nowrap;
+    font-size: 11px
+}
+
+.control {
+    display: grid;
+    gap: 2px;
+    color: var(--muted);
+    font-size: 9px
+}
+
+.control select,
+.control input {
+    height: 27px;
+    min-width: 86px;
+    padding: 0 6px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: var(--surface);
+    color: var(--text);
+    font-size: 11px
+}
+
+.small-control input {
+    width: 58px;
+    min-width: 58px
+}
+
+.color-control {
+    position: relative;
+    width: 33px;
+    height: 31px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--line);
+    border-radius: 7px;
+    background: var(--surface);
+    font-weight: 700;
+    cursor: pointer;
+    overflow: hidden
+}
+
+.color-control input {
+    position: absolute;
+    inset: auto 0 0;
+    width: 100%;
+    height: 6px;
+    padding: 0;
+    border: 0;
+    opacity: 1
+}
+
+.color-control.fill {
+    font-weight: 400
+}
+
+.formula-bar {
+    flex: 0 0 auto;
+    height: 38px;
+    padding: 5px 18px;
+    display: grid;
+    grid-template-columns: 82px 34px 1fr;
+    gap: 6px;
+    align-items: center;
+    background: var(--surface);
+    border-bottom: 1px solid var(--line)
+}
+
+.name-box {
+    height: 28px;
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    color: var(--muted);
+    font-size: 11px;
+    background: var(--background)
+}
+
+.fx {
+    height: 28px;
+    display: grid;
+    place-items: center;
+    color: var(--primary);
+    font: italic 700 13px Georgia, serif
+}
+
+.formula-bar input {
+    height: 28px;
+    padding: 0 9px;
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    background: var(--surface);
+    outline: none;
+    font-family: Consolas, 'Courier New', monospace;
+    font-size: 12px
+}
+
+.formula-bar input:focus {
+    border-color: var(--primary)
+}
+
+.workspace {
+    flex: 1 1 auto;
+    min-height: 0;
+    padding: 12px 18px 0;
+    background: var(--background)
+}
+
+.grid-viewport {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    box-shadow: 0 8px 30px rgba(24, 48, 43, .04)
+}
+
+.sheet-table {
+    border-collapse: separate;
+    border-spacing: 0;
+    table-layout: fixed;
+    transform-origin: top left;
+    font-size: 12px
+}
+
+.sheet-table th,
+.sheet-table td {
+    height: 25px;
+    min-height: 25px;
+    padding: 0 6px;
+    border-right: 1px solid var(--grid);
+    border-bottom: 1px solid var(--grid);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background: var(--surface);
+    font-weight: 400
+}
+
+.sheet-table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    height: 27px;
+    background: var(--header);
+    color: var(--muted);
+    text-align: center;
+    font-size: 10px
+}
+
+.sheet-table .corner {
+    left: 0;
+    z-index: 30;
+    width: 44px;
+    min-width: 44px
+}
+
+.sheet-table .row-header {
+    position: sticky;
+    left: 0;
+    z-index: 15;
+    width: 44px;
+    min-width: 44px;
+    background: var(--header);
+    color: var(--muted);
+    text-align: center;
+    font-size: 10px
+}
+
+.sheet-table .cell {
+    position: relative;
+    min-width: 96px;
+    width: 96px;
+    max-width: 96px;
+    cursor: cell
+}
+
+.sheet-table .cell.range-selected {
+    background: var(--selected)
+}
+
+.sheet-table .cell.selected {
+    outline: 2px solid var(--selected-border);
+    outline-offset: -2px;
+    z-index: 3
+}
+
+.sheet-table .cell.match {
+    box-shadow: inset 0 0 0 2px #e6a239
+}
+
+.sheet-table.no-gridlines td,
+.sheet-table.no-gridlines th {
+    border-color: transparent
+}
+
+.cell-editor {
+    position: fixed;
+    z-index: 1000;
+    padding: 2px 5px;
+    border: 2px solid var(--selected-border);
+    background: var(--surface);
+    color: var(--text);
+    outline: none;
+    font: inherit
+}
+
+.bottom-bar {
+    flex: 0 0 auto;
+    min-height: 42px;
+    padding: 0 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--toolbar);
+    border-top: 1px solid var(--line)
+}
+
+.sheet-tabs-wrap {
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px
+}
+
+.add-sheet {
+    width: 28px;
+    height: 28px;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--primary);
+    font-size: 20px;
+    cursor: pointer
+}
+
+.sheet-tabs {
+    display: flex;
+    gap: 4px;
+    overflow-x: auto
+}
+
+.sheet-tab {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    max-width: 160px;
+    padding: 7px 11px;
+    border: 1px solid transparent;
+    border-radius: 7px 7px 0 0;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 11px
+}
+
+.sheet-tab.active {
+    border-color: var(--line);
+    border-bottom-color: var(--surface);
+    background: var(--surface);
+    color: var(--text);
+    font-weight: 700
+}
+
+.sheet-tab .tab-close {
+    display: none;
+    font-size: 13px
+}
+
+.sheet-tab:hover .tab-close {
+    display: inline
+}
+
+.status-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--muted);
+    font-size: 10px
+}
+
+.status-bar button {
+    width: 26px;
+    height: 26px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: var(--surface);
+    cursor: pointer
+}
+
+.chart-dialog {
+    width: min(920px, calc(100% - 36px));
+    border: 0;
+    border-radius: 14px;
+    padding: 22px;
+    background: var(--surface);
+    color: var(--text);
+    box-shadow: 0 24px 80px rgba(24, 48, 43, .25)
+}
+
+.chart-dialog::backdrop {
+    background: rgba(24, 48, 43, .32);
+    backdrop-filter: blur(3px)
+}
+
+.dialog-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: start
+}
+
+.dialog-head h2 {
+    margin: 0;
+    font: 400 27px Georgia, serif
+}
+
+.eyebrow {
+    margin: 0 0 5px;
+    color: var(--accent);
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: .18em
+}
+
+.dialog-close {
+    width: 34px;
+    height: 34px;
+    border: 0;
+    background: transparent;
+    color: var(--muted);
+    font-size: 24px;
+    cursor: pointer
+}
+
+.chart-controls {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 16px 0
+}
+
+.chart-controls label {
+    display: grid;
+    gap: 5px;
+    color: var(--muted);
+    font-size: 11px
+}
+
+.chart-controls select {
+    height: 32px;
+    border: 1px solid var(--line);
+    border-radius: 7px;
+    background: var(--surface);
+    padding: 0 8px
+}
+
+.chart-dialog canvas {
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--line);
+    background: #fff
+}
+
+.chart-hint {
+    margin: 10px 0 0;
+    color: var(--muted);
+    font-size: 11px
+}
+
+@media print {
+    body {
+        display: block;
+        overflow: visible;
+        background: white
+    }
+
+    .topbar,
+    .toolbar,
+    .formula-bar,
+    .bottom-bar {
+        display: none !important
+    }
+
+    .workspace {
+        padding: 0
+    }
+
+    .grid-viewport {
+        overflow: visible;
+        border: 0;
+        box-shadow: none
+    }
+
+    .sheet-table {
+        font-size: 10px
+    }
+
+    .sheet-table thead th,
+    .sheet-table .row-header {
+        position: static
+    }
+}
+
+@media(max-width:900px) {
+    .topbar {
+        margin: 0 10px
+    }
+
+    .topbar-actions .save-state,
+    .topbar-actions #saveProjectButton {
+        display: none
+    }
+
+    .document-info {
+        min-width: 220px
+    }
+
+    .project-title {
+        width: 220px
+    }
+
+    .toolbar {
+        padding-left: 10px;
+        padding-right: 10px
+    }
+
+    .formula-bar,
+    .workspace,
+    .bottom-bar {
+        padding-left: 10px;
+        padding-right: 10px
+    }
+}

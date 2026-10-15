@@ -1,0 +1,13 @@
+SpeechRecognition>=3.10.0
+sounddevice>=0.5.0
+webrtcvad-wheels>=2.0.14,<3
+numpy>=2.0.0
+vosk>=0.3.45
+onnxruntime>=1.29.0
+scipy>=1.18.0
+espeakng-loader>=0.2.4
+kitsune-tts[onnx] @ git+https://github.com/Heitorkk2/Kitsune-TTS.git@085acefa9ad92d16c713648270c509cb6a6a13eb
+requests>=2.31.0
+PyMySQL>=1.1.1,<2
+beautifulsoup4>=4.12.0
+yt-dlp>=2025.1.15

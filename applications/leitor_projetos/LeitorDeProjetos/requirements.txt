@@ -1,0 +1,6 @@
+# Nenhuma dependência externa. Usa apenas a biblioteca padrão do
+# Python (tkinter, pathlib, threading, json, os, subprocess).
+#
+# Para empacotar em .exe:
+#   pip install pyinstaller
+#   pyinstaller --onefile --windowed --name LeitorDeProjetos main.py

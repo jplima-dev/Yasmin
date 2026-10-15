@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 2, "id": "project-reader", "name": "Leitor de Projetos", "category": "utilities",
+  "vendor": "Ink-guginha",
+  "author": "Ink-guginha",
+  "description": "Prepara código em Markdown ou TXT no navegador para documentação e análise.", "kind": "static-web",
+  "entryFile": "web/index.html", "icon": "code", "version": "1.1.0", "minCoreVersion": "0.3.0",
+  "keywords": ["código", "markdown", "ia", "tokens", "projeto"],
+  "capabilities": {"export": true, "import": true, "print": false, "offline": true, "shortcuts": [], "permissions": ["files:user-selected-read", "storage:local"]},
+  "agentOperations": [{
+    "name": "listar_arquivos_projeto_ink",
+    "description": "Classifica arquivos de um projeto usando os filtros do Leitor de Projetos, sem ler conteúdo.",
+    "parameters": ["caminho"],
+    "risk": "baixo",
+    "verification": "arquivos_projeto_ink"
+  }, {
+    "name": "exportar_contexto_projeto_ink",
+    "description": "Prepara e exporta cópias de contexto Markdown para IA usando os filtros do Leitor de Projetos.",
+    "parameters": ["caminho", "destino"],
+    "risk": "medio",
+    "verification": "contexto_projeto_ink"
+  }],
+  "dataSchemaVersion": 1,
+  "migrations": [],
+  "instructions": ["Escolha a pasta, revise os arquivos e exporte em Markdown, TXT ou ZIP."]
+}

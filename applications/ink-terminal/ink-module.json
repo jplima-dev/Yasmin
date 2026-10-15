@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 2, "id": "terminal", "name": "Ink Terminal", "category": "utilities",
+  "vendor": "Ink-guginha",
+  "author": "Ink-guginha",
+  "description": "Terminal integrado irrestrito, com processos independentes, auditoria e histórico controlável.", "kind": "static-web",
+  "entryFile": "index.html", "icon": "terminal", "version": "1.5.0", "minCoreVersion": "0.3.0",
+  "keywords": ["terminal", "console", "prompt", "comando", "autocompletar"],
+  "capabilities": {"export": true, "import": false, "print": false, "offline": false, "shortcuts": ["terminal", "subdivide", "unsubidivide"], "permissions": ["terminal:unrestricted", "terminal:audit"]},
+  "instructions": ["Use subdivide para abrir duas instâncias independentes da tela atual e unsubidivide para escolher qual deve continuar.", "O terminal executa comandos PowerShell sem classificação, bloqueio de diretório ou confirmação por comando; a API continua protegida pela sessão local."]
+}

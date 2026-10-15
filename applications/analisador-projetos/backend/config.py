@@ -1,0 +1,112 @@
+"""Configuration defaults used by the project scanner."""
+
+from __future__ import annotations
+
+DEFAULT_IGNORED_DIRECTORIES = {
+    ".git",
+    ".hg",
+    ".svn",
+    ".idea",
+    ".vscode",
+    ".venv",
+    "venv",
+    "env",
+    "__pycache__",
+    "node_modules",
+    "dist",
+    "build",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".ruff_cache",
+    ".tox",
+    ".next",
+    ".nuxt",
+    "coverage",
+}
+
+# Files that are usually generated, noisy or irrelevant to source statistics.
+DEFAULT_IGNORED_FILES = {
+    ".DS_Store",
+    "Thumbs.db",
+}
+
+# Extension -> display language name.
+LANGUAGE_BY_EXTENSION = {
+    ".py": "Python",
+    ".pyw": "Python",
+    ".js": "JavaScript",
+    ".mjs": "JavaScript",
+    ".cjs": "JavaScript",
+    ".jsx": "JavaScript",
+    ".ts": "TypeScript",
+    ".tsx": "TypeScript",
+    ".html": "HTML",
+    ".htm": "HTML",
+    ".css": "CSS",
+    ".scss": "SCSS",
+    ".sass": "Sass",
+    ".less": "Less",
+    ".json": "JSON",
+    ".jsonc": "JSON",
+    ".md": "Markdown",
+    ".mdx": "MDX",
+    ".xml": "XML",
+    ".yaml": "YAML",
+    ".yml": "YAML",
+    ".toml": "TOML",
+    ".ini": "INI",
+    ".cfg": "Config",
+    ".conf": "Config",
+    ".sh": "Shell",
+    ".bash": "Shell",
+    ".zsh": "Shell",
+    ".ps1": "PowerShell",
+    ".bat": "Batch",
+    ".cmd": "Batch",
+    ".sql": "SQL",
+    ".java": "Java",
+    ".kt": "Kotlin",
+    ".kts": "Kotlin",
+    ".c": "C",
+    ".h": "C/C++ Header",
+    ".cc": "C++",
+    ".cpp": "C++",
+    ".cxx": "C++",
+    ".hpp": "C++ Header",
+    ".cs": "C#",
+    ".go": "Go",
+    ".rs": "Rust",
+    ".rb": "Ruby",
+    ".php": "PHP",
+    ".swift": "Swift",
+    ".dart": "Dart",
+    ".lua": "Lua",
+    ".r": "R",
+    ".vue": "Vue",
+    ".svelte": "Svelte",
+    ".astro": "Astro",
+    ".graphql": "GraphQL",
+    ".gql": "GraphQL",
+}
+
+LANGUAGE_BY_FILENAME = {
+    "dockerfile": "Dockerfile",
+    "makefile": "Makefile",
+    "cmakelists.txt": "CMake",
+    "gemfile": "Ruby",
+    "rakefile": "Ruby",
+}
+
+# Extensions that are overwhelmingly text even when not treated as a programming language.
+TEXT_EXTENSIONS = set(LANGUAGE_BY_EXTENSION) | {
+    ".txt",
+    ".csv",
+    ".tsv",
+    ".log",
+    ".env",
+    ".gitignore",
+    ".gitattributes",
+    ".editorconfig",
+    ".properties",
+    ".lock",
+}

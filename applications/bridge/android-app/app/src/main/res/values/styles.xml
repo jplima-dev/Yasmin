@@ -1,0 +1,8 @@
+<resources>
+    <style name="Theme.Bridge" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">#6432C7</item>
+        <item name="colorPrimaryVariant">#3D1C84</item>
+        <item name="android:fontFamily">sans</item>
+    </style>
+</resources>
+

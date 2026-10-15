@@ -1,0 +1,96 @@
+{
+    "usuario": {
+        "nome": "Ruan"
+    },
+    "assistente": {
+        "nome": "Yasmin"
+    },
+    "voz": {
+        "id": "kitsune:emilia"
+    },
+    "configuracao": {
+        "concluida": true
+    },
+    "preferencias": {
+        "personalidade": "descontraida",
+        "tamanho_respostas": "diretas",
+        "pesquisa_automatica": true,
+        "corretor_ativo": true,
+        "iniciativa": "2",
+        "interrupcao": true,
+        "memoria_ativa": true,
+        "tipo_memoria": "tudo",
+        "inicializar_windows": true,
+        "saudacao_inicio": true,
+        "uso_principal": "programacao",
+        "nivel_tecnico": "iniciante"
+    },
+    "notas": [],
+    "tarefas": [],
+    "historico": [
+        {
+            "tipo": "usuario",
+            "texto": "tchau Yasmin",
+            "criado_em": "2026-09-06T14:42:56"
+        },
+        {
+            "tipo": "usuario",
+            "texto": "yasmin tá aí",
+            "criado_em": "2026-10-01T20:31:31"
+        },
+        {
+            "tipo": "yasm",
+            "texto": "Pode mandar.",
+            "criado_em": "2026-10-01T20:31:31"
+        },
+        {
+            "tipo": "usuario",
+            "texto": "Que horas são",
+            "criado_em": "2026-10-01T20:31:38"
+        },
+        {
+            "tipo": "yasm",
+            "texto": "Neste momento são 20:31.",
+            "criado_em": "2026-10-01T20:31:38"
+        },
+        {
+            "tipo": "usuario",
+            "texto": "tchau Yasmin",
+            "criado_em": "2026-10-01T20:31:45"
+        },
+        {
+            "tipo": "usuario",
+            "texto": "Yasmin abre o vs code",
+            "criado_em": "2026-10-01T20:32:54"
+        },
+        {
+            "tipo": "yasm",
+            "texto": "Abrindo vscode.",
+            "criado_em": "2026-10-01T20:32:54"
+        },
+        {
+            "tipo": "usuario",
+            "texto": "abre a Steam",
+            "criado_em": "2026-10-01T20:33:35"
+        },
+        {
+            "tipo": "yasm",
+            "texto": "Abrindo steam.",
+            "criado_em": "2026-10-01T20:33:35"
+        },
+        {
+            "tipo": "usuario",
+            "texto": "tchau Yasmin",
+            "criado_em": "2026-10-01T20:34:19"
+        }
+    ],
+    "pesquisas": [],
+    "estudo": {
+        "nivel": "iniciante",
+        "topicos_vistos": [],
+        "exercicios": [],
+        "quiz_atual": null,
+        "pontuacao_quiz": 0,
+        "sessoes": []
+    }
+}

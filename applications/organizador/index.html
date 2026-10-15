@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <script src="http://127.0.0.1:8790/core/theme-preload.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f8fafd" />
+    <meta name="description" content="Seu espaço pessoal para organizar projetos, tarefas, notas e ideias. Dados salvos neste dispositivo." />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>Organizador — seu espaço pessoal</title>
+  <script type="module" src="http://127.0.0.1:8790/core/module-bootstrap.js"></script>
+</head>
+  <body>
+    <a class="skip-link" href="#main-content">Pular para o conteúdo</a>
+    <div id="app"><div class="boot-state" role="status"><span class="boot-pt">Abrindo seu espaço…</span><span class="boot-en">Opening your workspace…</span></div></div>
+    <div id="toasts" aria-live="polite" aria-atomic="true"></div>
+    <script>
+      window.setTimeout(() => {
+        const boot = document.querySelector('.boot-state');
+        if (!boot) return;
+        const english = document.documentElement.lang === 'en-US';
+        const recovery = document.createElement('div');
+        recovery.className = 'boot-recovery';
+        recovery.setAttribute('role', 'alert');
+        const title = document.createElement('h1');
+        title.textContent = english ? 'Loading is taking longer than expected' : 'O carregamento está demorando mais que o esperado';
+        const copy = document.createElement('p');
+        copy.textContent = english
+          ? 'Close other Organizer tabs and try again. Your local data will not be deleted.'
+          : 'Feche outras abas do Organizador e tente novamente. Seus dados locais não serão apagados.';
+        const actions = document.createElement('div');
+        actions.className = 'button-row';
+        const retry = document.createElement('button');
+        retry.className = 'button primary';
+        retry.type = 'button';
+        retry.textContent = english ? 'Try again' : 'Tentar novamente';
+        retry.addEventListener('click', () => location.reload());
+        const workspace = document.createElement('a');
+        workspace.className = 'button';
+        workspace.href = 'http://127.0.0.1:8790/';
+        workspace.textContent = english ? 'Back to Workspace OS' : 'Voltar ao Workspace OS';
+        actions.append(retry, workspace);
+        recovery.append(title, copy, actions);
+        boot.replaceWith(recovery);
+      }, 8000);
+    </script>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

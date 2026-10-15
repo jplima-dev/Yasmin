@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <script src="/core/theme-preload.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark light">
+    <title>Yasmin · Workspace</title>
+    <link rel="stylesheet" href="/workspace-ui-fallback.css">
+    <link rel="stylesheet" href="/design-system/workspace-ui.css">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/yasmin.css">
+    <link rel="stylesheet" href="/core/components/terminal.css" data-workspace-terminal-style>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar">
+        <div class="brand">
+          <span class="brand-mark">Y</span>
+          <span class="brand-copy"><strong>Yasmin</strong><small>Workspace</small></span>
+          <button class="sidebar-collapse-button" id="sidebar-collapse-button" type="button" aria-label="Recolher barra lateral" title="Recolher barra lateral">‹</button>
+        </div>
+        <nav class="nav" aria-label="Navegação principal">
+          <button class="nav-item active" data-route="dashboard" title="Painel"><span class="nav-icon">⌂</span><span class="nav-text">Painel</span></button>
+          <p class="nav-label">ECOSSISTEMA</p>
+          <button class="nav-item" data-route="modules" title="Módulos"><span class="nav-icon">▦</span><span class="nav-text">Módulos</span></button>
+          <button class="nav-item" data-route="setup" title="Primeiro uso"><span class="nav-icon">✓</span><span class="nav-text">Primeiro uso</span></button>
+          <p class="nav-label">SISTEMA</p>
+          <button class="nav-item" data-route="diagnostics" title="Diagnóstico"><span class="nav-icon">◉</span><span class="nav-text">Diagnóstico</span></button>
+          <button class="nav-item" data-route="settings" title="Configurações"><span class="nav-icon">⚙</span><span class="nav-text">Configurações</span></button>
+        </nav>
+        <div class="sidebar-footer">
+          <span class="status-dot" id="core-dot"></span>
+          <div><strong>Yasmin + Workspace</strong><small>somente neste PC</small><small>Aplicações por Ink-guginha.</small></div>
+        </div>
+      </aside>
+      <button class="sidebar-backdrop" id="sidebar-backdrop" type="button" aria-label="Fechar menu"></button>
+
+      <section class="workspace">
+        <header class="topbar">
+          <button class="icon-button menu-button" id="menu-button" aria-label="Abrir menu">☰</button>
+          <div><p class="eyebrow">YASMIN WORKSPACE</p><h1 id="page-title">Visão geral</h1></div>
+          <button class="command-trigger" id="command-trigger" type="button" aria-haspopup="dialog" aria-controls="command-dialog"><span>⌕ Pesquisar e executar</span><kbd>Ctrl K</kbd></button>
+          <div class="topbar-actions">
+            <button class="secondary-button" id="refresh-button">↻ Atualizar</button>
+            <button class="primary-button" data-route="setup">Configurar</button>
+          </div>
+        </header>
+        <main id="content" tabindex="-1"></main>
+      </section>
+      <section class="yasmin-stage" id="yasmin-stage" aria-label="Aplicação aberta" hidden><div class="yasmin-stage-bar"><div><strong id="yasmin-stage-title"></strong><small>Aplicação de Ink-guginha</small></div><div><a id="yasmin-stage-link" target="_blank" rel="noopener">Abrir separadamente ↗</a><button type="button" id="yasmin-close-stage">Voltar ao Workspace</button></div></div><iframe title="Aplicação" referrerpolicy="same-origin"></iframe></section>
+    </div>
+
+    <div class="yasmin-dock-host"><button class="yasmin-dock" id="yasmin-dock" type="button" aria-expanded="false" aria-controls="yasmin-panel" aria-label="Yasmin: abrir conversa"><span class="yasmin-dock-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="yasmin-dock-spinner" aria-hidden="true"></span><span class="yasmin-dock-detail" id="yasmin-dock-detail">Conectando à Yasmin</span><span class="yasmin-dock-processes" id="yasmin-dock-processes" aria-live="polite"></span></button></div>
+
+    <section class="yasmin-panel" id="yasmin-panel" role="dialog" aria-label="Conversa com Yasmin" hidden><div class="yasmin-panel-header"><strong>Converse com a Yasmin</strong><button type="button" id="yasmin-panel-close" aria-label="Fechar conversa">×</button></div><div class="yasmin-messages" id="yasmin-messages" role="log" aria-live="polite"></div><form class="yasmin-command-form" id="yasmin-command-form"><input id="yasmin-command-input" maxlength="1000" autocomplete="off" placeholder="Peça uma tarefa ou converse…" aria-label="Mensagem para Yasmin"><button type="submit" id="yasmin-send">Enviar</button></form></section>
+
+    <dialog class="command-dialog" id="command-dialog" aria-labelledby="command-title">
+      <div class="command-header">
+        <div><p class="eyebrow">COMANDOS RÁPIDOS</p><h2 id="command-title">O que você quer fazer?</h2></div>
+        <button class="icon-button" id="command-close" type="button" aria-label="Fechar pesquisa">×</button>
+      </div>
+      <label class="command-search">
+        <span aria-hidden="true">⌕</span>
+        <input id="command-input" type="search" autocomplete="off" placeholder="Busque uma ferramenta, tela ou ação…" aria-label="Pesquisar comandos">
+        <kbd>Esc</kbd>
+      </label>
+      <div class="command-results" id="command-results" role="listbox" aria-label="Resultados da pesquisa"></div>
+      <p class="command-hint">Use ↑ ↓ para navegar e Enter para executar.</p>
+    </dialog>
+
+    <div class="toast-region" id="toast-region" aria-live="polite"></div>
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,10 @@
+{
+  "name": "Bridge - seus dispositivos conectados",
+  "short_name": "Bridge",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fbfafd",
+  "theme_color": "#21133f",
+  "description": "Compartilhe arquivos, textos, links e ações autorizadas entre seus aparelhos.",
+  "icons": []
+}

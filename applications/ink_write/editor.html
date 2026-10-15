@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Editor | InkWrite</title>
+  <script>
+    (() => {
+      const inWorkspace = location.port === '8790' && location.pathname.includes('/module/');
+      document.documentElement.dataset.workspace = inWorkspace ? 'true' : 'false';
+      if (!inWorkspace) {
+        const saved = localStorage.getItem('inkwrite-ui-theme');
+        const theme = saved === 'dark' || saved === 'light'
+          ? saved
+          : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.classList.toggle('dark', theme === 'dark');
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="css/editor.css">
+  <script type="module" src="http://127.0.0.1:8790/core/module-bootstrap.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-left">
+      <a class="brand-button" href="index.html" title="Voltar para documentos"><span>IW</span></a>
+      <div class="document-info">
+        <input id="documentTitle" class="document-title" value="Documento sem título" aria-label="Nome do documento">
+        <div class="menu-row" aria-label="Menu principal">
+          <div class="menu-item"><button data-menu-button="fileMenu" type="button">Arquivo</button>
+            <div id="fileMenu" class="top-menu" hidden>
+              <button data-action="new-document">Novo documento</button><button data-action="save">Salvar</button><button data-action="versions">Histórico de versões…</button><span></span>
+              <button data-action="import-file">Abrir HTML / TXT / Markdown</button><span></span>
+              <button data-action="open-export">Exportar…</button>
+              <button data-action="export-docx">Word (.docx)</button><button data-action="export-word">Word legado (.doc)</button><button data-action="export-rtf">Rich Text (.rtf)</button>
+              <button data-action="export-html">Página Web (.html)</button><button data-action="export-md">Markdown (.md)</button><button data-action="export-txt">Texto (.txt)</button><span></span>
+              <button data-action="print">PDF / Imprimir</button><button data-action="home">Voltar à Home</button>
+            </div>
+          </div>
+          <div class="menu-item"><button data-menu-button="editMenu" type="button">Editar</button>
+            <div id="editMenu" class="top-menu" hidden>
+              <button data-action="undo">Desfazer <kbd>Ctrl+Z</kbd></button><button data-action="redo">Refazer <kbd>Ctrl+Y</kbd></button><span></span>
+              <button data-action="cut">Recortar</button><button data-action="copy">Copiar</button><button data-action="paste">Colar mantendo origem</button><button data-action="paste-merge">Mesclar formatação</button><button data-action="paste-plain">Colar só texto</button><button data-action="select-all">Selecionar tudo</button><span></span>
+              <button data-action="select-paragraph">Selecionar parágrafo</button><button data-action="duplicate-selection">Duplicar seleção</button><span></span>
+              <button data-action="find">Buscar <kbd>Ctrl+F</kbd></button><button data-action="replace">Substituir <kbd>Ctrl+H</kbd></button><span></span><button data-action="shortcuts">Atalhos configuráveis…</button>
+            </div>
+          </div>
+          <div class="menu-item"><button data-menu-button="insertMenu" type="button">Inserir</button>
+            <div id="insertMenu" class="top-menu" hidden>
+              <button data-action="insert-link">Link</button><button data-action="insert-image">Imagem</button><button data-action="insert-table">Tabela</button><span></span>
+              <button data-action="insert-rule">Linha horizontal</button><button data-action="insert-toc">Inserir / atualizar sumário</button><button data-action="insert-footnote">Nota de rodapé…</button><button data-action="insert-symbol">Símbolo / caractere especial…</button><button data-action="insert-date">Data atual</button><button data-action="insert-time">Hora atual</button><button data-action="page-break">Quebra de página <kbd>Ctrl+Enter</kbd></button><span></span>
+              <button data-action="quote">Bloco de citação</button><button data-action="code">Bloco de código</button>
+            </div>
+          </div>
+          <div class="menu-item"><button data-menu-button="formatMenu" type="button">Formatar</button>
+            <div id="formatMenu" class="top-menu" hidden>
+              <button data-block="h1">Título 1</button><button data-block="h2">Título 2</button><button data-block="h3">Título 3</button><button data-block="p">Parágrafo</button><span></span>
+              <button data-action="quote">Citação</button><button data-action="caption">Legenda</button><button data-action="code">Código</button><button data-action="clear-format">Limpar formatação</button><span></span>
+              <button data-action="uppercase">MAIÚSCULAS</button><button data-action="lowercase">minúsculas</button>
+            </div>
+          </div>
+          <div class="menu-item"><button data-menu-button="viewMenu" type="button">Visualizar</button>
+            <div id="viewMenu" class="top-menu" hidden>
+              <button data-action="toggle-outline">Alternar estrutura</button><button data-action="toggle-properties">Alternar propriedades</button><button data-action="toggle-formatting">Mostrar marcas ¶</button><button data-action="accessibility">Verificar acessibilidade…</button><button data-action="focus-mode">Modo foco</button><span></span>
+              <button data-action="fit-width">Ajustar à largura</button><button data-action="fit-page">Ajustar página inteira</button><span></span>
+              <button data-action="zoom-75">Zoom 75%</button><button data-action="zoom-100">Zoom 100%</button><button data-action="zoom-125">Zoom 125%</button><span></span>
+              <button data-action="zoom-out">Diminuir zoom</button><button data-action="zoom-reset">Zoom 100%</button><button data-action="zoom-in">Aumentar zoom</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <span id="saveStatus" class="save-status">Salvo</span>
+      <button id="undoButton" class="icon-button" type="button" title="Desfazer">↶</button>
+      <button id="redoButton" class="icon-button" type="button" title="Refazer">↷</button>
+      <button id="saveButton" class="secondary-button" type="button">Salvar</button>
+      <button id="exportButton" class="primary-button" type="button">Exportar</button>
+      <span id="workspaceThemeNote" class="workspace-theme-note" hidden>Tema: Configurações / Terminal</span>
+      <button id="themeButton" class="icon-button" type="button" title="Alternar tema" aria-label="Alternar tema">◐</button>
+      <button id="focusExitButton" class="icon-button focus-exit-button" type="button" title="Sair do modo foco">↙</button>
+    </div>
+  </header>
+
+  <section class="toolbar" aria-label="Ferramentas de texto">
+    <div class="tool-group style-group" data-group-label="Bloco">
+      <label><span>Estilo</span><select id="blockStyle"><option value="p">Normal</option><option value="h1">Título 1</option><option value="h2">Título 2</option><option value="h3">Título 3</option><option value="blockquote">Citação</option><option value="caption">Legenda</option><option value="pre">Código</option></select></label>
+    </div>
+    <div class="tool-group font-group" data-group-label="Fonte">
+      <label><span>Fonte</span><select id="fontName"><option>Arial</option><option>Aptos</option><option>Calibri</option><option>Cambria</option><option>Garamond</option><option>Georgia</option><option>Inter</option><option>Palatino Linotype</option><option>Segoe UI</option><option>Tahoma</option><option>Trebuchet MS</option><option>Times New Roman</option><option>Verdana</option><option>Courier New</option></select></label>
+      <button id="importFontsButton" class="tool-button wide-tool font-import-button" type="button" title="Adicionar ao menu as fontes instaladas neste computador">＋ Fontes do PC</button>
+      <label class="font-size-control"><span>Tamanho</span><select id="fontSize"><option value="1">10</option><option value="2">12</option><option value="3" selected>16</option><option value="4">18</option><option value="5">24</option><option value="6">32</option><option value="7">48</option></select></label>
+      <button data-action="font-smaller" class="tool-button compact" title="Diminuir fonte">A−</button><button data-action="font-bigger" class="tool-button compact" title="Aumentar fonte">A+</button>
+    </div>
+    <div class="tool-group format-group" data-group-label="Texto">
+      <button data-cmd="bold" class="tool-button strong" title="Negrito">B</button><button data-cmd="italic" class="tool-button italic" title="Itálico">I</button><button data-cmd="underline" class="tool-button underline" title="Sublinhado">S</button><button data-cmd="strikeThrough" class="tool-button strike" title="Tachado">abc</button>
+      <button data-cmd="superscript" class="tool-button compact" title="Sobrescrito">x²</button><button data-cmd="subscript" class="tool-button compact" title="Subscrito">x₂</button>
+      <label class="color-tool" title="Cor do texto"><span>A</span><input id="textColor" type="color" value="#172033"></label><div class="highlight-tool" title="Marca-texto"><button id="highlightToggleButton" class="tool-button highlight-toggle" type="button" aria-pressed="false" title="Ativar marca-texto para a escrita">▰</button><input id="highlightColor" class="highlight-color-input" type="color" value="#fff2a8" aria-label="Cor do marca-texto" title="Cor do marca-texto"></div>
+      <button id="formatPainterButton" data-action="format-painter" class="tool-button wide-tool" aria-pressed="false" title="Copiar a formatação da seleção e aplicar em outra; clique novamente ou pressione Esc para desativar">🖌 Pincel</button><button data-action="clear-format" class="tool-button wide-tool" title="Limpar formatação do texto selecionado">Tx&nbsp; Limpar</button>
+    </div>
+    <div class="tool-group paragraph-group" data-group-label="Parágrafo">
+      <button data-cmd="justifyLeft" class="tool-button align-icon left-icon" title="Alinhar à esquerda" aria-label="Alinhar à esquerda"><svg viewBox="0 0 24 18" aria-hidden="true"><path d="M3 3h18M3 7h12M3 11h18M3 15h10"/></svg></button><button data-cmd="justifyCenter" class="tool-button align-icon center-icon" title="Centralizar" aria-label="Centralizar"><svg viewBox="0 0 24 18" aria-hidden="true"><path d="M3 3h18M6 7h12M3 11h18M7 15h10"/></svg></button><button data-cmd="justifyRight" class="tool-button align-icon right-icon" title="Alinhar à direita" aria-label="Alinhar à direita"><svg viewBox="0 0 24 18" aria-hidden="true"><path d="M3 3h18M9 7h12M3 11h18M11 15h10"/></svg></button><button data-cmd="justifyFull" class="tool-button align-icon justify-icon" title="Justificar" aria-label="Justificar"><svg viewBox="0 0 24 18" aria-hidden="true"><path d="M3 3h18M3 7h18M3 11h18M3 15h18"/></svg></button>
+      <button data-cmd="insertUnorderedList" class="tool-button wide-tool paragraph-tool" title="Lista com marcadores">• Lista</button><button data-cmd="insertOrderedList" class="tool-button wide-tool paragraph-tool" title="Lista numerada">1. Lista</button><button data-cmd="outdent" class="tool-button wide-tool paragraph-tool" title="Diminuir recuo">← Recuo</button><button data-cmd="indent" class="tool-button wide-tool paragraph-tool" title="Aumentar recuo">Recuo →</button>
+    </div>
+    <div class="tool-group insert-group" data-group-label="Inserir">
+      <button data-action="insert-link" class="tool-button wide-tool" title="Inserir link">🔗 Link</button><button data-action="insert-image" class="tool-button wide-tool" title="Inserir imagem">▧ Imagem</button><button data-action="insert-table" class="tool-button wide-tool" title="Inserir tabela">▦ Tabela</button><button data-action="page-break" class="tool-button wide-tool" title="Inserir quebra de página">↡ Quebra pág.</button>
+    </div>
+    <div class="toolbar-spacer"></div>
+  </section>
+  <div id="storageWarning" class="storage-warning" hidden role="status"><strong>Armazenamento quase cheio.</strong><span id="storageWarningText"></span><button id="storageWarningDismiss" type="button" aria-label="Ocultar aviso">×</button></div>
+
+  <main id="editorLayout" class="editor-layout">
+    <aside id="outlineSidebar" class="sidebar outline-sidebar">
+      <div class="sidebar-head"><div><p>ESTRUTURA</p><h2>Documento</h2></div></div>
+      <div id="outlineList" class="outline-list"><p class="sidebar-empty">Adicione títulos para criar uma estrutura navegável.</p></div>
+      <section class="page-navigator-section"><div class="mini-section-head"><strong>PÁGINAS</strong><span id="pageNavigatorCount">1</span></div><div id="pageNavigator" class="page-navigator" aria-label="Navegação de páginas"></div></section>
+      <section class="sidebar-tip"><strong>Atalho</strong><p>Use Título 1, 2 e 3 para navegar rapidamente por textos longos.</p></section>
+    </aside>
+
+    <section class="canvas-area">
+      <div id="rulerShell" class="ruler-shell" aria-label="Régua de parágrafo">
+        <div id="ruler" class="ruler" title="Arraste os marcadores para ajustar o parágrafo selecionado">
+          <span class="ruler-margin ruler-margin-left" aria-hidden="true"></span><span class="ruler-margin ruler-margin-right" aria-hidden="true"></span>
+          <button class="ruler-marker ruler-first" type="button" data-ruler-marker="first" title="Recuo da primeira linha" aria-label="Recuo da primeira linha">▼</button>
+          <button class="ruler-marker ruler-left" type="button" data-ruler-marker="left" title="Recuo esquerdo" aria-label="Recuo esquerdo">▲</button>
+          <button class="ruler-marker ruler-right" type="button" data-ruler-marker="right" title="Recuo direito" aria-label="Recuo direito">▲</button>
+        </div>
+      </div>
+      <div id="tableTools" class="table-tools" hidden>
+        <button type="button" data-table-action="row-add" title="Adicionar linha abaixo">＋ Linha</button><button type="button" data-table-action="row-remove" title="Remover linha">− Linha</button>
+        <button type="button" data-table-action="col-add" title="Adicionar coluna à direita">＋ Coluna</button><button type="button" data-table-action="col-remove" title="Remover coluna">− Coluna</button>
+        <button type="button" data-table-action="merge-right" title="Mesclar com a célula à direita">Mesclar →</button><button type="button" data-table-action="split" title="Dividir célula mesclada">Dividir</button>
+        <button type="button" data-table-action="header-toggle" title="Alternar primeira linha como cabeçalho">Cabeçalho</button><button type="button" data-table-action="cell-left" title="Alinhar célula à esquerda">◧←</button><button type="button" data-table-action="cell-center" title="Centralizar conteúdo da célula">◫</button><button type="button" data-table-action="cell-right" title="Alinhar célula à direita">→◧</button>
+        <button type="button" data-table-action="distribute" title="Distribuir colunas igualmente">Distribuir</button>
+      </div>
+      <div id="verticalRuler" class="vertical-ruler" aria-label="Régua vertical"><span class="vertical-ruler-fill"></span><button id="verticalMarginTop" type="button" class="vertical-marker top" title="Margem superior">▶</button><button id="verticalMarginBottom" type="button" class="vertical-marker bottom" title="Margem inferior">▶</button></div>
+      <div id="pageShell" class="page-shell">
+        <article id="documentPage" class="document-page" data-paper="a4" data-orientation="portrait">
+          <div id="pageGuides" class="page-guides" aria-hidden="true"></div>
+          <div id="editor" class="editor" contenteditable="true" spellcheck="true" role="textbox" aria-multiline="true"></div>
+        </article>
+      </div>
+    </section>
+
+    <aside id="propertiesSidebar" class="sidebar properties-sidebar">
+      <div class="sidebar-head"><div><p>PROPRIEDADES</p><h2>Documento</h2></div></div>
+      <section class="panel-section">
+        <h3>Página</h3>
+        <label class="field"><span>Papel</span><select id="paperSize"><option value="a4">A4</option><option value="letter">Carta</option><option value="a5">A5</option></select></label>
+        <label class="field"><span>Orientação</span><select id="orientation"><option value="portrait">Retrato</option><option value="landscape">Paisagem</option></select></label>
+        <label class="field"><span>Margens</span><select id="marginPreset"><option value="narrow">Estreita</option><option value="normal" selected>Normal</option><option value="wide">Larga</option><option value="custom">Personalizada</option></select></label>
+        <label id="customMarginRow" class="field" hidden><span>Margem personalizada (px)</span><input id="customMargin" type="number" min="8" max="180" value="72"></label>
+        <label class="field"><span>Cor da página</span><input id="pageColor" type="color" value="#ffffff"></label>
+      </section>
+      <section id="templatePanel" class="panel-section template-panel" hidden>
+        <h3 id="templatePanelTitle">Ferramentas do modelo</h3>
+        <p id="templatePanelDescription" class="panel-help"></p>
+        <label class="field"><span>Visual</span><select id="templateStyle"></select></label>
+        <div id="templateActions" class="template-actions"></div>
+      </section>
+      <section class="panel-section quick-styles-panel">
+        <h3>Estilos rápidos</h3>
+        <div class="quick-style-grid"><button type="button" data-quick-style="p">Normal</button><button type="button" data-quick-style="h1">Título 1</button><button type="button" data-quick-style="h2">Título 2</button><button type="button" data-quick-style="h3">Título 3</button><button type="button" data-quick-style="blockquote">Citação</button><button type="button" data-quick-style="caption">Legenda</button><button type="button" data-quick-style="pre">Código</button></div>
+      </section>
+      <section class="panel-section">
+        <h3>Parágrafo</h3>
+        <label class="field"><span>Entrelinhas</span><select id="lineHeight"><option value="1.2">1,2</option><option value="1.4">1,4</option><option value="1.6" selected>1,6</option><option value="1.8">1,8</option><option value="2">2,0</option></select></label>
+        <label class="field"><span>Espaço antes</span><input id="paragraphBefore" type="range" min="0" max="32" value="0"><b id="paragraphBeforeValue">0 px</b></label>
+        <label class="field"><span>Espaço depois</span><input id="paragraphSpacing" type="range" min="0" max="32" value="8"><b id="paragraphSpacingValue">8 px</b></label>
+        <label class="field"><span>Primeira linha</span><input id="firstLineIndent" type="range" min="0" max="96" value="0"><b id="firstLineIndentValue">0 px</b></label>
+        <p class="panel-help">A régua acima da folha ajusta recuos do parágrafo selecionado.</p>
+      </section>
+      <section class="panel-section block-flow-panel">
+        <h3>Fluxo do bloco</h3>
+        <label class="check-row settings-check"><input id="keepWithNext" type="checkbox"><span>Manter com o próximo</span></label>
+        <label class="check-row settings-check"><input id="keepLinesTogether" type="checkbox"><span>Não dividir o bloco entre páginas</span></label>
+        <label class="check-row settings-check"><input id="pageBreakBefore" type="checkbox"><span>Começar em nova página</span></label>
+        <p class="panel-help">As opções valem para o parágrafo ou título onde está o cursor e também são levadas ao DOCX/PDF.</p>
+      </section>
+      <section class="panel-section">
+        <h3>Cabeçalho e rodapé</h3>
+        <label class="field"><span>Cabeçalho</span><input id="headerText" type="text" placeholder="Ex.: Trabalho de História"></label>
+        <label class="field"><span>Rodapé</span><input id="footerText" type="text" placeholder="Ex.: Soares · 2026"></label>
+        <label class="field"><span>Numeração</span><select id="pageNumberStyle"><option value="none">Sem número</option><option value="number">1, 2, 3…</option><option value="page">Página 1, Página 2…</option></select></label>
+        <p class="panel-help">Cabeçalho e rodapé são repetidos no PDF. O navegador decide o suporte final à numeração automática.</p>
+      </section>
+      <section class="panel-section">
+        <h3>Revisão e visualização</h3>
+        <label class="field"><span>Idioma da ortografia</span><select id="spellLanguage"><option value="pt-BR">Português (Brasil)</option><option value="en-US">English (US)</option><option value="es-ES">Español</option></select></label>
+        <label class="check-row settings-check"><input id="spellcheckEnabled" type="checkbox" checked><span>Verificação ortográfica do navegador</span></label>
+        <label class="field"><span>Zoom rápido</span><select id="zoomPreset"><option value="custom">Personalizado</option><option value="75">75%</option><option value="100">100%</option><option value="125">125%</option><option value="fit-width">Ajustar à largura</option><option value="fit-page">Página inteira</option></select></label>
+        <label class="field"><span>Zoom</span><input id="zoomRange" type="range" min="50" max="150" value="90"><b id="zoomValue">90%</b></label>
+        <label class="field"><span>Cor de destaque</span><input id="accentColor" type="color" value="#2563eb"></label>
+      </section>
+      <section class="panel-section dictionary-panel">
+        <h3>Dicionário local</h3>
+        <div class="dictionary-current"><span>Palavra atual</span><strong id="dictionaryCurrentWord">—</strong></div>
+        <p id="dictionaryStatus" class="panel-help">Selecione uma palavra para revisar.</p>
+        <div id="dictionarySuggestions" class="dictionary-suggestions"></div>
+        <div class="dictionary-actions"><button id="dictionaryAdd" class="secondary-button" type="button">Adicionar palavra</button><button id="dictionaryRefresh" class="secondary-button" type="button">Revisar</button></div>
+        <div id="dictionaryWords" class="dictionary-words" aria-label="Palavras adicionadas"></div>
+      </section>
+      <section id="imageProperties" class="panel-section" hidden>
+        <h3>Imagem selecionada</h3>
+        <label class="field"><span>Largura</span><input id="imageWidth" type="range" min="10" max="100" value="60"><b id="imageWidthValue">60%</b></label>
+        <label class="field"><span>Alinhamento</span><select id="imageAlign"><option value="left">Esquerda</option><option value="center">Centro</option><option value="right">Direita</option></select></label><label class="field"><span>Disposição</span><select id="imageFlow"><option value="block">Separada do texto</option><option value="wrap">Texto ao redor</option></select></label>
+        <label class="field"><span>Texto alternativo</span><input id="imageAlt" type="text" placeholder="Descreva a imagem"></label>
+        <label class="field"><span>Borda</span><input id="imageBorder" type="range" min="0" max="8" value="0"><b id="imageBorderValue">0 px</b></label>
+        <label class="field"><span>Cantos</span><input id="imageRadius" type="range" min="0" max="32" value="8"><b id="imageRadiusValue">8 px</b></label>
+        <button id="cropImageButton" class="secondary-button image-panel-button" type="button">Recortar imagem…</button>
+        <button id="removeImageButton" class="danger-button" type="button">Remover imagem</button>
+      </section>
+      <section class="panel-section stats-section"><h3>Estatísticas</h3><dl><div><dt>Palavras</dt><dd id="statWords">0</dd></div><div><dt>Caracteres</dt><dd id="statChars">0</dd></div><div><dt>Sem espaços</dt><dd id="statCharsNoSpaces">0</dd></div><div><dt>Parágrafos</dt><dd id="statParagraphs">0</dd></div><div><dt>Páginas</dt><dd id="statPages">1</dd></div><div><dt>Leitura</dt><dd id="statReadTime">0 min</dd></div></dl></section>
+    </aside>
+  </main>
+
+  <footer class="statusbar"><div><span id="statusWords">0 palavras</span><span id="statusChars">0 caracteres</span><span id="statusParagraphs">0 parágrafos</span><span id="statusPages">1 página</span></div><div><span id="statusCurrentPage">Página 1 de 1</span><span id="statusPaper">A4 · Retrato</span><span id="statusZoom">90%</span></div></footer>
+
+  <div id="findPanel" class="find-panel" hidden>
+    <div class="find-row"><input id="findInput" type="search" placeholder="Buscar no documento"><span id="findCount">0</span><button id="findPrev" title="Anterior">↑</button><button id="findNext" title="Próximo">↓</button><button id="findClose" title="Fechar">×</button></div>
+    <div id="replaceRow" class="replace-row" hidden><input id="replaceInput" type="text" placeholder="Substituir por"><button id="replaceOne">Substituir</button><button id="replaceAll">Tudo</button><label><input id="matchCase" type="checkbox"> Aa</label><label><input id="wholeWord" type="checkbox"> Palavra inteira</label></div>
+  </div>
+
+  <dialog id="linkDialog" class="dialog compact-dialog"><form method="dialog" id="linkForm"><button class="dialog-close" type="button" data-dialog-close>×</button><p class="eyebrow">LINK</p><h2 id="linkDialogTitle">Inserir link</h2><label class="field"><span>Texto</span><input id="linkText" type="text" placeholder="Texto do link"></label><label class="field"><span>Endereço</span><input id="linkUrl" type="url" value="https://" required></label><label class="check-row"><input id="linkNewTab" type="checkbox" checked><span>Abrir em nova aba</span></label><div class="dialog-actions link-dialog-actions"><button id="removeLinkButton" class="danger-button compact-danger" type="button" hidden>Remover link</button><span class="dialog-action-spacer"></span><button class="secondary-button" type="button" data-dialog-close>Cancelar</button><button id="linkSubmitButton" class="primary-button" type="submit" value="default">Inserir</button></div></form></dialog>
+  <dialog id="tableDialog" class="dialog compact-dialog"><form method="dialog" id="tableForm"><button class="dialog-close" type="button" data-dialog-close>×</button><p class="eyebrow">INSERIR</p><h2>Tabela</h2><div class="two-fields"><label class="field"><span>Linhas</span><input id="tableRows" type="number" min="1" max="20" value="3"></label><label class="field"><span>Colunas</span><input id="tableCols" type="number" min="1" max="10" value="3"></label></div><label class="check-row"><input id="tableHeader" type="checkbox" checked><span>Primeira linha como cabeçalho</span></label><div class="dialog-actions"><button class="secondary-button" type="button" data-dialog-close>Cancelar</button><button class="primary-button" type="submit" value="default">Inserir tabela</button></div></form></dialog>
+  <dialog id="symbolDialog" class="dialog compact-dialog symbol-dialog"><form method="dialog"><button class="dialog-close" type="button" data-symbol-close>×</button><p class="eyebrow">INSERIR</p><h2>Símbolo</h2><p class="dialog-copy">Clique em um caractere para inseri-lo na posição do cursor.</p><div class="symbol-grid" aria-label="Símbolos disponíveis"><button type="button" data-symbol="—" title="Travessão">—</button><button type="button" data-symbol="–" title="Meia-risca">–</button><button type="button" data-symbol="…" title="Reticências">…</button><button type="button" data-symbol="“" title="Aspa tipográfica esquerda">“</button><button type="button" data-symbol="”" title="Aspa tipográfica direita">”</button><button type="button" data-symbol="‘" title="Aspa simples esquerda">‘</button><button type="button" data-symbol="’" title="Aspa simples direita">’</button><button type="button" data-symbol=" " title="Espaço não separável">NBSP</button><button type="button" data-symbol="•">•</button><button type="button" data-symbol="°">°</button><button type="button" data-symbol="±">±</button><button type="button" data-symbol="×">×</button><button type="button" data-symbol="÷">÷</button><button type="button" data-symbol="≈">≈</button><button type="button" data-symbol="≠">≠</button><button type="button" data-symbol="≤">≤</button><button type="button" data-symbol="≥">≥</button><button type="button" data-symbol="©">©</button><button type="button" data-symbol="®">®</button><button type="button" data-symbol="™">™</button><button type="button" data-symbol="€">€</button><button type="button" data-symbol="£">£</button><button type="button" data-symbol="¥">¥</button><button type="button" data-symbol="→">→</button><button type="button" data-symbol="←">←</button><button type="button" data-symbol="↑">↑</button><button type="button" data-symbol="↓">↓</button><button type="button" data-symbol="✓">✓</button><button type="button" data-symbol="★">★</button></div></form></dialog>
+
+  <dialog id="cropImageDialog" class="dialog crop-dialog">
+    <form method="dialog" id="cropImageForm">
+      <button class="dialog-close" type="button" data-crop-close>×</button>
+      <p class="eyebrow">IMAGEM</p><h2>Recortar</h2>
+      <p class="dialog-copy">Informe quanto remover de cada lado. O recorte cria uma nova imagem incorporada e não altera o arquivo original.</p>
+      <div class="crop-preview-shell"><img id="cropPreview" alt="Prévia do recorte"></div>
+      <div class="crop-fields"><label class="field"><span>Topo %</span><input id="cropTop" type="number" min="0" max="45" value="0"></label><label class="field"><span>Direita %</span><input id="cropRight" type="number" min="0" max="45" value="0"></label><label class="field"><span>Base %</span><input id="cropBottom" type="number" min="0" max="45" value="0"></label><label class="field"><span>Esquerda %</span><input id="cropLeft" type="number" min="0" max="45" value="0"></label></div>
+      <div class="dialog-actions"><button class="secondary-button" type="button" data-crop-close>Cancelar</button><button class="primary-button" type="submit">Aplicar recorte</button></div>
+    </form>
+  </dialog>
+  <dialog id="versionsDialog" class="dialog versions-dialog">
+    <form method="dialog">
+      <button class="dialog-close" type="button" data-versions-close>×</button>
+      <p class="eyebrow">HISTÓRICO</p>
+      <h2>Versões do documento</h2>
+      <p class="dialog-copy">O InkWrite cria checkpoints durante o uso e em salvamentos importantes. Restaurar uma versão não apaga as demais.</p>
+      <div class="version-toolbar">
+        <label class="field"><span>Manter por documento</span><select id="versionLimit"><option value="10">10 versões</option><option value="20">20 versões</option><option value="30">30 versões</option><option value="50">50 versões</option><option value="100">100 versões</option></select></label>
+        <label class="field"><span>Limite para versões</span><select id="versionStorageLimit"><option value="5">5 MB</option><option value="10">10 MB</option><option value="25">25 MB</option><option value="50">50 MB</option><option value="100">100 MB</option><option value="200">200 MB</option></select></label>
+        <div class="version-toolbar-actions">
+          <button id="createNamedVersion" class="secondary-button" type="button">＋ Checkpoint</button>
+          <button id="compareVersions" class="secondary-button" type="button">Comparar</button>
+        </div>
+      </div>
+      <div class="version-summary"><span id="versionCount" class="version-count">0 versões</span><span id="versionStorage" class="version-storage">Calculando armazenamento…</span></div>
+      <div id="versionList" class="version-list" aria-live="polite"></div>
+      <div class="dialog-actions"><button class="secondary-button" type="button" data-versions-close>Fechar</button></div>
+    </form>
+  </dialog>
+
+
+  <dialog id="versionCompareDialog" class="dialog compare-dialog">
+    <form method="dialog">
+      <button class="dialog-close" type="button" data-compare-close>×</button>
+      <p class="eyebrow">COMPARAR</p>
+      <h2>Comparar versões</h2>
+      <p class="dialog-copy">Escolha dois checkpoints. A prévia é isolada do editor e serve apenas para conferir diferenças.</p>
+      <div class="compare-controls">
+        <label class="field"><span>Versão A</span><select id="compareVersionA"></select></label>
+        <label class="field"><span>Versão B</span><select id="compareVersionB"></select></label>
+      </div>
+      <div id="compareStats" class="compare-stats" aria-live="polite"></div>
+      <div class="compare-grid">
+        <section><h3 id="compareLabelA">Versão A</h3><iframe id="comparePreviewA" sandbox title="Prévia da versão A"></iframe></section>
+        <section><h3 id="compareLabelB">Versão B</h3><iframe id="comparePreviewB" sandbox title="Prévia da versão B"></iframe></section>
+      </div>
+      <div class="dialog-actions"><button class="secondary-button" type="button" data-compare-close>Fechar</button></div>
+    </form>
+  </dialog>
+  <dialog id="accessibilityDialog" class="dialog accessibility-dialog">
+    <form method="dialog">
+      <button class="dialog-close" type="button" data-accessibility-close>×</button>
+      <p class="eyebrow">ACESSIBILIDADE</p>
+      <h2>Verificação do documento</h2>
+      <p class="dialog-copy">O InkWrite procura problemas comuns em imagens, títulos, links, tabelas e contraste. A revisão humana continua importante.</p>
+      <div id="accessibilitySummary" class="accessibility-summary"></div>
+      <div id="accessibilityList" class="accessibility-list" aria-live="polite"></div>
+      <div class="dialog-actions"><button id="rerunAccessibility" class="secondary-button" type="button">Verificar novamente</button><button class="secondary-button" type="button" data-accessibility-close>Fechar</button></div>
+    </form>
+  </dialog>
+  <dialog id="footnoteDialog" class="dialog compact-dialog"><form method="dialog" id="footnoteForm"><button class="dialog-close" type="button" data-footnote-close>×</button><p class="eyebrow">INSERIR</p><h2>Nota de rodapé</h2><label class="field"><span>Texto da nota</span><textarea id="footnoteText" rows="5" placeholder="Escreva a nota de rodapé" required></textarea></label><div class="dialog-actions"><button class="secondary-button" type="button" data-footnote-close>Cancelar</button><button class="primary-button" type="submit" value="default">Inserir nota</button></div></form></dialog>
+
+  <dialog id="shortcutDialog" class="dialog shortcut-dialog"><form method="dialog"><button class="dialog-close" type="button" data-shortcut-close>×</button><p class="eyebrow">ATALHOS</p><h2>Atalhos configuráveis</h2><p class="dialog-copy">Clique em um campo e pressione a combinação desejada. “Mod” significa Ctrl no Windows/Linux e Command no macOS.</p><div id="shortcutList" class="shortcut-list"></div><div class="dialog-actions"><button id="shortcutReset" class="secondary-button" type="button">Restaurar padrão</button><span class="dialog-action-spacer"></span><button class="primary-button" type="button" data-shortcut-close>Concluir</button></div></form></dialog>
+
+  <dialog id="exportDialog" class="dialog export-dialog">
+    <form method="dialog">
+      <button class="dialog-close" type="button" data-export-close>×</button>
+      <p class="eyebrow">EXPORTAR</p>
+      <h2>Escolha o formato</h2>
+      <p class="dialog-copy">O documento continua salvo automaticamente no navegador. A exportação cria apenas uma cópia no formato escolhido.</p>
+      <div class="export-grid">
+        <button type="button" data-export-format="docx"><strong>Word DOCX</strong><small>.docx · formato real do Word</small></button><button type="button" data-export-format="word"><strong>Word legado</strong><small>.doc · compatibilidade baseada em HTML</small></button>
+        <button type="button" data-export-format="rtf"><strong>Rich Text</strong><small>.rtf · abre em vários editores</small></button>
+        <button type="button" data-export-format="html"><strong>Página Web</strong><small>.html · preserva estilos e imagens</small></button>
+        <button type="button" data-export-format="md"><strong>Markdown</strong><small>.md · ótimo para texto e código</small></button>
+        <button type="button" data-export-format="txt"><strong>Texto simples</strong><small>.txt · sem formatação</small></button>
+        <button type="button" data-export-format="pdf"><strong>PDF</strong><small>usa a impressão do navegador</small></button>
+      </div>
+    </form>
+  </dialog>
+
+  <input id="imageInput" type="file" accept="image/*" hidden>
+  <input id="projectInput" type="file" accept=".html,.htm,.txt,.md,.markdown,text/html,text/plain,text/markdown" hidden>
+
+  <script src="js/storage.js"></script>
+  <script src="js/document-model.js"></script>
+  <script src="js/docx.js"></script>
+  <script src="js/export.js"></script>
+  <script src="js/selection.js"></script>
+  <script src="js/history.js"></script>
+  <script src="js/commands.js"></script>
+  <script src="js/shortcuts.js"></script>
+  <script src="js/spelling.js"></script>
+  <script src="js/footnotes.js"></script>
+  <script src="js/tables.js"></script>
+  <script src="js/images.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/dialogs.js"></script>
+  <script src="js/accessibility.js"></script>
+  <script src="js/editor.js"></script>
+</body>
+</html>

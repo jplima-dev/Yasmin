@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>InkSheet</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <script type="module" src="http://127.0.0.1:8790/core/module-bootstrap.js"></script>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <a class="logo" href="index.html" title="Projetos">IS</a>
+      <div class="document-info">
+        <input id="projectTitle" class="project-title" value="Minha planilha" aria-label="Nome da planilha">
+        <span class="brand-tagline">editor de planilhas local</span>
+        <nav class="menu" aria-label="Menu principal">
+          <div class="menu-item">
+            <button data-menu-target="fileMenu" type="button">Arquivo</button>
+            <div id="fileMenu" class="top-menu" hidden>
+              <button id="menuNew" type="button">Nova planilha</button>
+              <button id="menuSave" type="button">Salvar</button>
+              <hr>
+              <button id="menuImportCsv" type="button">Importar CSV</button>
+              <button id="menuImportJson" type="button">Abrir projeto (.json)</button>
+              <button id="menuDownloadJson" type="button">Baixar projeto (.json)</button>
+              <hr>
+              <button id="menuExportCsv" type="button">Exportar aba como CSV</button>
+              <button id="menuExportXls" type="button">Exportar Excel compatível (.xls)</button>
+              <button id="menuExportHtml" type="button">Exportar HTML</button>
+              <button id="menuPrint" type="button">Imprimir / PDF</button>
+            </div>
+          </div>
+          <div class="menu-item">
+            <button data-menu-target="editMenu" type="button">Editar</button>
+            <div id="editMenu" class="top-menu" hidden>
+              <button id="menuUndo" type="button">Desfazer</button>
+              <button id="menuRedo" type="button">Refazer</button>
+              <hr>
+              <button id="menuCut" type="button">Recortar</button>
+              <button id="menuCopy" type="button">Copiar</button>
+              <button id="menuPaste" type="button">Colar</button>
+              <button id="menuDelete" type="button">Limpar conteúdo</button>
+              <hr>
+              <button id="menuFind" type="button">Localizar</button>
+              <button id="menuReplace" type="button">Substituir</button>
+            </div>
+          </div>
+          <div class="menu-item">
+            <button data-menu-target="insertMenu" type="button">Inserir</button>
+            <div id="insertMenu" class="top-menu" hidden>
+              <button id="menuAddRow" type="button">Linha abaixo</button>
+              <button id="menuAddColumn" type="button">Coluna à direita</button>
+              <button id="menuAddSheet" type="button">Nova aba</button>
+              <hr>
+              <button id="menuChart" type="button">Gráfico rápido</button>
+            </div>
+          </div>
+          <div class="menu-item">
+            <button data-menu-target="dataMenu" type="button">Dados</button>
+            <div id="dataMenu" class="top-menu" hidden>
+              <button id="menuSortAsc" type="button">Ordenar A → Z</button>
+              <button id="menuSortDesc" type="button">Ordenar Z → A</button>
+              <button id="menuRemoveDuplicates" type="button">Remover duplicatas</button>
+              <hr>
+              <button id="menuAutoSum" type="button">AutoSoma</button>
+            </div>
+          </div>
+          <div class="menu-item">
+            <button data-menu-target="viewMenu" type="button">Visualizar</button>
+            <div id="viewMenu" class="top-menu" hidden>
+              <button id="menuZoomIn" type="button">Aumentar zoom</button>
+              <button id="menuZoomOut" type="button">Diminuir zoom</button>
+              <button id="menuZoomReset" type="button">Zoom 100%</button>
+              <hr>
+              <button id="menuGridlines" type="button">Alternar linhas de grade</button>
+              <button id="menuTheme" type="button">Alternar tema</button>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <span id="saveState" class="save-state">Salvo</span>
+      <button id="undoButton" class="icon-button" type="button" title="Desfazer">↶</button>
+      <button id="redoButton" class="icon-button" type="button" title="Refazer">↷</button>
+      <button id="saveProjectButton" class="secondary-button" type="button">Salvar</button>
+      <button id="exportButton" class="primary-button" type="button">Exportar CSV</button>
+    </div>
+  </header>
+
+  <section class="toolbar" aria-label="Ferramentas">
+    <div class="toolbar-group compact">
+      <button id="boldButton" class="format-button" type="button" title="Negrito"><b>B</b></button>
+      <button id="italicButton" class="format-button" type="button" title="Itálico"><i>I</i></button>
+      <button id="underlineButton" class="format-button" type="button" title="Sublinhado"><u>U</u></button>
+    </div>
+    <div class="divider"></div>
+    <label class="control"><span>Fonte</span><select id="fontFamily">
+        <option value="Arial">Arial</option>
+        <option value="Georgia">Georgia</option>
+        <option value="Courier New">Courier New</option>
+        <option value="Verdana">Verdana</option>
+      </select></label>
+    <label class="control small-control"><span>Tamanho</span><input id="fontSize" type="number" min="8" max="48"
+        value="12"></label>
+    <div class="divider"></div>
+    <div class="toolbar-group">
+      <button class="align-button" data-align="left" type="button" title="Alinhar à esquerda">≡</button>
+      <button class="align-button" data-align="center" type="button" title="Centralizar">☰</button>
+      <button class="align-button" data-align="right" type="button" title="Alinhar à direita">≣</button>
+    </div>
+    <div class="divider"></div>
+    <label class="color-control" title="Cor do texto">A<input id="textColor" type="color" value="#18302b"></label>
+    <label class="color-control fill" title="Cor de fundo">▧<input id="fillColor" type="color" value="#ffffff"></label>
+    <label class="control"><span>Formato</span><select id="numberFormat">
+        <option value="general">Geral</option>
+        <option value="number">Número</option>
+        <option value="currency">Moeda</option>
+        <option value="percent">Porcentagem</option>
+        <option value="date">Data</option>
+      </select></label>
+    <div class="divider"></div>
+    <button id="clearFormatButton" class="toolbar-button" type="button">Limpar formato</button>
+    <button id="autoSumButton" class="toolbar-button" type="button">Σ AutoSoma</button>
+    <button id="chartButton" class="toolbar-button" type="button">▥ Gráfico</button>
+  </section>
+
+  <section class="formula-bar">
+    <div id="nameBox" class="name-box" title="Célula selecionada">A1</div>
+    <div class="fx">fx</div>
+    <input id="formulaInput" type="text" spellcheck="false" autocomplete="off"
+      placeholder="Digite um valor ou uma fórmula, por exemplo =SUM(A1:A5)">
+  </section>
+
+  <main class="workspace">
+    <div id="gridViewport" class="grid-viewport">
+      <table id="sheetTable" class="sheet-table" aria-label="Planilha"></table>
+      <input id="cellEditor" class="cell-editor" type="text" spellcheck="false" autocomplete="off" hidden>
+    </div>
+  </main>
+
+  <footer class="bottom-bar">
+    <div class="sheet-tabs-wrap">
+      <button id="addSheetButton" class="add-sheet" type="button" title="Nova aba">＋</button>
+      <div id="sheetTabs" class="sheet-tabs"></div>
+    </div>
+    <div class="status-bar">
+      <span id="selectionStats">Pronto</span>
+      <button id="zoomOutButton" type="button">−</button>
+      <span id="zoomLabel">100%</span>
+      <button id="zoomInButton" type="button">＋</button>
+    </div>
+  </footer>
+
+  <input id="csvFileInput" type="file" accept=".csv,text/csv" hidden>
+  <input id="jsonFileInput" type="file" accept="application/json,.json" hidden>
+
+  <dialog id="chartDialog" class="chart-dialog">
+    <div class="dialog-head">
+      <div>
+        <p class="eyebrow">GRÁFICO RÁPIDO</p>
+        <h2>Visualizar seleção</h2>
+      </div><button id="chartClose" class="dialog-close" type="button">×</button>
+    </div>
+    <div class="chart-controls">
+      <label>Tipo <select id="chartType">
+          <option value="bar">Barras</option>
+          <option value="line">Linha</option>
+          <option value="pie">Pizza</option>
+        </select></label>
+      <button id="chartDownload" class="secondary-button" type="button">Baixar PNG</button>
+    </div>
+    <canvas id="chartCanvas" width="900" height="460"></canvas>
+    <p class="chart-hint">Use uma seleção com rótulos na primeira coluna e valores na segunda.</p>
+  </dialog>
+
+  <script src="js/storage.js"></script>
+  <script src="js/editor.js"></script>
+  <script src="js/engine.js"></script>
+  <script src="js/enhance.js"></script>
+  <script src="js/xlsx.js"></script>
+  <script src="js/ximport.js"></script>
+  <script src="js/colresize.js"></script>
+  <script src="js/rules.js"></script>
+  <script src="js/views.js"></script>
+  <script src="js/format.js"></script>
+  <script src="js/notes.js"></script>
+  <script src="js/tables.js"></script>
+  <script src="js/print.js"></script>
+</body>
+
+</html>

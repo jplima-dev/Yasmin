@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark light">
+    <meta name="description" content="Gerador local e privado de QR Codes em PNG e SVG.">
+    <title>Gerador de QR Code</title>
+    <link rel="stylesheet" href="/src/styles.css">
+    <script type="module" src="http://127.0.0.1:8790/core/module-bootstrap.js"></script>
+  </head>
+  <body>
+    <header class="app-header">
+      <a class="brand" href="./" aria-label="Página inicial do Gerador de QR Code"><span>▦</span><div><strong>Gerador de QR Code</strong><small>Workspace OS</small></div></a>
+      <span class="privacy-pill">● Processamento local</span>
+    </header>
+
+    <main class="app-layout">
+      <section class="editor-panel">
+        <div class="intro"><p class="eyebrow">CRIAR QR CODE</p><h1>Transforme informações em um código pronto para usar.</h1><p>Escolha o conteúdo, personalize e exporte. Nada é enviado para a internet.</p></div>
+
+        <form id="qr-form">
+          <fieldset class="form-section">
+            <legend>1. O que o QR Code deve abrir?</legend>
+            <div class="type-grid" id="type-grid">
+              <label><input type="radio" name="type" value="url" checked><span>↗<b>URL</b></span></label>
+              <label><input type="radio" name="type" value="text"><span>¶<b>Texto</b></span></label>
+              <label><input type="radio" name="type" value="wifi"><span>⌁<b>Wi-Fi</b></span></label>
+              <label><input type="radio" name="type" value="contact"><span>◉<b>Contato</b></span></label>
+              <label><input type="radio" name="type" value="phone"><span>☎<b>Telefone</b></span></label>
+              <label><input type="radio" name="type" value="email"><span>@<b>E-mail</b></span></label>
+              <label><input type="radio" name="type" value="pix"><span>◇<b>PIX</b></span></label>
+            </div>
+
+            <div class="content-fields" data-fields="url"><label>Endereço<input name="url" type="url" value="https://" autocomplete="url" placeholder="https://exemplo.com"></label></div>
+            <div class="content-fields hidden" data-fields="text"><label>Texto<textarea name="text" rows="5" placeholder="Escreva a mensagem"></textarea></label></div>
+            <div class="content-fields hidden two-columns" data-fields="wifi">
+              <label>Nome da rede<input name="ssid" autocomplete="off" placeholder="Wi-Fi de casa"></label>
+              <label>Segurança<select name="security"><option value="WPA">WPA/WPA2/WPA3</option><option value="WEP">WEP</option><option value="nopass">Sem senha</option></select></label>
+              <label>Senha<input name="password" type="password" autocomplete="new-password" placeholder="Senha da rede"></label>
+              <label class="check-row"><input name="hidden" type="checkbox"> Rede oculta</label>
+            </div>
+            <div class="content-fields hidden two-columns" data-fields="contact">
+              <label>Nome<input name="name" autocomplete="name" placeholder="Nome completo"></label>
+              <label>Organização<input name="organization" autocomplete="organization" placeholder="Empresa ou projeto"></label>
+              <label>Telefone<input name="contactPhone" autocomplete="tel" placeholder="+55 85 99999-9999"></label>
+              <label>E-mail<input name="contactEmail" type="email" autocomplete="email" placeholder="nome@exemplo.com"></label>
+            </div>
+            <div class="content-fields hidden" data-fields="phone"><label>Telefone<input name="phone" autocomplete="tel" placeholder="+55 85 99999-9999"></label></div>
+            <div class="content-fields hidden two-columns" data-fields="email">
+              <label>E-mail<input name="email" type="email" autocomplete="email" placeholder="nome@exemplo.com"></label>
+              <label>Assunto<input name="subject" placeholder="Assunto opcional"></label>
+              <label class="wide">Mensagem<textarea name="body" rows="3" placeholder="Mensagem opcional"></textarea></label>
+            </div>
+            <div class="content-fields hidden two-columns" data-fields="pix">
+              <label>Tipo de chave<select name="pixKeyType"><option value="cpf">CPF</option><option value="cnpj">CNPJ</option><option value="phone">Telefone</option><option value="email">E-mail</option><option value="random">Chave aleatória</option></select></label>
+              <label>Chave PIX<input name="pixKey" maxlength="77" autocomplete="off" placeholder="Digite a chave"></label>
+              <label>Nome do recebedor<input name="pixName" maxlength="25" autocomplete="name" placeholder="Até 25 caracteres"></label>
+              <label>Cidade<input name="pixCity" maxlength="15" autocomplete="address-level2" placeholder="Até 15 caracteres"></label>
+              <label>Tipo de cobrança<select name="pixAmountMode"><option value="open">Sem valor definido</option><option value="fixed">Com valor definido</option></select></label>
+              <label class="hidden" data-pix-amount>Valor (R$)<input name="pixAmount" inputmode="decimal" placeholder="0,00"></label>
+              <label class="wide">Descrição<input name="pixDescription" maxlength="72" placeholder="Opcional; aparecerá nos dados do pagamento"></label>
+              <label class="wide">Identificador<input name="pixTxid" maxlength="25" pattern="[A-Za-z0-9]*" placeholder="Opcional; apenas letras e números"></label>
+              <p class="hint wide">Para telefone, use o formato internacional: +5585999999999. CPF e CNPJ são validados antes da geração.</p>
+            </div>
+          </fieldset>
+
+          <fieldset class="form-section">
+            <legend>2. Aparência</legend>
+            <div class="appearance-grid">
+              <label>Tamanho<select name="size"><option value="256">256 px</option><option value="512" selected>512 px</option><option value="1024">1024 px</option></select></label>
+              <label>Margem<select name="margin"><option value="2">Pequena</option><option value="4" selected>Padrão</option><option value="6">Ampla</option></select></label>
+              <label>Cor do código<input name="dark" type="color" value="#111827"></label>
+              <label>Cor de fundo<input name="light" type="color" value="#ffffff"></label>
+              <label>Correção de erro<select name="errorLevel"><option value="M">Média</option><option value="Q" selected>Alta</option><option value="H">Máxima</option></select></label>
+              <label>Título<input name="title" maxlength="70" placeholder="Opcional"></label>
+              <label class="check-row"><input name="frame" type="checkbox" checked> Moldura discreta</label>
+              <label class="file-field">Logo opcional<input id="logo-input" name="logo" type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml"><span id="logo-name">Escolher imagem</span></label>
+            </div>
+            <p class="hint">Ao usar um logo, a correção máxima é aplicada automaticamente. O logo ocupa no máximo 18% do código.</p>
+          </fieldset>
+        </form>
+      </section>
+
+      <aside class="preview-panel">
+        <div class="preview-heading"><div><p class="eyebrow">PRÉVIA</p><h2>Seu QR Code</h2></div><span class="status" id="status">Preencha o conteúdo</span></div>
+        <div class="canvas-wrap"><canvas id="qr-preview" width="512" height="512" aria-label="Prévia do QR Code"></canvas><div class="empty-preview" id="empty-preview">▦<span>A prévia aparece aqui</span></div></div>
+        <div class="validation" id="validation"><span>○</span><p><strong>Aguardando conteúdo</strong><small>O código será atualizado automaticamente.</small></p></div>
+        <div class="pix-copy hidden" id="pix-copy-wrap">
+          <label>PIX Copia e Cola<textarea id="pix-copy" rows="4" readonly></textarea></label>
+          <button id="copy-pix" type="button">Copiar código PIX</button>
+        </div>
+        <div class="export-actions"><button id="download-png" type="button" disabled>Baixar PNG</button><button id="download-svg" type="button" disabled>Baixar SVG</button></div>
+        <p class="export-note">Teste o código com a câmera do celular antes de imprimir grandes quantidades.</p>
+      </aside>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script type="module" src="/src/app.js"></script>
+  </body>
+</html>

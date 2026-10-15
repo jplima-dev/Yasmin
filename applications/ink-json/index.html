@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark light">
+  <title>Ink JSON</title>
+  <link rel="stylesheet" href="http://127.0.0.1:8790/core/tool-shell.css">
+</head>
+<body class="ink-tool">
+  <main class="tool-shell">
+    <header class="tool-header">
+      <div class="tool-title"><span class="tool-mark">{ }</span><div><h1>Ink JSON</h1><p>Edite, valide, pesquise e explore JSON em árvore.</p></div></div>
+      <div class="tool-actions">
+        <label class="tool-button">Abrir arquivo<input class="sr-only" id="file-input" type="file" accept=".json,application/json,text/json"></label>
+        <button class="tool-button" id="sample" type="button">Exemplo</button>
+        <button class="tool-button" id="download" type="button">Baixar JSON</button>
+      </div>
+    </header>
+    <section class="tool-grid">
+      <article class="tool-card">
+        <div class="tool-card-header"><h2>Editor</h2><div class="button-row"><button class="tool-button" id="validate" type="button">Validar</button><button class="tool-button" id="minify" type="button">Minificar</button><button class="tool-button primary" id="format" type="button">Formatar</button></div></div>
+        <div class="tool-card-body"><textarea class="tool-textarea" id="editor" spellcheck="false" aria-label="Conteúdo JSON" placeholder='{"projeto":"Ink","ativo":true}'></textarea><div class="tool-status" id="status" role="status">Cole um JSON ou abra um arquivo.</div></div>
+      </article>
+      <article class="tool-card">
+        <div class="tool-card-header"><h2>Árvore</h2><div class="inline-controls"><input class="tool-input" id="search" type="search" placeholder="Buscar chave ou valor" aria-label="Buscar na árvore"><button class="tool-button" id="copy" type="button">Copiar</button></div></div>
+        <div class="tool-tree" id="tree"><span class="tree-meta">A árvore aparece após validar.</span></div>
+      </article>
+    </section>
+  </main>
+  <script type="module" src="http://127.0.0.1:8790/core/module-bootstrap.js"></script>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="pt-BR" data-module-id="notebook">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ink Notebook · Workspace OS</title>
+  <link rel="stylesheet" href="./shell.css">
+</head>
+
+<body>
+  <main class="notebook-shell" aria-label="Ink Notebook">
+    <div id="notebook-status" class="notebook-status" role="status">Conectando ao Ink Notebook…</div>
+    <iframe id="notebook-frame" title="Ink Notebook" allow="clipboard-read; clipboard-write" hidden></iframe>
+  </main>
+  <script type="module" src="/core/module-bootstrap.js"></script>
+  <script type="module" src="./shell.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 2,
+  "id": "sheets",
+  "name": "InkSheet",
+  "vendor": "Ink-guginha",
+  "author": "Ink-guginha",
+  "category": "work",
+  "description": "Planilha local independente com edição, fórmulas e armazenamento próprios.",
+  "kind": "static-web",
+  "entryFile": "index.html",
+  "icon": "table",
+  "version": "1.0.0",
+  "minCoreVersion": "0.3.0",
+  "dataSchemaVersion": 1,
+  "capabilities": {
+    "export": true,
+    "import": true,
+    "print": true,
+    "offline": true,
+    "shortcuts": [
+      "save"
+    ],
+    "permissions": [
+      "storage:local",
+      "files:user-selected"
+    ]
+  },
+  "instructions": [
+    "Crie ou edite uma planilha; os dados permanecem locais."
+  ]
+}

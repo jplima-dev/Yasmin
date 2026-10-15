@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 2,
+  "id": "writer",
+  "name": "InkWrite",
+  "vendor": "Ink-guginha",
+  "author": "Ink-guginha",
+  "category": "work",
+  "description": "Editor de documentos local com versionamento, recuperação, edição avançada e exportação profissional.",
+  "kind": "static-web",
+  "entryFile": "index.html",
+  "icon": "document",
+  "version": "2.0.4",
+  "minCoreVersion": "0.3.0",
+  "dataSchemaVersion": 3,
+  "capabilities": {
+    "export": true,
+    "import": true,
+    "print": true,
+    "offline": true,
+    "shortcuts": [
+      "save",
+      "print"
+    ],
+    "permissions": [
+      "storage:local",
+      "files:user-selected"
+    ]
+  },
+  "instructions": [
+    "Crie ou edite documentos localmente; rascunhos de recuperação e versões anteriores são preservados no navegador.",
+    "O modelo semântico v2 é usado junto de um fallback HTML compatível com documentos antigos.",
+    "DOCX real, notas de rodapé, sumário, acessibilidade, atalhos configuráveis, dicionário local e controles de fluxo de página estão disponíveis."
+  ],
+  "migrations": []
+}

@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+  <script src="http://127.0.0.1:8790/core/theme-preload.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#21133f">
+  <meta name="description" content="Bridge conecta seus dispositivos com privacidade e baixa fricção.">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="/styles.css?v=12">
+  <script type="module" src="http://127.0.0.1:8790/core/module-bootstrap.js"></script>
+  <title>Bridge</title>
+</head>
+
+<body>
+  <header class="topbar">
+    <a class="brand" href="#devices" aria-label="Bridge - início">
+      <span class="brand-mark">B</span><span>BRIDGE</span>
+    </a>
+    <div class="connection"><span id="connectionDot" class="dot pending"></span><span
+        id="connectionText">Conectando</span></div>
+    <button id="installButton" class="button ghost" type="button" hidden>Instalar app</button>
+  </header>
+
+  <div class="shell">
+    <nav class="sidebar" aria-label="Navegação principal">
+      <a href="#devices" class="nav-item active" data-view="devices">⌁ <span>Dispositivos</span></a>
+      <a href="#send" class="nav-item" data-view="send">↑ <span>Enviar</span></a>
+      <a href="#history" class="nav-item" data-view="history">◷ <span>Histórico</span></a>
+      <a href="#settings" class="nav-item" data-view="settings">⚙ <span>Conexões</span></a>
+      <a href="#guide" class="nav-item" data-view="guide">▤ <span>Guia</span></a>
+    </nav>
+
+    <main>
+      <section id="devices" class="view active">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">Visão geral</p>
+            <h1>Seus dispositivos</h1>
+            <p>Veja quem está disponível e envie arquivos diretamente.</p>
+          </div>
+          <button class="button primary" id="pairNew" type="button">Conectar outro aparelho</button>
+        </div>
+        <div id="deviceGrid" class="device-grid skeleton-grid" aria-live="polite"></div>
+        <div class="section-heading">
+          <div>
+            <h2>Agora no Bridge</h2>
+            <p>Atividade recente dos seus aparelhos.</p>
+          </div>
+        </div>
+        <div id="liveFeed" class="feed empty">Nenhum evento nesta sessão.</div>
+      </section>
+
+      <section id="send" class="view">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">Compartilhar</p>
+            <h1>Envie direto</h1>
+            <p>Escolha o destino e o arquivo. A transferência começa imediatamente.</p>
+          </div>
+        </div>
+        <div class="send-layout">
+          <div class="file-send-panel">
+            <label class="target-picker">Enviar arquivos para<select id="fileTarget" required></select></label>
+            <div id="dropZone" class="drop-zone" tabindex="0" role="button">
+              <div class="drop-icon">↑</div>
+              <h2>Solte arquivos aqui</h2>
+              <p>Ou escolha no aparelho. Depois da seleção, o envio é automático e o destino não precisa aprovar.</p>
+              <input id="fileInput" type="file" multiple hidden>
+              <input id="directoryInput" type="file" webkitdirectory multiple hidden>
+              <div class="device-actions"><button class="button secondary" id="chooseFile" type="button">Escolher
+                  arquivo</button><button class="button ghost" id="chooseFolder" type="button">Escolher pasta</button>
+              </div>
+            </div>
+          </div>
+          <form id="messageForm" class="panel form-stack">
+            <h2>Conteúdo rápido</h2>
+            <label>Tipo<select id="messageKind">
+                <option value="text">Texto</option>
+                <option value="snippet">Snippet</option>
+                <option value="link">Link</option>
+                <option value="clipboard">Clipboard explícito</option>
+                <option value="photo_offer">Oferta de foto</option>
+              </select></label>
+            <label>Destino<select id="messageTarget" required></select></label>
+            <label>Conteúdo<textarea id="messageContent" rows="7" required
+                placeholder="Cole ou escreva aqui..."></textarea></label>
+            <label>Ação ao receber<select id="messageBehavior">
+                <option value="save">Guardar</option>
+                <option value="ask">Perguntar</option>
+                <option value="open">Abrir</option>
+              </select></label>
+            <button class="button primary" type="submit">Enviar agora</button>
+          </form>
+        </div>
+        <div id="transferQueue" class="transfer-list"></div>
+      </section>
+
+      <section id="history" class="view">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">Atividade</p>
+            <h1>Histórico</h1>
+            <p>O que aconteceu, entre quais aparelhos e quando.</p>
+          </div><label class="toggle-label"><input id="securityOnly" type="checkbox"> Só segurança</label>
+        </div>
+        <div id="historyList" class="timeline"></div>
+      </section>
+
+      <section id="settings" class="view">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">Conexão</p>
+            <h1>Conectar outro aparelho</h1>
+            <p>Abra o Bridge no aparelho que você quer adicionar.</p>
+          </div>
+        </div>
+        <div class="panel quick-start">
+          <h2>É só fazer isto</h2>
+          <ol>
+            <li>No outro aparelho, abra o endereço mostrado em <strong>Na sua casa</strong>.</li>
+            <li>Escreva um nome, gere o código e digite os seis dígitos mostrados na janela do Core.</li>
+          </ol>
+          <p class="muted">O código de seis dígitos aparece na janela do Bridge Core e vale por 10 minutos.</p>
+          <p class="muted"><strong>Depois de reiniciar o notebook:</strong> o Workspace inicia o Bridge automaticamente
+            quando as opções de inicialização estão ativadas.</p>
+        </div>
+        <div class="settings-grid">
+          <article class="panel connection-card"><span class="status-badge live">Ativo</span>
+            <h2>Na sua casa</h2>
+            <p>Funciona pela rede local, mesmo sem internet. As redes Wi-Fi de 2,4 GHz e 5 GHz precisam permitir que os
+              aparelhos se enxerguem.</p><code id="localAddress">carregando...</code>
+            <div id="peerCount" class="muted"></div>
+          </article>
+          <article class="panel connection-card"><span class="status-badge ready">Opcional</span>
+            <h2>Fora de casa</h2>
+            <p>Para usar redes diferentes, conecte os aparelhos pela sua rede privada Tailscale e abra o endereço do
+              computador.</p>
+          </article>
+        </div>
+        <div class="panel identity-panel screen-permission-panel">
+          <div>
+            <p class="eyebrow">Privacidade</p>
+            <h2>Compartilhamento de tela</h2>
+            <p>Pedidos ficam permitidos por padrão, mas nenhuma imagem é capturada automaticamente. Toda sessão exige
+              sua aprovação local e o seletor do sistema.</p>
+            <p class="muted" id="screenShareHint"></p>
+          </div>
+          <label class="permission-toggle"><input id="screenSharePermission" type="checkbox"><span>Permitir solicitações
+              neste aparelho</span></label>
+        </div>
+        <div class="panel identity-panel">
+          <h2>Identidade deste Bridge</h2>
+          <p>Compare esta impressão nos dois aparelhos durante o pareamento.</p><code
+            id="fingerprint">carregando...</code>
+        </div>
+      </section>
+
+      <section id="guide" class="view">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">Manual completo</p>
+            <h1>Livro do Bridge</h1>
+            <p>Da primeira inicialização ao envio diário, com cada clique explicado.</p>
+          </div>
+        </div>
+        <div class="guide-book">
+          <details open>
+            <summary><span class="guide-number">1</span><span><strong>Iniciar junto com o computador</strong><small>Faça
+                  uma vez no Workspace</small></span></summary>
+            <ol>
+              <li>Abra o <strong>Workspace</strong> e entre em <strong>Configurações</strong> pela barra lateral.</li>
+              <li>Na seção <strong>Inicialização</strong>, ative <strong>Iniciar com o Windows</strong>.</li>
+              <li>Logo abaixo, deixe <strong>Iniciar Bridge Core</strong> ligado.</li>
+              <li>Reinicie o computador uma vez. Depois de entrar na conta, abra o Workspace e confira se o Bridge
+                aparece como <strong>online</strong>.</li>
+            </ol>
+          </details>
+          <details>
+            <summary><span class="guide-number">2</span><span><strong>Conectar celular ou outro
+                  computador</strong><small>Os aparelhos devem se enxergar na rede</small></span></summary>
+            <ol>
+              <li>Nesta página, clique em <strong>Conexões</strong> no menu lateral.</li>
+              <li>Em <strong>Na sua casa</strong>, copie o endereço completo mostrado. Ele começa com
+                <code>http://</code> e termina com a porta do Bridge.</li>
+              <li>Conecte o outro aparelho ao mesmo Wi-Fi e abra esse endereço no navegador dele.</li>
+              <li>Clique em <strong>Conectar outro aparelho</strong>, escreva um nome reconhecível e escolha
+                <strong>Gerar código de pareamento</strong>.</li>
+              <li>Na janela do Bridge Core, veja os seis dígitos; digite-os no aparelho novo e confirme.</li>
+              <li>Volte a <strong>Dispositivos</strong>. O novo aparelho deve aparecer com o indicador de presença.</li>
+            </ol>
+            <p class="guide-callout"><strong>Importante:</strong> no celular, não use <code>127.0.0.1</code>. Esse
+              endereço sempre aponta para o próprio celular.</p>
+          </details>
+          <details>
+            <summary><span class="guide-number">3</span><span><strong>Enviar arquivos, pastas e
+                  texto</strong><small>Fluxo normal do dia a dia</small></span></summary>
+            <ol>
+              <li>Clique em <strong>Enviar</strong> no menu.</li>
+              <li>No campo <strong>Enviar arquivos para</strong>, escolha o aparelho de destino.</li>
+              <li>Arraste os arquivos para a área central ou use <strong>Escolher arquivo</strong>. Para uma pasta
+                inteira, use <strong>Escolher pasta</strong>.</li>
+              <li>Para texto, link ou trecho de código, use <strong>Conteúdo rápido</strong>, escolha o tipo, o destino
+                e a ação ao receber.</li>
+              <li>Abra <strong>Histórico</strong> para confirmar o resultado ou localizar uma falha.</li>
+            </ol>
+          </details>
+          <details>
+            <summary><span class="guide-number">4</span><span><strong>Compartilhar a tela do
+                  computador</strong><small>WebRTC direto com consentimento local</small></span></summary>
+            <ol>
+              <li>Se o painel já estiver aberto no computador, no celular escolha o dispositivo <strong>web</strong> e
+                toque em <strong>Ver tela</strong>.</li>
+              <li>Se o Chrome estiver fechado, escolha o dispositivo <strong>windows</strong> e toque em <strong>Pedir
+                  tela por notificação</strong>.</li>
+              <li>No computador, clique na notificação <strong>Abrir Bridge</strong>.</li>
+              <li>No painel, clique em <strong>Compartilhar agora</strong> e escolha a tela ou janela no seletor do
+                navegador.</li>
+              <li>Encerre em qualquer aparelho. A permissão nunca inicia a captura silenciosamente.</li>
+            </ol>
+          </details>
+          <details>
+            <summary><span class="guide-number">5</span><span><strong>Usar fora de casa com
+                  Tailscale</strong><small>Opcional, para redes diferentes</small></span></summary>
+            <ol>
+              <li>Instale o Tailscale no computador do Bridge e no aparelho remoto.</li>
+              <li>Entre na mesma conta do Tailscale nos dois aparelhos e confirme que ambos aparecem conectados.</li>
+              <li>No computador, copie o endereço Tailscale no formato <code>100.x.y.z</code>.</li>
+              <li>No aparelho remoto, abra <code>http://100.x.y.z:8876</code>, trocando o exemplo pelo endereço real e
+                pela porta configurada.</li>
+              <li>Faça o cadastro do aparelho como no capítulo 2.</li>
+            </ol>
+          </details>
+          <details>
+            <summary><span class="guide-number">6</span><span><strong>Configurar o agente do
+                  Windows</strong><small>Comandos e permissões remotas</small></span></summary>
+            <ol>
+              <li>No Workspace, abra <strong>Configurações → Integrações → Bridge Agent no Windows</strong>.</li>
+              <li>Confira o endereço do Bridge, escolha o nome do computador e ative somente as permissões desejadas.
+              </li>
+              <li>Clique em <strong>Salvar perfil do agente</strong>.</li>
+              <li>Clique em <strong>Copiar comando para parear</strong>, abra o <strong>Ink Terminal</strong>, cole e
+                pressione <strong>Enter</strong>.</li>
+              <li>Veja o código na janela do Bridge Core, digite-o no terminal do agente e volte a
+                <strong>Dispositivos</strong> para verificar o computador.</li>
+            </ol>
+          </details>
+          <details>
+            <summary><span class="guide-number">7</span><span><strong>Resolver problemas comuns</strong><small>Checklist
+                  rápido</small></span></summary>
+            <ul>
+              <li><strong>Bridge parado:</strong> no Workspace, abra Módulos, localize Bridge e clique em Iniciar.</li>
+              <li><strong>Celular não abre:</strong> confira o mesmo Wi-Fi, o endereço completo e se a rede permite
+                comunicação entre aparelhos.</li>
+              <li><strong>Aparelho sumiu:</strong> abra o Bridge nele novamente; o indicador depende da página
+                conectada.</li>
+              <li><strong>Fora de casa não funciona:</strong> confirme o Tailscale nos dois lados e use o endereço
+                <code>100.x.y.z</code>, não o endereço local.</li>
+              <li><strong>Transferência falhou:</strong> confira <strong>Histórico</strong>, espaço disponível e conexão
+                dos dois aparelhos.</li>
+            </ul>
+          </details>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="pairDialog">
+    <form class="dialog-content form-stack" id="pairForm">
+      <button class="dialog-close" type="button" data-close aria-label="Fechar">×</button>
+      <div id="pairNameStep" class="form-stack">
+        <p class="eyebrow">Novo aparelho</p>
+        <h2>Como chamar este aparelho?</h2>
+        <p>Use um nome fácil, como “Meu celular” ou “Notebook”.</p>
+        <label>Nome do aparelho<input id="deviceName" value="Meu navegador" required></label>
+        <button id="requestPair" class="button primary" type="button">Gerar código de pareamento</button>
+      </div>
+      <div id="pairCodeStep" class="form-stack" hidden>
+        <p class="eyebrow">Confirmação</p>
+        <h2>Digite o código do Core</h2>
+        <p>Veja os seis dígitos na janela em que o Bridge Core está rodando. O código não aparece neste aparelho por
+          segurança.</p>
+        <label>Código de seis dígitos<input id="pairCode" inputmode="numeric" autocomplete="one-time-code"
+            pattern="[0-9]{6}" maxlength="6" placeholder="000000" required></label>
+        <button id="confirmPair" class="button primary" type="submit">Confirmar aparelho</button>
+        <button id="restartPair" class="button ghost" type="button">Voltar e gerar outro código</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="actionDialog">
+    <div class="dialog-content"><button class="dialog-close" type="button" data-close aria-label="Fechar">×</button>
+      <h2 id="actionTitle">Ações do dispositivo</h2>
+      <div id="actionBody" class="action-grid"></div>
+    </div>
+  </dialog>
+  <dialog id="urlDialog">
+    <form class="dialog-content form-stack" id="urlForm">
+      <button class="dialog-close" type="button" data-close aria-label="Fechar">×</button>
+      <p class="eyebrow">Abrir no outro aparelho</p>
+      <h2>Enviar endereço</h2>
+      <label>URL<input id="urlInput" type="url" inputmode="url" required placeholder="https://exemplo.com"></label>
+      <button class="button primary" type="submit">Abrir no aparelho</button>
+    </form>
+  </dialog>
+  <dialog id="urlConsentDialog">
+    <div class="dialog-content form-stack">
+      <p class="eyebrow">Link recebido</p>
+      <h2>Abrir em uma nova guia?</h2>
+      <p><strong id="urlRequester">Outro aparelho</strong> enviou este endereço. A aba do Bridge continuará aberta.</p>
+      <code id="remoteUrlPreview" class="remote-url-preview"></code>
+      <div class="dialog-actions"><button class="button ghost" id="declineRemoteUrl" type="button">Agora
+          não</button><button class="button primary" id="acceptRemoteUrl" type="button">Abrir em nova guia</button>
+      </div>
+    </div>
+  </dialog>
+  <dialog id="screenConsentDialog">
+    <div class="dialog-content form-stack">
+      <p class="eyebrow">Solicitação de tela</p>
+      <h2>Compartilhar sua tela?</h2>
+      <p><strong id="screenRequester">Outro aparelho</strong> pediu para ver esta tela. Nada começa sem sua aprovação e
+        o navegador mostrará o seletor do sistema.</p>
+      <label id="remoteControlConsent" class="permission-toggle session-control-consent" hidden>
+        <input id="allowRemoteControl" type="checkbox">
+        <span><strong>Permitir mouse e teclado nesta sessão</strong><small>Para o cursor ficar alinhado, escolha a tela
+            inteira no seletor do navegador. O acesso termina junto com a transmissão.</small></span>
+      </label>
+      <div class="dialog-actions"><button class="button ghost" id="declineScreenShare" type="button">Agora
+          não</button><button class="button primary" id="acceptScreenShare" type="button">Compartilhar agora</button>
+      </div>
+    </div>
+  </dialog>
+  <dialog id="screenViewerDialog" class="screen-dialog">
+    <div class="dialog-content screen-dialog-content screen-viewer-content">
+      <div class="screen-dialog-heading">
+        <div>
+          <p class="eyebrow">Tela remota</p>
+          <h2 id="screenViewerTitle">Aguardando compartilhamento</h2>
+          <p id="screenViewerStatus" class="muted">A solicitação foi enviada.</p>
+        </div>
+        <div class="screen-dialog-actions"><button class="button secondary" id="fullscreenRemoteScreen"
+            type="button">Tela cheia</button><button class="button danger" id="stopScreenViewing"
+            type="button">Encerrar</button></div>
+      </div>
+      <div id="remoteControlBar" class="remote-control-bar" hidden>
+        <span><strong>Controle ativo</strong><small>Toque para clicar; arraste para mover.</small></span>
+        <div class="remote-control-buttons"><button class="button ghost" id="remoteScrollUp" type="button"
+            aria-label="Rolar para cima">↑</button><button class="button ghost" id="remoteScrollDown" type="button"
+            aria-label="Rolar para baixo">↓</button><button class="button ghost" id="remoteRightClick" type="button"
+            aria-pressed="false">Direito</button><button class="button ghost" id="remoteEnter"
+            type="button">Enter</button><button class="button secondary" id="remoteTypeText"
+            type="button">Digitar</button></div>
+      </div>
+      <div class="screen-stage" id="remoteScreenStage"><video id="remoteScreen" autoplay muted playsinline></video>
+        <div id="screenViewerPlaceholder" class="screen-placeholder">Aguardando aprovação no outro aparelho…</div>
+      </div>
+    </div>
+  </dialog>
+  <dialog id="screenBroadcastDialog" class="screen-dialog">
+    <div class="dialog-content screen-dialog-content">
+      <div class="screen-dialog-heading">
+        <div>
+          <p class="eyebrow">Compartilhando agora</p>
+          <h2 id="screenBroadcastTitle">Sua tela está visível</h2>
+          <p class="muted">O navegador mantém um indicador enquanto a captura estiver ativa.</p>
+        </div><button class="button danger" id="stopScreenBroadcast" type="button">Parar compartilhamento</button>
+      </div>
+      <div class="screen-stage"><video id="localScreen" autoplay muted playsinline></video></div>
+    </div>
+  </dialog>
+  <div id="toasts" class="toasts" aria-live="polite"></div>
+  <input id="resumeFileInput" type="file" hidden>
+  <script type="module" src="/app.js?v=20"></script>
+</body>
+
+</html>

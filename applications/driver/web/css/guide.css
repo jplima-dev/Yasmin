@@ -1,0 +1,63 @@
+body {
+  background-image:
+    radial-gradient(circle at 78% -8%, rgba(63, 122, 194, .10), transparent 34%),
+    linear-gradient(180deg, #f7f9fb, #f1f4f7);
+}
+
+.metric, .panel, .search, .modal-card {
+  background: linear-gradient(145deg, #fff, color-mix(in srgb, #3877bd 4%, #f4f7fa));
+}
+
+.primary { background: linear-gradient(135deg, #111820, #26394b); }
+.secondary, .actions button { background: linear-gradient(145deg, #fff, #f2f6fa); }
+
+.guide-intro {
+  margin-bottom: 18px;
+  padding: 22px;
+  border: 1px solid #dfe5ec;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #eef5fc, #fff 56%, #f4f7fa);
+}
+.guide-intro h2 { margin: 2px 0 7px; font-size: 25px; }
+.guide-book { display: grid; gap: 11px; max-width: 980px; }
+.guide-book details {
+  overflow: hidden;
+  border: 1px solid #dfe5ec;
+  border-radius: 14px;
+  background: linear-gradient(145deg, #fff, #f3f7fb);
+  box-shadow: 0 8px 28px rgba(17, 24, 32, .05);
+}
+.guide-book summary { display: flex; align-items: center; gap: 13px; padding: 17px 19px; cursor: pointer; list-style: none; }
+.guide-book summary::-webkit-details-marker { display: none; }
+.guide-book summary > span { width: 32px; height: 32px; flex: 0 0 32px; display: grid; place-items: center; border-radius: 9px; color: #255f9d; background: linear-gradient(135deg, #dceafb, #eef5fc); font-weight: 800; }
+.guide-book summary div { display: grid; gap: 2px; }
+.guide-book summary small { color: #75818d; font-weight: 500; }
+.guide-book summary::after { content: "+"; margin-left: auto; color: #466f9d; font-size: 21px; }
+.guide-book details[open] summary { border-bottom: 1px solid #dfe5ec; }
+.guide-book details[open] summary::after { content: "−"; }
+.guide-book ol, .guide-book ul { display: grid; gap: 10px; margin: 0; padding: 18px 26px 21px 56px; color: #65717d; }
+.guide-book li { padding-left: 4px; line-height: 1.55; }
+.guide-book li strong { color: #25303b; }
+.guide-book code { padding: 2px 6px; border: 1px solid #d9e0e7; border-radius: 6px; color: #25303b; background: #edf3f8; overflow-wrap: anywhere; }
+
+@media (prefers-color-scheme: dark) {
+  :root { color: #e8edf3; background: #151b22; }
+  body { color: #e8edf3; background-color: #151b22; background-image: radial-gradient(circle at 78% -8%, rgba(76, 139, 211, .12), transparent 34%), linear-gradient(180deg, #151b22, #11171d); }
+  main { color: #e8edf3; }
+  .metric, .panel, .search, .modal-card, .guide-book details { color: #e8edf3; border-color: #34414e; background: linear-gradient(145deg, #202a34, #1a232c); }
+  .table-head { color: #aab6c2; background: #202a34; }
+  .file-row, .list-item { border-color: #303c48; }
+  .secondary, .danger, .actions button { color: #e8edf3; border-color: #3b4855; background: linear-gradient(145deg, #26313c, #1d2730); }
+  .guide-intro { border-color: #34414e; background: linear-gradient(135deg, #1d3043, #202a34 56%, #18212a); }
+  .guide-book details[open] summary { border-color: #34414e; }
+  .guide-book summary small, .guide-book ol, .guide-book ul, .muted { color: #aeb9c5; }
+  .guide-book li strong, .guide-book code { color: #e8edf3; }
+  .guide-book code { border-color: #3b4855; background: #18232d; }
+  .inline input, .modal-card input { color: #e8edf3; border-color: #3b4855; background: #18212a; }
+  .star.on { background: #3e3820 !important; }
+}
+
+@media (max-width: 780px) {
+  .guide-book summary { padding: 14px; }
+  .guide-book ol, .guide-book ul { padding: 16px 18px 18px 40px; }
+}

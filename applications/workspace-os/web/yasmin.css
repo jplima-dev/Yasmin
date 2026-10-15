@@ -1,0 +1,56 @@
+/* Presença visual da Yasmin; as aplicações mantêm UI e autoria próprias. */
+.yasmin-dock-host { position: fixed; left: 50vw; top: 6px; transform: translateX(-50%); z-index: 8; }
+.yasmin-dock { width: 252px; min-height: 57px; display: grid; justify-items: center; align-content: center; gap: 4px; padding: 5px 14px; border: 1px solid #713b4b; border-radius: 17px; color: #fff3f5; background: linear-gradient(145deg, #2b111c, #110b10); box-shadow: 0 7px 25px #0008, inset 0 1px #ff819333; cursor: pointer; }
+.yasmin-dock:hover, .yasmin-dock:focus-visible { border-color: #ff7287; box-shadow: 0 7px 27px #e6385650; }
+.yasmin-dock-bars { height: 23px; display: flex; align-items: center; justify-content: center; gap: 4px; }
+.yasmin-dock-bars i { display: block; width: 4px; height: 9px; border-radius: 5px; background: linear-gradient(#ff9dad, #d82649); box-shadow: 0 0 8px #ef416766; transition: height .16s ease; }
+.yasmin-dock-bars i:nth-child(2), .yasmin-dock-bars i:nth-child(6) { height: 14px; }
+.yasmin-dock-bars i:nth-child(3), .yasmin-dock-bars i:nth-child(5) { height: 19px; }
+.yasmin-dock-bars i:nth-child(4) { height: 22px; }
+.yasmin-dock.is-speaking .yasmin-dock-bars i { animation: yasmin-wave .62s ease-in-out infinite alternate; }
+.yasmin-dock.is-speaking .yasmin-dock-bars i:nth-child(2n) { animation-delay: -.37s; }
+.yasmin-dock.is-speaking .yasmin-dock-bars i:nth-child(3n) { animation-delay: -.19s; }
+.yasmin-dock.is-listening .yasmin-dock-bars { filter: drop-shadow(0 0 7px #ff6d84); }
+.yasmin-dock.is-offline .yasmin-dock-bars { opacity: .45; }
+.yasmin-dock.is-working .yasmin-dock-bars { opacity: .3; }
+.yasmin-dock-spinner { display: none; position: absolute; top: 10px; left: 50%; margin-left: -12px; width: 24px; height: 24px; border: 3px solid #8b394c; border-top-color: #ff8fa1; border-radius: 50%; }
+.yasmin-dock.is-working .yasmin-dock-spinner { display: block; animation: yasmin-spin .7s linear infinite; }
+.yasmin-dock-detail { display: block; max-width: 185px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #f0c2ca; font-size: 10px; font-weight: 650; letter-spacing: .025em; }
+.yasmin-dock-processes { display: grid; gap: 1px; width: 100%; max-width: 220px; text-align: center; }
+.yasmin-process { color: #c995a3; font-size: 9px; line-height: 1.2; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.yasmin-process-executando { color: #ff9daf; }
+.yasmin-process-falhou, .yasmin-process-incerto { color: #ffbd78; }
+@keyframes yasmin-wave { 0% { height: 4px; } 50% { height: 22px; } 100% { height: 10px; } }
+@keyframes yasmin-spin { to { transform: rotate(360deg); } }
+.yasmin-panel[hidden], .yasmin-stage[hidden] { display: none; }
+.yasmin-panel { position: fixed; z-index: 30; top: 112px; left: 50%; transform: translateX(-50%); width: min(520px, calc(100vw - 24px)); border: 1px solid #754050; border-radius: 18px; background: #170e14; color: #fff0f2; box-shadow: 0 25px 65px #000c; overflow: hidden; }
+.yasmin-panel-header { display: flex; align-items: center; justify-content: space-between; padding: 15px 18px; border-bottom: 1px solid #59303c; }
+.yasmin-panel-header strong { font-size: 16px; }
+.yasmin-panel-header button, .yasmin-stage-bar button, .yasmin-stage-bar a { border: 1px solid #754050; border-radius: 8px; background: #341b26; color: #ffe3e8; padding: 6px 10px; cursor: pointer; text-decoration: none; }
+.yasmin-messages { min-height: 150px; max-height: min(360px, 48vh); overflow: auto; display: flex; flex-direction: column; gap: 10px; padding: 15px; }
+.yasmin-message { display: grid; gap: 4px; max-width: 88%; margin: 0; padding: 9px 11px; border: 1px solid #4e2b37; border-radius: 12px; background: #261720; overflow-wrap: anywhere; }
+.yasmin-message.user { align-self: flex-end; background: #542334; border-color: #8e3c51; }
+.yasmin-message strong { color: #ff95a5; font-size: 11px; }
+.yasmin-message span { line-height: 1.45; white-space: pre-wrap; }
+.yasmin-command-form { display: flex; gap: 8px; padding: 14px; border-top: 1px solid #59303c; }
+.yasmin-command-form input { flex: 1; min-width: 0; border: 1px solid #724052; border-radius: 9px; padding: 10px; background: #0d090c; color: #fff; }
+.yasmin-command-form button { border: 0; border-radius: 9px; padding: 9px 14px; color: #fff; background: #c92c4c; cursor: pointer; }
+.yasmin-stage { position: fixed; z-index: 9; top: 72px; left: 180px; right: 0; bottom: 0; display: flex; flex-direction: column; background: #0b090b; }
+.sidebar-collapsed .yasmin-stage { left: 72px; }
+.yasmin-stage-bar { min-height: 50px; padding: 8px 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; background: #24131b; border-bottom: 1px solid #643848; }
+.yasmin-stage-bar > div { display: flex; align-items: center; gap: 10px; }
+.yasmin-stage-bar small { color: #d8a2af; }
+.yasmin-stage iframe { flex: 1; width: 100%; border: 0; background: #fff; }
+.topbar .command-trigger + .topbar-actions { margin-left: auto; }
+.yasmin-settings-panel { display: grid; gap: 14px; margin-bottom: 22px; }
+.yasmin-settings-messages { min-height: 100px; max-height: 280px; overflow-y: auto; display: grid; align-content: start; gap: 10px; padding: 14px; border: 1px solid #51303a; border-radius: 14px; background: #110b0e; }
+.yasmin-settings-message { display: grid; gap: 3px; max-width: 85%; margin: 0; padding: 9px 12px; border-radius: 12px; background: #291820; color: #fff1f2; }
+.yasmin-settings-message.user { justify-self: end; background: #522230; }
+.yasmin-settings-message strong { color: #ff8b9b; font-size: 12px; }
+.yasmin-settings-chat-form { display: grid; gap: 7px; }
+.yasmin-settings-chat-form > div { display: flex; gap: 9px; }
+.yasmin-settings-chat-form input { min-width: 0; flex: 1; }
+@media (max-width: 1450px) { .topbar .command-trigger { display: none; } }
+@media (max-width: 760px) { .yasmin-stage, .sidebar-collapsed .yasmin-stage { left: 0; } .topbar > div:first-of-type { display: none; } }
+@media (max-width: 520px) { .topbar-actions { display: none; } .yasmin-dock { width: min(252px, calc(100vw - 92px)); } }
+@media (prefers-reduced-motion: reduce) { .yasmin-dock.is-speaking .yasmin-dock-bars i, .yasmin-dock.is-working .yasmin-dock-spinner { animation-duration: 2s; } }

@@ -1,0 +1,7 @@
+fastapi==0.116.1
+uvicorn[standard]==0.35.0
+cryptography==45.0.7
+httpx==0.28.1
+winotify==1.1.0
+pytest==8.4.2
+pyinstaller==6.22.3

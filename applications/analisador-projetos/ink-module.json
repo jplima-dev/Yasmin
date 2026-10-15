@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 2,
+  "id": "project-analyzer",
+  "name": "Analisador de Projetos",
+  "vendor": "Ink-guginha",
+  "author": "Ink-guginha",
+  "category": "utilities",
+  "description": "Inventário e estatísticas de projetos no navegador, em modo somente leitura.",
+  "kind": "static-web",
+  "entryFile": "frontend/index.html",
+  "icon": "chart",
+  "version": "1.0.0",
+  "minCoreVersion": "0.3.0",
+  "capabilities": {
+    "export": true,
+    "import": true,
+    "print": true,
+    "offline": true,
+    "shortcuts": [],
+    "permissions": [
+      "files:user-selected-read"
+    ]
+  },
+  "agentOperations": [
+    {
+      "name": "analisar_projeto_ink",
+      "description": "Lê estatísticas de uma pasta de projeto sem alterar arquivos.",
+      "parameters": ["caminho"],
+      "risk": "baixo",
+      "verification": "analise_projeto_ink"
+    }
+  ],
+  "instructions": [
+    "Escolha uma pasta; nenhum arquivo é alterado ou enviado."
+  ]
+}

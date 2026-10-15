@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark light">
+  <title>Ink Palette</title>
+  <link rel="stylesheet" href="http://127.0.0.1:8790/core/tool-shell.css">
+</head>
+<body class="ink-tool">
+  <main class="tool-shell">
+    <header class="tool-header">
+      <div class="tool-title"><span class="tool-mark">◐</span><div><h1>Ink Palette</h1><p>Tons, harmonias e variáveis CSS a partir de qualquer cor.</p></div></div>
+      <div class="tool-actions"><button class="tool-button" id="random" type="button">Cor aleatória</button><button class="tool-button primary" id="copy-css" type="button">Copiar CSS</button></div>
+    </header>
+    <section class="tool-grid">
+      <article class="tool-card">
+        <div class="tool-card-header"><h2>Cor base</h2></div>
+        <div class="tool-card-body">
+          <div class="color-input-row"><input id="color" type="color" value="#1a73e8" aria-label="Escolher cor"><input class="tool-input" id="hex" value="#1A73E8" maxlength="7" aria-label="Cor hexadecimal"></div>
+          <div class="color-preview" id="preview"></div>
+          <div class="tool-status" id="formats" role="status"></div>
+        </div>
+      </article>
+      <article class="tool-card">
+        <div class="tool-card-header"><h2>Harmonias</h2></div>
+        <div class="tool-card-body"><div class="palette-grid" id="harmonies"></div></div>
+      </article>
+    </section>
+    <article class="tool-card tool-section-gap">
+      <div class="tool-card-header"><h2>Escala de tons</h2><span class="tool-label">Clique para copiar</span></div>
+      <div class="tool-card-body"><div class="palette-grid" id="shades"></div></div>
+    </article>
+    <article class="tool-card tool-section-gap">
+      <div class="tool-card-header"><h2>Variáveis CSS</h2><button class="tool-button" id="download-css" type="button">Baixar .css</button></div>
+      <div class="tool-card-body"><textarea class="tool-textarea code-output" id="css-output" readonly aria-label="Variáveis CSS"></textarea></div>
+    </article>
+  </main>
+  <script type="module" src="http://127.0.0.1:8790/core/module-bootstrap.js"></script><script type="module" src="./app.js"></script>
+</body>
+</html>

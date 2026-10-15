@@ -1,0 +1,462 @@
+/* Camada visual pequena e compartilhada. Não altera a lógica interna dos módulos. */
+:root[data-font-size="small"] { font-size: 14px; }
+:root[data-font-size="comfortable"] { font-size: 16px; }
+:root[data-font-size="large"] { font-size: 18px; }
+
+:root[data-density="compact"] { --global-control-padding: 7px; --global-panel-gap: 10px; }
+:root[data-density="comfortable"] { --global-control-padding: 10px; --global-panel-gap: 14px; }
+:root[data-density="spacious"] { --global-control-padding: 13px; --global-panel-gap: 18px; }
+
+:root {
+  --radius-sm: var(--ws-radius-small, 8px);
+  --radius-md: var(--ws-radius-medium, 12px);
+  --radius-lg: var(--ws-radius-large, 16px);
+  --shadow: var(--ws-shadow-1, 0 1px 3px rgba(32, 33, 36, .12));
+}
+
+/* O Design System é a base real da suíte: os módulos preservam a sua estrutura,
+   mas superfícies, controles e identidade vêm dos mesmos tokens globais. */
+:root[data-theme] body {
+  color: var(--text);
+  background-color: var(--background);
+  background-image:
+    radial-gradient(circle at 7% -5%, color-mix(in srgb, var(--accent) 15%, transparent), transparent 36%),
+    radial-gradient(circle at 97% 10%, color-mix(in srgb, var(--accent-secondary) 11%, transparent), transparent 31%),
+    radial-gradient(circle at 82% 94%, color-mix(in srgb, var(--accent-tertiary) 8%, transparent), transparent 30%),
+    linear-gradient(180deg, color-mix(in srgb, var(--surface-2) 42%, transparent), transparent 38%);
+  background-attachment: fixed;
+}
+:root[data-theme] :where(.primary-button, button.primary, .home-logo, .brand-mark, .logo, .brand-button, .drop-icon) {
+  border-color: var(--accent) !important;
+  background: var(--accent-gradient, var(--accent)) !important;
+}
+:root[data-theme] :where(
+  .panel, .preview-panel, .utility-card, .template-card, .create-card, .tool-card,
+  .document-card, .project-card, .module-card, .stat-card, .step-card, .device-card,
+  .empty-state, .dialog, dialog, .new-project-dialog, .modal-card, .target-picker, .guide-book details,
+  .feed-item, .list-item, .timeline-item, .transfer, .metric, .summary-panel
+) {
+  border-color: var(--border) !important;
+  background: var(--surface-gradient, var(--surface)) !important;
+}
+:root[data-theme] :where(
+  .topbar, .app-header, .home-topbar, .tool-topbar, .toolbar, .formula-bar,
+  .bottom-bar, .sidebar, .workspace-terminal-bar, .workspace-drop-panel > header
+) {
+  border-color: var(--border) !important;
+  background: var(--surface-gradient, var(--surface)) !important;
+}
+:root[data-theme] :where(.secondary-button, button.secondary, .icon-button, .ghost-button, button.ghost) {
+  color: var(--text) !important;
+  border-color: var(--border) !important;
+  background: linear-gradient(145deg, var(--surface), color-mix(in srgb, var(--accent) 5%, var(--surface-2))) !important;
+}
+@media (hover:hover) and (pointer:fine) {
+  :root[data-theme] :where(.secondary-button, button.secondary, .icon-button, .ghost-button, button.ghost):hover {
+    color: var(--text) !important;
+    border-color: var(--accent-border) !important;
+    background: var(--accent-soft-gradient, var(--accent-soft)) !important;
+  }
+}
+
+:root[data-theme] :where(
+  .hero-main, .hero-card, .intro-card, .quick-start, .drop-zone, .guide-intro,
+  .integration-details, .integration-manual details
+) {
+  border-color: var(--border) !important;
+  background: var(--hero-gradient, var(--surface-gradient, var(--surface))) !important;
+}
+
+/* Grupos alternados dão ritmo às telas sem transformar a suíte em um arco-íris. */
+:root[data-theme] :where(
+  .stats-grid, .module-grid, .create-grid, .template-grid, .utility-layout,
+  .tool-grid, .guide-book
+) > :nth-child(3n + 1) {
+  background: var(--section-accent-gradient, var(--surface-gradient)) !important;
+}
+
+:root[data-theme] :where(
+  .stats-grid, .module-grid, .create-grid, .template-grid, .utility-layout,
+  .tool-grid, .guide-book
+) > :nth-child(3n + 2) {
+  background: var(--section-secondary-gradient, var(--surface-gradient)) !important;
+}
+
+:root[data-theme] :where(
+  .stats-grid, .module-grid, .create-grid, .template-grid, .utility-layout,
+  .tool-grid, .guide-book
+) > :nth-child(3n) {
+  background: var(--section-tertiary-gradient, var(--surface-gradient)) !important;
+}
+
+:root[data-theme] :where(.tool-card-header, .preview-title, .section-head, .recent-head) {
+  background-image: linear-gradient(100deg, color-mix(in srgb, var(--accent) 7%, transparent), color-mix(in srgb, var(--accent-secondary) 3%, transparent) 58%, transparent);
+}
+
+:root[data-theme] :where(
+  .nav-item.active, .filter-button.active, .toolbar-button.active, .tool-button.active,
+  .format-button.active, .align-button.active, .sheet-tab.active,
+  .menu-item > button.active, .steps .active, .type-grid input:checked + span,
+  .command-result.selected, [aria-selected="true"]
+) {
+  color: var(--text) !important;
+  border-color: var(--accent-border) !important;
+  background: var(--accent-soft-gradient, var(--accent-soft)) !important;
+}
+
+:root[data-theme] ::selection {
+  color: var(--text);
+  background: color-mix(in srgb, var(--accent) 34%, transparent);
+}
+
+[data-theme="dark"] body { color: var(--text); background-color: var(--background); }
+[data-theme="dark"] :where(
+  .app-header, .topbar, .toolbar, .bottom-bar, .formula-bar,
+  .panel, .preview-panel, .utility-card, .template-card, .create-card,
+  .document-card, .project-card, .empty-state, .validation, .pix-copy,
+  .sidebar, .grid-dialog, .tip, .dropdown-menu, .file-item,
+  .secondary-button, .secondary, .icon-button, .project-action,
+  .new-project-dialog, .dialog, .modal-card, .top-menu,
+  .color-popup, #calendar, #settingsPanel, #file-viewer-box, #llp-inner,
+  .menu-padronizar, #btnPadronizar, .empty-add-button, .alignment-actions button,
+  .viewer-discard-btn, .target-picker, .transfer,
+  input, select, textarea
+) { color: var(--text); background-color: var(--surface); border-color: var(--border); }
+
+[data-theme="dark"] :where(
+  .color-popup, #file-viewer-box, #llp-inner, .menu-padronizar,
+  #btnPadronizar, .empty-add-button, .alignment-actions button,
+  .viewer-discard-btn, .target-picker, .transfer
+) {
+  color: var(--text) !important;
+  border-color: var(--border) !important;
+  background: var(--surface-gradient, var(--surface)) !important;
+  box-shadow: var(--shadow);
+}
+
+[data-theme="dark"] :where(option, optgroup) {
+  color: var(--text);
+  background: var(--surface);
+}
+
+[data-theme="dark"] :where(.local-pill, .privacy-pill, .status-badge.live, .badge.synced) {
+  color: var(--green) !important;
+  border-color: color-mix(in srgb, var(--green) 36%, var(--border)) !important;
+  background: linear-gradient(145deg, color-mix(in srgb, var(--green) 15%, var(--surface)), var(--surface)) !important;
+}
+
+[data-theme="dark"] :where(.status-badge.ready, .status-badge.experimental, .badge.waiting) {
+  color: var(--amber) !important;
+  border-color: color-mix(in srgb, var(--amber) 34%, var(--border)) !important;
+  background: linear-gradient(145deg, color-mix(in srgb, var(--amber) 12%, var(--surface)), var(--surface)) !important;
+}
+
+[data-theme="dark"] :where(.badge.error, .button.danger, .danger-button) {
+  color: var(--red) !important;
+  border-color: color-mix(in srgb, var(--red) 34%, var(--border)) !important;
+  background: linear-gradient(145deg, color-mix(in srgb, var(--red) 12%, var(--surface)), var(--surface)) !important;
+}
+
+[data-theme="dark"] :where(.tool-shell .note, .warnings, .support-note) {
+  color: var(--text-secondary) !important;
+  border-color: color-mix(in srgb, var(--amber) 35%, var(--border)) !important;
+  background: linear-gradient(145deg, color-mix(in srgb, var(--amber) 9%, var(--surface)), var(--surface)) !important;
+}
+
+[data-theme="dark"] :where(.sidebar .panel-section, .sidebar .field textarea, .sidebar .field input) {
+  border-color: var(--border) !important;
+}
+[data-theme="dark"] :where(.sidebar, .grid-dialog, .tip) {
+  background: var(--surface-gradient, var(--surface)) !important;
+  box-shadow: var(--shadow);
+}
+
+/* Notas Flutuantes: mantém o canvas próprio, mas usa o shell visual da suíte. */
+:root[data-theme] body:has(#toolbar) { background: var(--background) !important; color: var(--text); }
+:root[data-theme] #toolbar,
+:root[data-theme] #settingsPanel,
+:root[data-theme] #calendar {
+  color: var(--text) !important;
+  border-color: var(--border) !important;
+  background: var(--surface-gradient, var(--surface)) !important;
+}
+:root[data-theme] #toolbar :where(button, select, input[type="search"]),
+:root[data-theme] #zoomControls,
+:root[data-theme] .settings-section :where(button, select, input) {
+  color: var(--text) !important;
+  border-color: var(--border) !important;
+  background: var(--surface-2) !important;
+}
+:root[data-theme] #toolbar :where(button:hover, button.active),
+:root[data-theme] .settings-section button:hover {
+  color: var(--text) !important;
+  border-color: var(--accent-border) !important;
+  background: var(--accent-soft) !important;
+}
+[data-theme="dark"] :where(
+  .toolbar-button, .secondary-button, .icon-button, .format-button,
+  .align-button, .alignment-actions button, .top-menu, .top-menu button,
+  input:not([type="color"]), select, textarea
+) {
+  color: var(--text) !important;
+  border-color: var(--border) !important;
+  background: var(--surface-gradient, var(--surface)) !important;
+}
+[data-theme="dark"] :where(button:disabled, input:disabled, select:disabled) {
+  color: var(--text-secondary) !important;
+  opacity: .62;
+}
+
+[data-theme="dark"] :where(.template-card.featured, .create-card.featured) {
+  background: linear-gradient(135deg, var(--accent-soft), var(--surface));
+}
+
+[data-theme="dark"] :where(
+  .toolbar-button:hover, .icon-button:hover, .secondary-button:hover,
+  .tool-button:hover, .format-button:hover, .align-button:hover,
+  .menu-item > button:hover, .top-menu button:hover,
+  .project-action:hover, .document-action:hover, .empty-add-button:hover,
+  #btnPadronizar:hover, #btnPadronizar.active, .alignment-actions button:hover,
+  .viewer-discard-btn:hover, #llp-cancel:hover, .color-popup button:hover,
+  .nav-item:hover, .language-option:hover, .file-row:hover
+) {
+  color: var(--text) !important;
+  border-color: var(--accent-border) !important;
+  background: var(--accent-soft-gradient, var(--accent-soft)) !important;
+}
+
+[data-theme="dark"] :where(.create-card:hover, .template-card:hover, .project-card:hover, .document-card:hover) {
+  color: var(--text) !important;
+  border-color: var(--accent-border) !important;
+  background: var(--surface-gradient, var(--surface-2)) !important;
+}
+
+[data-theme="dark"] :where(.project-preview, .doc-preview, .empty-preview, .name-box) {
+  color: var(--text-secondary); background: var(--surface-2); border-color: var(--border);
+}
+
+[data-high-contrast="true"] :where(button, input, select, textarea, .panel, .card, .template-card, .create-card) {
+  border-color: currentColor;
+}
+
+[data-decorations="false"] :where(.hero-art, .hero::after, .intro::after) { display: none !important; }
+
+[data-reduce-motion="true"] *,
+[data-reduce-motion="true"] *::before,
+[data-reduce-motion="true"] *::after {
+  scroll-behavior: auto !important;
+  animation-duration: .01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: .01ms !important;
+}
+
+.mega-toast-region { position: fixed; right: 18px; bottom: 18px; z-index: 10000; display: grid; gap: 8px; pointer-events: none; }
+.mega-toast { max-width: min(390px, calc(100vw - 36px)); padding: 11px 14px; border: 1px solid var(--border); border-radius: 10px; color: var(--text); background: var(--surface); box-shadow: 0 8px 30px rgba(32,33,36,.18); opacity: 0; translate: 0 8px; transition: .18s ease; }
+.mega-toast.is-visible { opacity: 1; translate: 0; }
+.mega-toast--success { border-color: #81c995; }
+.mega-toast--danger { border-color: #f28b82; }
+.mega-dialog { width: min(440px, calc(100vw - 32px)); padding: 0; border: 0; border-radius: 14px; color: var(--text); background: var(--surface-gradient, var(--surface)); box-shadow: 0 24px 80px rgba(32,33,36,.28); }
+.mega-dialog::backdrop { background: rgba(32,33,36,.36); backdrop-filter: blur(2px); }
+.mega-dialog__card { padding: 24px; }
+.mega-dialog__card h2 { margin: 0 0 10px; font-size: 20px; }
+.mega-dialog__card p { margin: 0; color: var(--text-secondary); line-height: 1.55; }
+.mega-dialog__actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 24px; }
+.mega-button { min-height: 38px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--border); cursor: pointer; font-weight: 650; }
+.mega-button--secondary { color: var(--text); background: var(--surface-gradient, var(--surface)); }
+.mega-button--primary { color: #fff; background: var(--accent-gradient, var(--accent)); border-color: var(--accent); }
+.mega-button--danger { color: #fff; background: #b3261e; border-color: #b3261e; }
+.mega-home-link { position: fixed; left: 12px; bottom: 12px; z-index: 9998; display: inline-flex; align-items: center; min-height: 32px; padding: 0 11px; border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text); background: color-mix(in srgb, var(--surface) 94%, transparent); box-shadow: var(--shadow); font: 600 12px/1 system-ui, sans-serif; text-decoration: none; backdrop-filter: blur(8px); }
+.mega-home-link:hover { color: var(--accent); border-color: var(--accent-border); background: var(--surface); }
+.mega-home-link:focus-visible { outline: 3px solid var(--accent-soft); outline-offset: 2px; }
+@media (max-width: 640px) { .mega-home-link { left: 8px; bottom: 8px; min-height: 30px; padding-inline: 9px; } }
+
+/* Identidade 02 aplicada a todos os módulos conectados ao Core. */
+:root[data-theme] {
+  --radius-sm: var(--ws-radius-small, 5px);
+  --radius-md: var(--ws-radius-medium, 8px);
+  --radius-lg: var(--ws-radius-large, 12px);
+  --shadow: var(--ws-shadow-1);
+  font-family: var(--ws-font-family, Manrope, Inter, "Segoe UI Variable", "Segoe UI", system-ui, sans-serif);
+  accent-color: var(--accent);
+}
+
+:root[data-theme] body {
+  font-family: inherit;
+  background-color: var(--background);
+  background-image:
+    linear-gradient(var(--ws-grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--ws-grid-line) 1px, transparent 1px),
+    radial-gradient(circle at 8% 0%, color-mix(in srgb, var(--accent) 11%, transparent), transparent 28%),
+    radial-gradient(circle at 96% 18%, color-mix(in srgb, var(--accent-secondary) 7%, transparent), transparent 25%);
+  background-size: 28px 28px, 28px 28px, auto, auto;
+}
+
+/* Alguns módulos antigos aplicam a paleta escura no body. Estes aliases mantêm
+   a identidade global com prioridade sem tocar na lógica ou no canvas deles. */
+:root[data-theme] body.dark {
+  --bg: var(--ws-color-background) !important;
+  --background: var(--ws-color-background) !important;
+  --paper: var(--ws-color-background) !important;
+  --panel: var(--ws-color-surface) !important;
+  --surface: var(--ws-color-surface) !important;
+  --surface-solid: var(--ws-color-surface) !important;
+  --panel-2: var(--ws-color-surface-subtle) !important;
+  --surface-2: var(--ws-color-surface-subtle) !important;
+  --toolbar: var(--ws-color-surface-subtle) !important;
+  --header: var(--ws-color-surface-subtle) !important;
+  --text: var(--ws-color-text) !important;
+  --ink: var(--ws-color-text) !important;
+  --muted: var(--ws-color-text-muted) !important;
+  --text-secondary: var(--ws-color-text-muted) !important;
+  --line: var(--ws-color-border) !important;
+  --border: var(--ws-color-border) !important;
+  --grid: var(--ws-color-border) !important;
+  --primary: var(--accent) !important;
+  --primary-dark: var(--accent-hover) !important;
+  --teal: var(--accent) !important;
+  --teal-dark: var(--accent-hover) !important;
+  --mint: var(--accent-soft) !important;
+  --selected: var(--accent-soft) !important;
+  --selected-border: var(--accent) !important;
+}
+
+:root[data-theme] :where(h1, h2, h3, h4, .hero h1, .tool-hero h1, .dialog h2, .panel h2, .project-title, .document-title) {
+  font-family: var(--ws-font-family, Manrope, Inter, "Segoe UI Variable", "Segoe UI", system-ui, sans-serif) !important;
+  letter-spacing: -.025em;
+}
+
+:root[data-decorations="false"] body {
+  background-image: linear-gradient(var(--ws-grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--ws-grid-line) 1px, transparent 1px);
+}
+
+:root[data-theme] :where(.eyebrow, .kicker, .section-label, .nav-label, .status-label, .badge, kbd) {
+  font-family: var(--ws-font-mono, "Cascadia Code", Consolas, monospace);
+  letter-spacing: .09em;
+}
+
+:root[data-theme] :where(
+  .panel, .preview-panel, .utility-card, .template-card, .create-card, .tool-card,
+  .document-card, .project-card, .module-card, .stat-card, .step-card, .device-card,
+  .empty-state, .dialog, dialog, .new-project-dialog, .modal-card, .target-picker,
+  .feed-item, .list-item, .timeline-item, .transfer, .metric, .summary-panel,
+  .file-panel, .settings-panel, .options-panel, .steps-panel
+) {
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--shadow) !important;
+}
+
+:root[data-theme] :where(
+  input:not([type="range"]):not([type="checkbox"]):not([type="radio"]),
+  select, textarea, .search, .command-search
+) {
+  color: var(--text) !important;
+  border-color: var(--border) !important;
+  border-radius: var(--radius-sm) !important;
+  background: color-mix(in srgb, var(--surface) 82%, var(--surface-2)) !important;
+}
+:root[data-theme] :where(
+  input:not([type="range"]):not([type="checkbox"]):not([type="radio"]),
+  select, textarea, .search, .command-search
+):hover { border-color: var(--accent-border) !important; }
+:root[data-theme] :where(
+  input:not([type="range"]):not([type="checkbox"]):not([type="radio"]),
+  select, textarea
+):focus {
+  border-color: var(--accent) !important;
+  background: var(--surface) !important;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+:root[data-theme] :where(
+  .primary-button, button.primary, .primary, .pick-button, .brand-button, .drop-icon
+) {
+  border-radius: var(--radius-sm) !important;
+  box-shadow: none !important;
+}
+:root[data-theme] :where(
+  .secondary-button, button.secondary, .secondary, .icon-button, .ghost-button,
+  button.ghost, .toolbar-button, .tool-button, .format-button, .align-button,
+  .document-action, .project-action, .text-button
+) { border-radius: var(--radius-sm) !important; }
+
+@media (hover:hover) and (pointer:fine) {
+  :root[data-theme] :where(
+    .secondary-button, button.secondary, .secondary, .icon-button, .ghost-button,
+    button.ghost, .toolbar-button, .tool-button, .format-button, .align-button,
+    .menu-item > button, .top-menu button, .document-action, .project-action,
+    .text-button, .file-row, .tree-row, .language-option
+  ):hover {
+    color: var(--text) !important;
+    border-color: var(--accent-border) !important;
+    background: var(--accent-soft-gradient, var(--accent-soft)) !important;
+  }
+  :root[data-theme] :where(
+    .primary-button, button.primary, .primary, .pick-button
+  ):hover {
+    color: #fff !important;
+    border-color: var(--accent-hover) !important;
+    background: linear-gradient(135deg, var(--accent-hover), var(--accent)) !important;
+    translate: 0 -1px;
+  }
+}
+
+:root[data-theme] :where(.topbar, .app-header, .home-topbar, .tool-topbar, .toolbar, .formula-bar, .bottom-bar) {
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--accent) 5%, var(--surface)), transparent 44%),
+    color-mix(in srgb, var(--surface) 95%, transparent) !important;
+  backdrop-filter: blur(14px);
+}
+
+:root[data-theme] :where(.brand-mark, .brand-button, .logo, .brand > span) {
+  border-radius: 4px !important;
+  box-shadow: 4px 4px 0 color-mix(in srgb, var(--accent) 24%, transparent) !important;
+}
+
+:root[data-theme] :where(.mega-home-link, .mega-button, .mega-dialog, .mega-toast) { border-radius: var(--radius-sm); }
+
+[data-theme="dark"] :where(
+  button:not(.primary-button):not(.primary):not(.pick-button):not(.danger-button):not(.brand-button):not(.logo),
+  [role="button"], summary
+):hover {
+  color: var(--text) !important;
+  border-color: var(--accent-border) !important;
+  background-color: var(--surface-2) !important;
+  background-image: linear-gradient(135deg, color-mix(in srgb, var(--accent) 11%, var(--surface-2)), var(--surface-2)) !important;
+}
+
+[data-theme="dark"] :where(
+  .dropdown-menu, .top-menu, .color-popup, .context-menu, .menu, .popover,
+  .dialog, dialog, .modal-card, .grid-dialog, #settingsPanel, #calendar,
+  .file-item, .file-row, .tree-row, .sheet-tab, .tab, .suggestions
+) {
+  color: var(--text) !important;
+  border-color: var(--border) !important;
+  background-color: var(--surface) !important;
+}
+
+[data-theme="dark"] :where(
+  .dropdown-menu button:hover, .top-menu button:hover, .context-menu button:hover,
+  .menu button:hover, .suggestions > *:hover, .sheet-tab:hover, .tab:hover,
+  tr:hover td, li:hover
+) {
+  color: var(--text) !important;
+  background: var(--surface-2) !important;
+}
+
+[data-theme="dark"] :where(option, optgroup) { color: var(--text) !important; background: var(--surface) !important; }
+[data-theme="dark"] :where(input:disabled, select:disabled, textarea:disabled, button:disabled) {
+  color: var(--text-secondary) !important;
+  border-color: var(--border) !important;
+  background: color-mix(in srgb, var(--surface-2) 72%, transparent) !important;
+}
+
+/* Escala comum das telas iniciais; editores e canvases mantêm suas dimensões próprias. */
+:where(.home-shell) :where(.home-topbar) { min-height: 68px; }
+:where(.home-shell) > .hero { gap: 36px; padding-block: 42px 34px; }
+:where(.home-shell) > .hero h1 { font-size: clamp(34px, 5vw, 56px); line-height: 1.02; }
+:where(.home-shell) > .hero .hero-copy { margin-top: 16px; font-size: 14px; }
+:where(.home-shell) :where(.create-grid, .template-grid) { gap: 12px; padding-bottom: 42px; }
+:where(.home-shell) :where(.create-card, .template-card) { min-height: 126px; padding: 18px; border-radius: var(--radius-md); box-shadow: var(--shadow); }
+:where(.home-shell) :where(.create-card, .template-card) strong { font-size: 19px; }
+:where(.home-shell) .recent-head { padding-top: 24px; }
+:where(.home-shell) :where(.project-card, .document-card) { box-shadow: var(--shadow); }

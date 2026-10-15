@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 2,
+  "id": "qrcode",
+  "name": "Gerador de QR Code",
+  "vendor": "Ink-guginha",
+  "author": "Ink-guginha",
+  "category": "utilities",
+  "description": "QR Codes offline para URL, texto, Wi-Fi, contato, telefone, e-mail e PIX BR Code.",
+  "kind": "static-web",
+  "entryFile": "dist/index.html",
+  "icon": "qr",
+  "version": "1.0.0",
+  "minCoreVersion": "0.3.0",
+  "capabilities": {
+    "export": true,
+    "import": false,
+    "print": true,
+    "offline": true,
+    "shortcuts": [],
+    "permissions": []
+  },
+  "instructions": [
+    "Gere e exporte em PNG ou SVG; todo processamento permanece neste dispositivo."
+  ]
+}

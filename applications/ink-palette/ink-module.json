@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 2, "id": "palette", "name": "Ink Palette", "category": "utilities",
+  "vendor": "Ink-guginha",
+  "author": "Ink-guginha",
+  "description": "Paletas, tons, combinações, HEX, RGB, HSL e variáveis CSS a partir de qualquer cor.", "kind": "static-web",
+  "entryFile": "index.html", "icon": "palette", "version": "1.0.0", "minCoreVersion": "0.3.0",
+  "keywords": ["cor", "cores", "paleta", "hex", "rgb", "hsl", "css"],
+  "capabilities": {"export": true, "import": false, "print": false, "offline": true, "shortcuts": [], "permissions": ["clipboard:write"]},
+  "instructions": ["Escolha uma cor e copie ou baixe as variáveis CSS."]
+}

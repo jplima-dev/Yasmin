@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>InkSheet | Criar</title>
+  <link rel="stylesheet" href="css/home.css">
+  <script type="module" src="http://127.0.0.1:8790/core/module-bootstrap.js"></script>
+</head>
+<body>
+  <main class="home-shell">
+    <header class="home-topbar">
+      <a class="home-brand" href="index.html">
+        <span class="home-logo">IS</span>
+        <span><strong>InkSheet</strong><small>planilhas, cálculos e organização</small></span>
+      </a>
+      <div class="home-actions"><a class="text-link" id="openLastProject" href="editor.html">Abrir última planilha</a></div>
+    </header>
+
+    <section class="hero">
+      <div>
+        <p class="eyebrow">CRIAR</p>
+        <h1>O que você quer organizar?</h1>
+        <p class="hero-copy">Comece em branco ou abra um modelo pronto. Depois, edite células, fórmulas, estilos, abas e dados no editor principal.</p>
+      </div>
+      <div class="hero-art" aria-hidden="true"><span></span><span></span><span></span></div>
+    </section>
+
+    <section class="create-grid" aria-label="Criar planilha">
+      <button class="create-card featured" data-template="blank" type="button">
+        <span class="create-icon">▦</span><span><strong>Planilha em branco</strong><small>Grade livre com fórmulas, formatação, várias abas e exportação.</small></span><b>Começar →</b>
+      </button>
+      <button class="create-card" data-template="budget" type="button">
+        <span class="create-icon">R$</span><span><strong>Orçamento mensal</strong><small>Receitas, despesas, saldo e totais já estruturados com fórmulas.</small></span><b>Usar modelo →</b>
+      </button>
+      <button class="create-card" data-template="expenses" type="button">
+        <span class="create-icon">↕</span><span><strong>Controle de gastos</strong><small>Data, categoria, descrição, forma de pagamento e valor.</small></span><b>Usar modelo →</b>
+      </button>
+      <button class="create-card" data-template="inventory" type="button">
+        <span class="create-icon">□</span><span><strong>Estoque simples</strong><small>Produtos, quantidade, mínimo, custo, preço e valor em estoque.</small></span><b>Usar modelo →</b>
+      </button>
+      <button class="create-card wide" data-template="schedule" type="button">
+        <span class="create-icon">✓</span><span><strong>Cronograma / tarefas</strong><small>Organize tarefas por responsável, prioridade, status, prazo e observações.</small></span><b>Usar modelo →</b>
+      </button>
+    </section>
+
+    <section class="recent-head">
+      <div><p class="eyebrow">PLANILHAS</p><h2>Projetos recentes</h2><p>Continue exatamente de onde parou.</p></div>
+      <button id="newProjectButton" class="primary-button" type="button">＋ Nova planilha</button>
+    </section>
+    <section id="projectGrid" class="project-grid" aria-live="polite"></section>
+    <section id="emptyProjects" class="empty-projects" hidden>
+      <div class="empty-folder">▦</div><h2>Nenhuma planilha salva ainda</h2><p>Crie uma planilha em branco ou use um dos modelos acima.</p>
+    </section>
+  </main>
+
+  <dialog id="newProjectDialog" class="new-project-dialog">
+    <form method="dialog" id="newProjectForm">
+      <button class="dialog-close" id="cancelProjectClose" type="button" aria-label="Fechar">×</button>
+      <p class="eyebrow">NOVA PLANILHA</p>
+      <h2>Dê um nome ao projeto</h2>
+      <input id="newProjectName" type="text" value="Minha planilha" autocomplete="off" autofocus>
+      <input id="newProjectTemplate" type="hidden" value="blank">
+      <p id="templateHint" class="template-hint"></p>
+      <div class="dialog-actions">
+        <button class="secondary-button" id="cancelProjectButton" type="button">Cancelar</button>
+        <button class="primary-button" id="createProjectSubmit" type="submit">Criar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="js/storage.js"></script>
+  <script src="js/home.js"></script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 2, "id": "json", "name": "Ink JSON", "category": "utilities",
+  "vendor": "Ink-guginha",
+  "author": "Ink-guginha",
+  "description": "Editor e visualizador JSON com árvore, busca, validação, formatação e minificação.", "kind": "static-web",
+  "entryFile": "index.html", "icon": "braces", "version": "1.0.0", "minCoreVersion": "0.3.0",
+  "keywords": ["json", "formatar", "minificar", "validar", "árvore", "api"],
+  "capabilities": {"export": true, "import": true, "print": false, "offline": true, "shortcuts": ["format"], "permissions": ["files:user-selected"]},
+  "instructions": ["Cole ou importe JSON, valide e baixe uma nova cópia."]
+}

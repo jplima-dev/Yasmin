@@ -1,0 +1,43 @@
+/* Tema local de reserva quando o Workspace Design System não está instalado. */
+:root {
+  --ws-font-family: "Segoe UI", system-ui, sans-serif;
+  --ws-font-mono: Consolas, monospace;
+  --ws-color-background: #0d111b;
+  --ws-color-surface: #171d2a;
+  --ws-color-surface-subtle: #202838;
+  --ws-color-border: #384256;
+  --ws-color-text: #f2f5fa;
+  --ws-color-text-muted: #abb6c8;
+  --ws-color-primary: #69a8ff;
+  --ws-color-primary-hover: #89bcff;
+  --ws-color-primary-soft: #203c62;
+  --ws-color-success: #6ed7a3;
+  --ws-color-warning: #ffcf70;
+  --ws-color-danger: #ff858b;
+  --ws-color-rail: #111827;
+  --ws-color-rail-text: #e8eef8;
+  --ws-color-rail-muted: #9eacc2;
+  --ws-grid-line: #283246;
+  --ws-radius-medium: 12px;
+  --ws-shadow-1: 0 10px 30px #0004;
+}
+
+:root[data-theme="light"] {
+  --ws-color-background: #f3f6fb;
+  --ws-color-surface: #ffffff;
+  --ws-color-surface-subtle: #eaf0f8;
+  --ws-color-border: #cdd7e5;
+  --ws-color-text: #172238;
+  --ws-color-text-muted: #53627a;
+  --ws-color-primary: #155db3;
+  --ws-color-primary-hover: #0f4e9b;
+  --ws-color-primary-soft: #dbeafc;
+  --ws-color-success: #167b4a;
+  --ws-color-warning: #9d6400;
+  --ws-color-danger: #ba3640;
+  --ws-color-rail: #e7edf6;
+  --ws-color-rail-text: #172238;
+  --ws-color-rail-muted: #53627a;
+  --ws-grid-line: #dbe3ee;
+  --ws-shadow-1: 0 10px 30px #27364a24;
+}

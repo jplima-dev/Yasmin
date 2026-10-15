@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 2, "id": "organizer", "name": "Organizador", "category": "work",
+  "vendor": "Ink-guginha",
+  "author": "Ink-guginha",
+  "description": "Projetos, tarefas, notas, quadros e busca global.", "kind": "web-service",
+  "url": "http://127.0.0.1:5173/#/dashboard", "healthUrl": "http://127.0.0.1:5173/",
+  "command": ["npm.cmd", "run", "serve"], "autoStart": true, "icon": "grid",
+  "version": "1.0.0", "minCoreVersion": "0.3.0", "dataSchemaVersion": 1,
+  "capabilities": {"export": true, "import": true, "print": true, "offline": true, "shortcuts": ["search"], "permissions": ["storage:local", "process:start"]},
+  "instructions": ["Abra o módulo pelo painel do Workspace OS.", "Use Configurações > Backup para exportar seus dados."]
+}

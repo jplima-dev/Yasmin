@@ -1,0 +1,40 @@
+{
+    "usuario": {
+        "nome": "Ruan"
+    },
+    "assistente": {
+        "nome": "Pode Continuar Com Yasmin"
+    },
+    "voz": {
+        "id": "kitsune:emilia"
+    },
+    "configuracao": {
+        "concluida": true
+    },
+    "preferencias": {
+        "personalidade": "equilibrada",
+        "tamanho_respostas": "equilibradas",
+        "pesquisa_automatica": "perguntar",
+        "corretor_ativo": true,
+        "iniciativa": "sim",
+        "interrupcao": true,
+        "memoria_ativa": true,
+        "tipo_memoria": "tudo",
+        "inicializar_windows": true,
+        "saudacao_inicio": true,
+        "uso_principal": "um pouco de tudo",
+        "nivel_tecnico": "avancado"
+    },
+    "notas": [],
+    "tarefas": [],
+    "historico": [],
+    "pesquisas": [],
+    "estudo": {
+        "nivel": "iniciante",
+        "topicos_vistos": [],
+        "exercicios": [],
+        "quiz_atual": null,
+        "pontuacao_quiz": 0,
+        "sessoes": []
+    }
+}

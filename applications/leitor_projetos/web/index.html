@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Leitor de Projetos para o Ink Workspace: transforma projetos de código em TXT, Markdown e contexto para IA.">
+  <title>Leitor de Projetos</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script type="module" src="/core/module-bootstrap.js"></script>
+</head>
+<body>
+  <div class="pr-shell" id="app">
+    <header class="pr-topbar">
+      <a class="pr-brand" href="./" aria-label="Leitor de Projetos">
+        <span class="pr-brand-mark">LP</span>
+        <span class="pr-brand-copy">
+          <strong data-i18n="title">Leitor de Projetos</strong>
+          <small>Workspace OS</small>
+        </span>
+      </a>
+      <div class="pr-top-actions">
+        <span class="pr-local-pill" data-i18n="local">● Processamento local</span>
+        <button class="pr-ghost-btn" id="open-settings" type="button" data-i18n="settings">Configurações</button>
+        <button class="pr-ghost-btn" id="open-help" type="button" data-i18n="help">Ajuda</button>
+        <button class="pr-ghost-btn" id="open-history" type="button" data-i18n="history">Histórico</button>
+      </div>
+    </header>
+
+    <main class="pr-layout">
+      <aside class="pr-sidebar">
+        <section class="pr-intro">
+          <p class="pr-eyebrow" data-i18n="prepareProject">PREPARAR PROJETO</p>
+          <h1 data-i18n="heroTitle">Transforme código em contexto organizado.</h1>
+          <p class="pr-lead" data-i18n="heroDescription">Leia apenas o que importa, revise a seleção e exporte uma cópia pronta para documentação, compartilhamento ou IA.</p>
+        </section>
+
+        <section class="pr-card">
+          <div class="pr-section-head">
+            <div>
+              <p class="pr-eyebrow" data-i18n="project">PROJETO</p>
+              <h2 data-i18n="selectedProject">Projeto selecionado</h2>
+            </div>
+          </div>
+          <div class="pr-path-row">
+            <div class="pr-path-box" id="project-path" data-i18n="noFolder">Nenhuma pasta selecionada.</div>
+            <button class="pr-primary-btn" id="choose-folder" type="button" data-i18n="selectFolder">Selecionar pasta</button>
+          </div>
+          <input id="folder-input" type="file" webkitdirectory multiple hidden>
+          <div class="pr-inline-actions">
+            <button class="pr-secondary-btn" id="open-preview" type="button" disabled data-i18n="previewFiles">Pré-visualizar arquivos</button>
+            <button class="pr-secondary-btn" id="reload-project" type="button" disabled data-i18n="reload">Recarregar</button>
+          </div>
+          <p class="pr-hint" id="folder-help" data-i18n="folderHint">Pastas ignoradas, arquivos sensíveis e itens fora dos filtros não são lidos.</p>
+        </section>
+
+        <section class="pr-card">
+          <div class="pr-section-head">
+            <div>
+              <p class="pr-eyebrow" data-i18n="processing">PROCESSAMENTO</p>
+              <h2 data-i18n="processingMode">Modo de processamento</h2>
+            </div>
+          </div>
+
+          <div class="pr-mode-list">
+            <label class="pr-mode-option">
+              <input type="radio" name="mode" value="single" checked>
+              <span>
+                <strong data-i18n="singleMode">Arquivo único</strong>
+                <small data-i18n="singleDescription">Cria um TXT consolidado com a estrutura e o conteúdo dos arquivos selecionados.</small>
+              </span>
+            </label>
+            <label class="pr-mode-option">
+              <input type="radio" name="mode" value="separate">
+              <span>
+                <strong data-i18n="separateMode">Arquivos separados</strong>
+                <small data-i18n="separateDescription">Cria um TXT para cada arquivo, preservando a estrutura de pastas.</small>
+              </span>
+            </label>
+            <label class="pr-mode-option">
+              <input type="radio" name="mode" value="ia">
+              <span>
+                <strong data-i18n="aiMode">Preparar para IA</strong>
+                <small data-i18n="aiDescription">Estima tokens e divide o contexto em partes Markdown ou TXT com limite configurável.</small>
+              </span>
+            </label>
+          </div>
+
+          <div class="pr-option-grid">
+            <label>
+              <span data-i18n="format">Formato</span>
+              <select id="format">
+                <option value="Markdown">Markdown</option>
+                <option value="TXT">TXT</option>
+              </select>
+            </label>
+            <label>
+              <span data-i18n="tokenLimit">Limite de tokens por parte</span>
+              <input id="token-limit" type="number" min="100" step="100" value="30000" inputmode="numeric">
+            </label>
+          </div>
+
+          <div class="pr-check-row">
+            <label class="pr-check">
+              <input id="include-tree" type="checkbox" checked>
+              <span data-i18n="includeTree">Incluir árvore dos arquivos</span>
+            </label>
+            <label class="pr-check">
+              <input id="split" type="checkbox" checked>
+              <span data-i18n="splitAutomatically">Dividir automaticamente</span>
+            </label>
+          </div>
+
+          <p class="pr-hint" id="mode-help"></p>
+        </section>
+
+        <section class="pr-card">
+          <div class="pr-section-head">
+            <div>
+              <p class="pr-eyebrow" data-i18n="output">SAÍDA</p>
+              <h2 data-i18n="destination">Destino</h2>
+            </div>
+          </div>
+          <div class="pr-output-note">
+            <span class="pr-output-icon">↓</span>
+            <div>
+              <strong data-i18n="browserDownload">Download do navegador</strong>
+              <p data-i18n="browserDownloadDescription">Por ser um módulo estático, os resultados são baixados pelo navegador. Sua pasta de Downloads continua sob controle do sistema.</p>
+            </div>
+          </div>
+        </section>
+      </aside>
+
+      <section class="pr-workspace">
+        <div class="pr-workspace-head">
+          <div>
+            <p class="pr-eyebrow" data-i18n="selection">SELEÇÃO</p>
+            <h2 id="project-name" data-i18n="noProject">Nenhum projeto carregado</h2>
+            <p id="summary">Escolha uma pasta para começar.</p>
+          </div>
+          <button class="pr-primary-btn pr-export-btn" id="export" type="button" disabled data-i18n="export">Gerar e exportar</button>
+        </div>
+
+        <div class="pr-toolbar">
+          <label class="pr-search">
+            <span aria-hidden="true">⌕</span>
+            <input id="search" type="search" disabled data-i18n-placeholder="searchPlaceholder" placeholder="Filtrar por nome ou caminho">
+          </label>
+          <button class="pr-secondary-btn" id="select-visible" type="button" disabled data-i18n="selectVisible">Selecionar visíveis</button>
+          <button class="pr-secondary-btn" id="clear-visible" type="button" disabled data-i18n="clearVisible">Desmarcar visíveis</button>
+        </div>
+
+        <div class="pr-content-grid">
+          <section class="pr-card pr-file-card">
+            <div class="pr-file-card-head">
+              <div>
+                <strong data-i18n="files">Arquivos</strong>
+                <span id="file-count">0</span>
+              </div>
+              <button class="pr-link-btn" id="open-preview-inline" type="button" disabled data-i18n="manageSelection">Gerenciar seleção</button>
+            </div>
+            <div id="empty" class="pr-empty">
+              <div class="pr-empty-mark">⌘</div>
+              <strong data-i18n="emptyTitle">O projeto aparecerá aqui</strong>
+              <p data-i18n="emptyDescription">Escolha uma pasta para listar os arquivos legíveis.</p>
+            </div>
+            <div id="file-list" class="pr-file-list" aria-live="polite"></div>
+          </section>
+
+          <aside class="pr-card pr-preview-card">
+            <div class="pr-eyebrow" data-i18n="preview">PRÉVIA</div>
+            <h3 id="preview-name" data-i18n="selectFile">Selecione um arquivo</h3>
+            <div class="pr-metrics">
+              <div><dt data-i18n="selected">Selecionados</dt><dd id="selected-count">0</dd></div>
+              <div><dt data-i18n="size">Tamanho</dt><dd id="selected-size">0 B</dd></div>
+              <div><dt data-i18n="estimatedTokens">Tokens estimados</dt><dd id="token-estimate">0</dd></div>
+              <div><dt data-i18n="estimatedParts">Partes estimadas</dt><dd id="part-estimate">0</dd></div>
+            </div>
+            <div class="pr-preview-code" id="preview">A prévia do conteúdo será exibida aqui.</div>
+            <div id="warnings" class="pr-notice" hidden></div>
+          </aside>
+        </div>
+
+        <section class="pr-card pr-progress-card" id="progress-card" hidden>
+          <div class="pr-progress-top">
+            <div>
+              <strong id="progress-status" data-i18n="processingProject">Processando projeto…</strong>
+              <span id="progress-file"></span>
+            </div>
+            <span id="progress-counter">0 / 0</span>
+          </div>
+          <div class="pr-progress-track"><div class="pr-progress-bar" id="progress-bar"></div></div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <!-- Prévia -->
+  <div class="pr-modal-layer" id="preview-modal" hidden>
+    <div class="pr-modal pr-modal-xl" role="dialog" aria-modal="true" aria-labelledby="preview-modal-title">
+      <div class="pr-modal-head">
+        <div>
+          <p class="pr-eyebrow" data-i18n="preview">PRÉVIA</p>
+          <h2 id="preview-modal-title" data-i18n="previewFiles">Pré-visualizar arquivos e pastas</h2>
+          <p data-i18n="previewInstructions">Use as caixas para incluir arquivos. Selecione linhas para aplicar ações em lote.</p>
+        </div>
+        <button class="pr-icon-btn" data-close="preview-modal" type="button" aria-label="Fechar">×</button>
+      </div>
+      <div class="pr-modal-actions">
+        <button class="pr-secondary-btn" id="preview-ignore" type="button" disabled data-i18n="ignoreSelected">Ignorar selecionados</button>
+        <button class="pr-secondary-btn" id="preview-include" type="button" disabled data-i18n="includeSelected">Incluir selecionados</button>
+        <button class="pr-secondary-btn pr-spacer-left" id="preview-select-all" type="button" data-i18n="selectAll">Selecionar tudo</button>
+      </div>
+      <div class="pr-preview-table-wrap">
+        <table class="pr-preview-table">
+          <thead>
+            <tr>
+              <th data-i18n="include">Incluir</th>
+              <th data-i18n="nameOrPath">Nome ou caminho</th>
+              <th data-i18n="type">Tipo</th>
+              <th data-i18n="status">Estado</th>
+              <th data-i18n="size">Tamanho</th>
+            </tr>
+          </thead>
+          <tbody id="preview-tree"></tbody>
+        </table>
+      </div>
+      <div class="pr-modal-foot">
+        <p class="pr-hint" id="preview-summary"></p>
+        <div>
+          <button class="pr-secondary-btn" data-close="preview-modal" type="button" data-i18n="cancel">Cancelar</button>
+          <button class="pr-primary-btn" id="preview-confirm" type="button" data-i18n="confirmSelection">Confirmar seleção</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Configurações -->
+  <div class="pr-modal-layer" id="settings-modal" hidden>
+    <div class="pr-modal pr-modal-lg" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+      <div class="pr-modal-head">
+        <div>
+          <p class="pr-eyebrow" data-i18n="settings">CONFIGURAÇÕES</p>
+          <h2 id="settings-title" data-i18n="settingsTitle">Configurações</h2>
+        </div>
+        <button class="pr-icon-btn" data-close="settings-modal" type="button" aria-label="Fechar">×</button>
+      </div>
+
+      <div class="pr-tabs" role="tablist">
+        <button class="pr-tab is-active" data-settings-tab="extensions" type="button" data-i18n="extensionsTab">Extensões</button>
+        <button class="pr-tab" data-settings-tab="ignored" type="button" data-i18n="ignoredTab">Pastas e arquivos ignorados</button>
+        <button class="pr-tab" data-settings-tab="language" type="button" data-i18n="languageTab">Idioma</button>
+      </div>
+
+      <div class="pr-settings-pane" data-settings-pane="extensions">
+        <div class="pr-settings-grid">
+          <section class="pr-settings-section">
+            <div class="pr-section-head compact">
+              <div>
+                <h3 data-i18n="singleExtensionsTitle">Modo: Arquivo único / Preparar para IA</h3>
+                <p data-i18n="extensionsInfo">Uma extensão por linha. O modo de IA usa esta mesma lista.</p>
+              </div>
+              <button class="pr-secondary-btn" id="restore-single-extensions" type="button" data-i18n="restoreDefault">Restaurar padrão</button>
+            </div>
+            <textarea class="pr-list-editor" id="single-extensions" rows="12" spellcheck="false"></textarea>
+          </section>
+
+          <section class="pr-settings-section">
+            <div class="pr-section-head compact">
+              <div>
+                <h3 data-i18n="separateExtensionsTitle">Modo: Arquivos separados</h3>
+                <p data-i18n="extensionsInfo">Esta lista é independente da lista do modo de arquivo único.</p>
+              </div>
+              <button class="pr-secondary-btn" id="restore-separate-extensions" type="button" data-i18n="restoreDefault">Restaurar padrão</button>
+            </div>
+            <textarea class="pr-list-editor" id="separate-extensions" rows="12" spellcheck="false"></textarea>
+          </section>
+        </div>
+      </div>
+
+      <div class="pr-settings-pane" data-settings-pane="ignored" hidden>
+        <div class="pr-settings-grid">
+          <section class="pr-settings-section">
+            <div class="pr-section-head compact">
+              <div>
+                <h3 data-i18n="ignoredFolders">Pastas ignoradas</h3>
+                <p data-i18n="ignoredFoldersInfo">Nomes simples valem em qualquer pasta; caminhos com / valem para o caminho indicado.</p>
+              </div>
+              <button class="pr-secondary-btn" id="restore-folders" type="button" data-i18n="restoreDefault">Restaurar padrão</button>
+            </div>
+            <textarea class="pr-list-editor" id="ignored-folders" rows="14" spellcheck="false"></textarea>
+          </section>
+
+          <section class="pr-settings-section">
+            <div class="pr-section-head compact">
+              <div>
+                <h3 data-i18n="ignoredFiles">Arquivos ignorados</h3>
+                <p data-i18n="protectedEnv">.env é sempre protegido e não pode ser removido.</p>
+              </div>
+              <button class="pr-secondary-btn" id="restore-files" type="button" data-i18n="restoreDefault">Restaurar padrão</button>
+            </div>
+            <textarea class="pr-list-editor" id="ignored-files" rows="14" spellcheck="false"></textarea>
+          </section>
+        </div>
+      </div>
+
+      <div class="pr-settings-pane" data-settings-pane="language" hidden>
+        <section class="pr-settings-section">
+          <h3 data-i18n="interfaceLanguage">Idioma da interface</h3>
+          <label class="pr-radio-line"><input type="radio" name="language" value="pt_BR"><span>Português (Brasil)</span></label>
+          <label class="pr-radio-line"><input type="radio" name="language" value="en"><span>English</span></label>
+          <p class="pr-hint" data-i18n="languageInfo">A alteração é salva ao fechar as configurações.</p>
+        </section>
+      </div>
+
+      <div class="pr-modal-foot">
+        <p class="pr-hint" data-i18n="settingsStored">As preferências ficam apenas neste navegador e não incluem o conteúdo do projeto.</p>
+        <button class="pr-primary-btn" id="save-settings" type="button" data-i18n="close">Fechar e salvar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ajuda -->
+  <div class="pr-modal-layer" id="help-modal" hidden>
+    <div class="pr-modal pr-modal-md" role="dialog" aria-modal="true" aria-labelledby="help-title">
+      <div class="pr-modal-head">
+        <div>
+          <p class="pr-eyebrow" data-i18n="help">AJUDA</p>
+          <h2 id="help-title">Leitor de Projetos 1.1.0</h2>
+        </div>
+        <button class="pr-icon-btn" data-close="help-modal" type="button" aria-label="Fechar">×</button>
+      </div>
+      <div class="pr-help-content" id="help-content"></div>
+      <div class="pr-modal-foot">
+        <span></span>
+        <button class="pr-secondary-btn" data-close="help-modal" type="button" data-i18n="close">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Histórico -->
+  <div class="pr-modal-layer" id="history-modal" hidden>
+    <div class="pr-modal pr-modal-md" role="dialog" aria-modal="true" aria-labelledby="history-title">
+      <div class="pr-modal-head">
+        <div>
+          <p class="pr-eyebrow" data-i18n="history">HISTÓRICO</p>
+          <h2 id="history-title" data-i18n="history">Histórico</h2>
+        </div>
+        <button class="pr-icon-btn" data-close="history-modal" type="button" aria-label="Fechar">×</button>
+      </div>
+      <div id="history-list" class="pr-history-list"></div>
+      <div class="pr-modal-foot">
+        <button class="pr-danger-btn" id="clear-history" type="button" data-i18n="clearHistory">Limpar histórico</button>
+        <button class="pr-secondary-btn" data-close="history-modal" type="button" data-i18n="close">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirmação -->
+  <div class="pr-modal-layer" id="confirm-modal" hidden>
+    <div class="pr-modal pr-modal-sm" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+      <div class="pr-modal-head">
+        <div>
+          <p class="pr-eyebrow" data-i18n="confirm">CONFIRMAÇÃO</p>
+          <h2 id="confirm-title" data-i18n="confirmProcessing">Confirmar processamento</h2>
+        </div>
+      </div>
+      <div class="pr-confirm-body">
+        <p id="confirm-count"></p>
+        <p id="confirm-sensitive" class="pr-sensitive-text"></p>
+        <strong data-i18n="continueQuestion">Deseja continuar?</strong>
+      </div>
+      <div class="pr-modal-foot">
+        <button class="pr-secondary-btn" data-close="confirm-modal" type="button" data-i18n="cancel">Cancelar</button>
+        <button class="pr-primary-btn" id="confirm-go" type="button" data-i18n="continue">Continuar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Resultado -->
+  <div class="pr-modal-layer" id="result-modal" hidden>
+    <div class="pr-modal pr-modal-md" role="dialog" aria-modal="true" aria-labelledby="result-title">
+      <div class="pr-result-head">
+        <span class="pr-success-mark">✓</span>
+        <div>
+          <p class="pr-eyebrow" data-i18n="complete">CONCLUÍDO</p>
+          <h2 id="result-title" data-i18n="transferComplete">Transferência concluída</h2>
+          <p data-i18n="filesGenerated">Os arquivos foram gerados e o download foi iniciado pelo navegador.</p>
+        </div>
+      </div>
+      <div id="result-metrics" class="pr-result-metrics"></div>
+      <div id="result-errors" class="pr-result-errors" hidden></div>
+      <div class="pr-modal-foot">
+        <span></span>
+        <button class="pr-primary-btn" data-close="result-modal" type="button" data-i18n="continue">Continuar</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

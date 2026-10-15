@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="App de notas flutuantes com quadros, ligações entre notas, busca, zoom e calendário." />
+<title>Notas Flutuantes</title>
+<link rel="icon" type="image/png" href="assets/screenshots/logo.png" />
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="icons.css" />
+  <script type="module" src="http://127.0.0.1:8790/core/module-bootstrap.js"></script>
+</head>
+<body>
+  <div id="toolbar">
+    <button id="addNote" title="Criar uma nova nota">Nova nota</button>
+    <button id="undoBtn" title="Desfazer (Ctrl+Z)">Desfazer</button>
+    <button id="redoBtn" title="Refazer (Ctrl+Shift+Z ou Ctrl+Y)">Refazer</button>
+    <button id="linkMode" title="Ativar modo de ligar notas">Ligar</button>
+    <button id="toggleCal" title="Mostrar/ocultar calendário"></button>
+
+    <span class="sep"></span>
+
+    <select id="boardSelect" title="Trocar de quadro"></select>
+    <button id="addBoard" title="Novo quadro">Quadro</button>
+    <button id="renameBoard" title="Renomear quadro"></button>
+
+    <span class="sep"></span>
+
+    <input type="search" id="searchInput" placeholder="Buscar nas notas... (Enter navega)" />
+
+    <span class="sep"></span>
+
+    <div id="zoomControls">
+      <button id="zoomOut" title="Diminuir zoom"></button>
+      <span id="zoomLevel">100%</span>
+      <button id="zoomIn" title="Aumentar zoom"></button>
+      <button id="zoomReset" title="Redefinir visualização"></button>
+    </div>
+
+    <span id="stats"></span>
+    <span id="saveIndicator" aria-live="polite">Salvo</span>
+
+    <button id="settingsToggle" title="Configurações">Configurações</button>
+  </div>
+
+  <div id="settingsPanel" class="hidden">
+    <div class="settings-header">
+      <span id="settingsHeaderText">Configurações</span>
+      <button id="settingsClose" title="Fechar" aria-label="Fechar"></button>
+    </div>
+
+    <div class="settings-section">
+      <h4 id="backupHeading">Backup</h4>
+      <button id="exportNotes" title="Baixar backup com todos os quadros em JSON">Exportar tudo</button>
+      <button id="exportBoardNotes" title="Baixar backup apenas do quadro atual em JSON">Exportar quadro atual</button>
+      <button id="importNotes" title="Carregar backup em JSON">Importar backup</button>
+      <input type="file" id="importInput" accept="application/json" hidden />
+    </div>
+
+    <div class="settings-section">
+      <h4 id="historyHeading">Histórico e recuperação</h4>
+      <label class="settings-check" for="autoSnapshots">
+        <input type="checkbox" id="autoSnapshots" />
+        <span id="autoSnapshotsLabel">Versões automáticas</span>
+      </label>
+      <label class="settings-label" id="snapshotIntervalLabel" for="snapshotInterval">Intervalo</label>
+      <select id="snapshotInterval" title="Intervalo das versões automáticas">
+        <option value="1">1 minuto</option>
+        <option value="5">5 minutos</option>
+        <option value="15">15 minutos</option>
+        <option value="30">30 minutos</option>
+      </select>
+      <button id="saveSnapshotNow" title="Salvar uma versão de recuperação agora">Salvar versão agora</button>
+      <label class="settings-label" id="snapshotSelectLabel" for="snapshotSelect">Versões salvas</label>
+      <div class="snapshot-select-row">
+        <select id="snapshotSelect" title="Escolher versão salva"></select>
+        <button id="deleteSnapshot" class="snapshot-delete-btn" title="Excluir versão selecionada" aria-label="Excluir versão selecionada"></button>
+      </div>
+      <button id="restoreSnapshot" title="Restaurar a versão selecionada em todos os quadros">Restaurar versão selecionada</button>
+      <button id="exportSnapshot" title="Exportar todos os quadros exatamente como estavam na versão selecionada">Exportar versão selecionada</button>
+    </div>
+
+    <div class="settings-section">
+      <h4 id="appearanceHeading">Aparência</h4>
+      <button id="darkMode" title="Alternar modo escuro">Modo escuro</button>
+    </div>
+
+    <div class="settings-section">
+      <h4 id="languageHeading">Idioma</h4>
+      <label class="settings-label" id="languageLabel" for="languageSelect">Idioma da interface</label>
+      <select id="languageSelect" title="Escolher idioma">
+        <option value="pt-BR">Português (Brasil)</option>
+        <option value="en">English</option>
+      </select>
+    </div>
+
+    <div class="settings-section settings-section--danger">
+      <h4 id="deleteHeading">Apagar</h4>
+      <button id="clearAll" title="Apagar todas as notas do quadro atual">Limpar notas do quadro atual</button>
+      <button id="deleteBoard" title="Apagar o quadro atual inteiro">Apagar quadro atual</button>
+    </div>
+  </div>
+
+  <div id="viewport">
+    <div id="world">
+      <svg id="links"></svg>
+      <div id="canvas"></div>
+    </div>
+  </div>
+
+  <div id="calendar" class="hidden">
+    <div class="cal-header">
+      <button id="calPrev" aria-label="Mês anterior"></button>
+      <span id="calTitle"></span>
+      <button id="calNext" aria-label="Próximo mês"></button>
+    </div>
+
+    <div class="cal-grid" id="calGrid"></div>
+    <div class="cal-foot" id="calFoot">Clique em um dia para inserir na nota ativa</div>
+  </div>
+
+  <!-- Popup de criação de link local (aparece sobre a nota) -->
+  <div id="local-link-popup" class="hidden">
+    <div id="llp-inner">
+      <span id="llp-label">Criar link</span>
+      <input id="llp-url-input" type="text" placeholder="Cole uma URL ou caminho local..." autocomplete="off" spellcheck="false" />
+      <div id="llp-buttons">
+        <button id="llp-confirm">Inserir link</button>
+        <button id="llp-cancel">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Visualizador de arquivo -->
+  <div id="file-viewer-overlay" class="hidden" role="dialog" aria-modal="true">
+    <div id="file-viewer-box">
+      <div id="file-viewer-header">
+        <span id="file-viewer-title">Arquivo</span>
+        <button id="file-viewer-close" title="Fechar (Esc)">Fechar</button>
+      </div>
+      <div id="file-viewer-body"></div>
+    </div>
+  </div>
+
+  <script src="storage.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 2,
+  "id": "notebook",
+  "name": "Ink Notebook",
+  "vendor": "Ink-guginha",
+  "author": "Ink-guginha",
+  "agentOperations": [
+    {"name": "listar_cadernos_ink", "description": "Lista cadernos e contagens de documentos do Ink Notebook", "parameters": [], "risk": "baixo", "verification": "cadernos_ink"}
+  ],
+  "category": "work",
+  "description": "Cadernos locais para reunir fontes, pesquisar conteúdo e consultar trechos.",
+  "kind": "web-service",
+  "serviceUrl": "http://127.0.0.1:8001",
+  "healthUrl": "http://127.0.0.1:8001/health",
+  "command": ["{project_python}", "run.py", "--no-browser"],
+  "entryFile": "workspace/index.html",
+  "icon": "notebook",
+  "version": "1.0.0",
+  "minCoreVersion": "0.3.0",
+  "keywords": ["notebook", "cadernos", "pesquisa", "documentos", "pdf", "conhecimento"],
+  "capabilities": {
+    "export": false,
+    "import": true,
+    "print": false,
+    "offline": false,
+    "shortcuts": ["search", "theme"],
+    "permissions": ["files:user-selected-read", "files:read-write", "network:local", "storage:local"]
+  },
+  "dataSchemaVersion": 1,
+  "migrations": [],
+  "instructions": [
+    "Use o botão Usar no Workspace para iniciar e abrir o serviço, ou digite open Ink Notebook no Ink Terminal quando ele já estiver ativo.",
+    "O tema, o terminal, a Drop Zone e a Central de Atividades são fornecidos pelo Workspace OS."
+  ]
+}

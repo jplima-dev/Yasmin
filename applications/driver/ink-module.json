@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 2, "id": "drive2", "name": "InkDriver", "category": "devices",
+  "vendor": "Ink-guginha",
+  "author": "Ink-guginha",
+  "description": "Armazenamento pessoal integrado ao Workspace, com modo remoto opcional pelo Tailscale.", "kind": "web-service",
+  "entryFile": "web/index.html", "url": "http://127.0.0.1:8000", "healthUrl": "http://127.0.0.1:8000/api/health",
+  "command": ["{project_python}", "run.py"], "autoStart": true, "icon": "drive",
+  "version": "1.0.0", "minCoreVersion": "0.3.0", "dataSchemaVersion": 1,
+  "capabilities": {"export": true, "import": true, "print": false, "offline": true, "shortcuts": [], "permissions": ["network:local", "network:tailscale", "files:read-write", "process:start"]},
+  "instructions": ["O Workspace inicia o InkDriver local automaticamente quando o modo local está ativo."]
+}

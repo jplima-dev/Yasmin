@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 2, "id": "diff", "name": "Ink Diff", "category": "utilities",
+  "vendor": "Ink-guginha",
+  "author": "Ink-guginha",
+  "description": "Comparador de texto e código com diferenças linha a linha, estatísticas e exportação.", "kind": "static-web",
+  "entryFile": "index.html", "icon": "diff", "version": "1.0.0", "minCoreVersion": "0.3.0",
+  "keywords": ["comparar", "texto", "código", "git", "diff"],
+  "capabilities": {"export": true, "import": true, "print": true, "offline": true, "shortcuts": ["compare"], "permissions": ["files:user-selected-read"]},
+  "instructions": ["Compare as versões e copie ou baixe o diff gerado."]
+}

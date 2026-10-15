@@ -1,0 +1,125 @@
+/* Integração visual do InkDriver com os tokens e componentes do Workspace OS. */
+:root[data-theme] {
+  color-scheme: light;
+  font-family: var(--ws-font-family, Inter, "Segoe UI", system-ui, sans-serif);
+}
+
+:root[data-theme="dark"] { color-scheme: dark; }
+
+:root[data-theme] body {
+  color: var(--text);
+  background-color: var(--background);
+}
+
+:root[data-theme] .sidebar {
+  color: var(--ws-color-rail-text);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--accent) 9%, transparent), transparent 34%),
+    var(--ws-color-rail);
+  border-right: 1px solid var(--border);
+}
+
+:root[data-theme] .brand small,
+:root[data-theme] .storage-card small { color: var(--ws-color-rail-muted); }
+
+:root[data-theme] .brand-mark {
+  color: #fff;
+  background: var(--accent-gradient);
+  border: 1px solid color-mix(in srgb, var(--accent) 72%, #fff);
+  border-radius: var(--ws-radius-small);
+}
+
+:root[data-theme] .nav { color: var(--ws-color-rail-muted); }
+:root[data-theme] .nav:hover {
+  color: var(--ws-color-rail-text);
+  background: color-mix(in srgb, var(--accent) 13%, var(--ws-color-rail));
+}
+:root[data-theme] .nav.active {
+  color: #fff;
+  background: color-mix(in srgb, var(--accent) 24%, var(--ws-color-rail));
+  box-shadow: inset 3px 0 0 var(--accent);
+}
+
+:root[data-theme] .storage-card {
+  background: color-mix(in srgb, var(--surface-2) 34%, var(--ws-color-rail));
+  border-color: color-mix(in srgb, var(--accent) 22%, var(--border));
+  border-radius: var(--ws-radius-medium);
+}
+:root[data-theme] .progress { background: color-mix(in srgb, var(--surface-2) 54%, transparent); }
+:root[data-theme] .progress i { background: var(--accent-gradient); }
+
+:root[data-theme] main > header {
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--border);
+}
+:root[data-theme] .eyebrow { color: var(--accent); }
+:root[data-theme] .server-status { color: var(--text-secondary); }
+:root[data-theme] .server-status i { background: var(--green); }
+
+:root[data-theme] :where(.metric, .panel, .modal-card, .list-item) {
+  color: var(--text);
+  border-color: var(--border);
+  background: var(--surface-gradient, var(--surface));
+  box-shadow: var(--ws-shadow-1);
+}
+:root[data-theme] .cards > :nth-child(3n + 1) { background: var(--section-accent-gradient); }
+:root[data-theme] .cards > :nth-child(3n + 2) { background: var(--section-secondary-gradient); }
+:root[data-theme] .cards > :nth-child(3n) { background: var(--section-tertiary-gradient); }
+
+:root[data-theme] :where(.metric span, .metric small, .muted, .meta, .crumbs, .list-item small, .settings-list dt, .modal-card label) {
+  color: var(--text-secondary);
+}
+:root[data-theme] .table-head {
+  color: var(--text-secondary);
+  background: var(--surface-2);
+}
+:root[data-theme] .file-row { border-color: var(--border); }
+:root[data-theme] .file-icon { background: var(--accent-soft-gradient, var(--accent-soft)); }
+
+:root[data-theme] :where(input, select, textarea, .search, .inline input, .modal-card input) {
+  color: var(--text);
+  background: var(--surface);
+  border-color: var(--border);
+}
+:root[data-theme] :where(input, select, textarea):focus {
+  outline: 2px solid color-mix(in srgb, var(--accent) 38%, transparent);
+  border-color: var(--accent);
+}
+:root[data-theme] input::placeholder,
+:root[data-theme] textarea::placeholder { color: var(--text-secondary); }
+
+:root[data-theme] :where(.primary, button.primary) {
+  color: #fff;
+  border-color: var(--accent);
+  background: var(--accent-gradient);
+}
+:root[data-theme] :where(.secondary, button.secondary, .actions button, .crumbs button) {
+  color: var(--text);
+  border-color: var(--border);
+  background: var(--surface);
+}
+:root[data-theme] :where(.secondary, button.secondary, .actions button, .crumbs button):hover {
+  border-color: var(--accent-border);
+  background: var(--accent-soft-gradient, var(--accent-soft));
+}
+:root[data-theme] .danger {
+  color: var(--red);
+  border-color: color-mix(in srgb, var(--red) 40%, var(--border));
+  background: var(--surface);
+}
+
+:root[data-theme] .badge { color: var(--text-secondary); background: var(--surface-2); }
+:root[data-theme] .badge.synced { color: var(--green); background: color-mix(in srgb, var(--green) 13%, var(--surface)); }
+:root[data-theme] .badge.error { color: var(--red); background: color-mix(in srgb, var(--red) 13%, var(--surface)); }
+:root[data-theme] .badge.waiting { color: var(--amber); background: color-mix(in srgb, var(--amber) 13%, var(--surface)); }
+:root[data-theme] .toast { color: var(--ws-color-rail-text); background: var(--ws-color-rail); }
+:root[data-theme] .modal { background: color-mix(in srgb, var(--background) 76%, transparent); backdrop-filter: blur(8px); }
+:root[data-theme] .login-brand { color: var(--text); }
+
+/* Reserva visual para os três lançadores flutuantes do Core. */
+:root[data-theme] main { padding-bottom: 92px; }
+
+@media (max-width: 780px) {
+  :root[data-theme] .sidebar { border-right: 0; border-bottom: 1px solid var(--border); }
+  :root[data-theme] .nav.active { box-shadow: inset 0 -3px 0 var(--accent); }
+}

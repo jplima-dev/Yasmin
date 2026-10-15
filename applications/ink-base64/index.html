@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark light"><title>Ink Base64</title>
+  <link rel="stylesheet" href="http://127.0.0.1:8790/core/tool-shell.css">
+</head>
+<body class="ink-tool">
+  <main class="tool-shell">
+    <header class="tool-header"><div class="tool-title"><span class="tool-mark">64</span><div><h1>Ink Base64</h1><p>Texto, Base64, arquivos e Data URLs.</p></div></div></header>
+    <section class="tool-grid">
+      <article class="tool-card">
+        <div class="tool-card-header"><h2>Texto</h2><div class="button-row"><button class="tool-button" id="decode-text" type="button">Decodificar</button><button class="tool-button primary" id="encode-text" type="button">Codificar</button></div></div>
+        <div class="tool-card-body"><label class="tool-field"><span>Entrada</span><textarea class="tool-textarea" id="text-input" spellcheck="false" placeholder="Digite texto UTF-8 ou Base64"></textarea></label><label class="tool-field"><span>Resultado</span><textarea class="tool-textarea code-output" id="text-output" readonly></textarea></label><div class="button-row"><button class="tool-button" id="copy-text" type="button">Copiar resultado</button><button class="tool-button" id="swap" type="button">Usar como entrada</button></div><div class="tool-status" id="text-status">Pronto.</div></div>
+      </article>
+      <article class="tool-card">
+        <div class="tool-card-header"><h2>Arquivo / Data URL</h2><button class="tool-button" id="download-file" type="button" disabled>Baixar decodificado</button></div>
+        <div class="tool-card-body">
+          <label class="tool-dropzone" id="dropzone"><input id="file-input" type="file"><span><strong>Solte um arquivo aqui</strong><br>ou clique para escolher</span></label>
+          <label class="tool-field"><span>Data URL ou Base64</span><textarea class="tool-textarea code-output" id="file-output" spellcheck="false" placeholder="O resultado do arquivo aparece aqui; você também pode colar uma Data URL para decodificar."></textarea></label>
+          <div class="button-row"><button class="tool-button" id="copy-file" type="button">Copiar</button><button class="tool-button primary" id="decode-file" type="button">Preparar download</button></div>
+          <div class="tool-status" id="file-status">Nenhum arquivo selecionado.</div><img class="file-preview" id="preview" alt="Prévia da imagem" hidden>
+        </div>
+      </article>
+    </section>
+  </main>
+  <script type="module" src="http://127.0.0.1:8790/core/module-bootstrap.js"></script><script type="module" src="./app.js"></script>
+</body>
+</html>

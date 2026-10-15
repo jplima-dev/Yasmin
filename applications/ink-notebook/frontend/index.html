@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="pt-BR" data-module-id="notebook">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ink Notebook</title>
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%234f46e5'/><path d='M10 9h12v14H10z' fill='none' stroke='white' stroke-width='2.2'/><path d='M13 14h6M13 18h4' stroke='white' stroke-width='2'/></svg>">
+  <link rel="stylesheet" href="/style.css">
+  <script>window.__WORKSPACE_CORE_ORIGIN__ = "__WORKSPACE_CORE_ORIGIN_VALUE__";</script>
+</head>
+
+<body>
+  <header class="top">
+    <a class="brand" href="#/"><span class="logo">▤</span> Ink Notebook</a>
+    <nav id="crumbs"></nav>
+    <div class="spacer"></div>
+    <a class="icon-btn" href="#/settings" title="Configurações">⚙</a>
+    <span class="workspace-theme-notice" role="status" title="Altere o tema em Configurações do Workspace">Tema definido
+      pelo Workspace</span>
+  </header>
+  <main id="view"></main>
+
+  <aside id="activity" class="activity">
+    <div class="act-list" id="act-list" hidden></div>
+    <button class="act-bar" id="act-bar"><span class="dot" id="act-dot"></span><span id="act-last">Pronto.</span><span
+        class="act-more">atividade ▴</span></button>
+  </aside>
+
+  <aside id="preview" class="preview" hidden>
+    <div class="pv-head">
+      <div class="pv-title"><strong id="pv-name"></strong><span id="pv-meta" class="muted"></span></div>
+      <button class="icon-btn" id="pv-close" title="Fechar (Esc)">✕</button>
+    </div>
+    <div class="pv-body" id="pv-body"></div>
+  </aside>
+
+  <dialog id="dlg">
+    <form method="dialog">
+      <h3 id="dlg-title"></h3>
+      <p id="dlg-msg" class="muted"></p>
+      <input id="dlg-input" type="text" maxlength="80" autocomplete="off">
+      <div class="dlg-actions"><button type="button" class="btn" id="dlg-cancel">Cancelar</button><button
+          class="btn primary" id="dlg-ok" value="ok">OK</button></div>
+    </form>
+  </dialog>
+  <div id="toasts"></div>
+  <script type="module" src="/workspace-embed.js"></script>
+  <script src="/code.js"></script>
+  <script type="module" src="/app.js"></script>
+</body>
+
+</html>

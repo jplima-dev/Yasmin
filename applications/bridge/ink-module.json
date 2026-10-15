@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 2, "id": "bridge", "name": "Bridge", "category": "devices",
+  "vendor": "Ink-guginha",
+  "author": "Ink-guginha",
+  "description": "Transferência local, presença e clipboard entre dispositivos.", "kind": "web-service",
+  "url": "http://127.0.0.1:8876", "healthUrl": "http://127.0.0.1:8876/api/health",
+  "command": ["{project}\\.venv\\Scripts\\python.exe", "{workspace}\\scripts\\run_bridge.py"], "autoStart": true,
+  "icon": "devices", "version": "1.0.0", "minCoreVersion": "0.3.0",
+  "capabilities": {"export": false, "import": true, "print": false, "offline": false, "shortcuts": [], "permissions": ["network:local", "files:read-write", "process:start"]},
+  "instructions": ["No celular, use o endereço de Outros aparelhos exibido pelo Bridge."]
+}

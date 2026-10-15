@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 2, "id": "base64", "name": "Ink Base64", "category": "utilities",
+  "vendor": "Ink-guginha",
+  "author": "Ink-guginha",
+  "description": "Conversão de texto em Base64 e de arquivos ou imagens em Data URL.", "kind": "static-web",
+  "entryFile": "index.html", "icon": "base64", "version": "1.0.0", "minCoreVersion": "0.3.0",
+  "keywords": ["base64", "data url", "encode", "decode", "arquivo", "imagem"],
+  "capabilities": {"export": true, "import": true, "print": false, "offline": true, "shortcuts": [], "permissions": ["files:user-selected"]},
+  "instructions": ["Codifique texto ou arquivos e baixe o conteúdo decodificado quando necessário."]
+}
